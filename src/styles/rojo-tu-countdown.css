@@ -1,0 +1,32 @@
+.rojo-tu-countdown-0-x-countdown-countdown-container {
+    display: flex;
+    justify-content: center;
+}
+
+.rojo-tu-countdown-0-x-countdown-countdown-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #4d4d4d0d;
+    width: 5.836576vw;
+    height: 5.836576vw;
+    justify-content: center;
+    border-radius: 200px;
+    margin: 0 0.486381vw;
+    box-shadow: rgb(0 0 0 / 13%) 0px 4px 12px;
+}
+
+.rojo-tu-countdown-0-x-countdown-countdown-box-text,
+.rojo-tu-countdown-0-x-countdown-countdown-box-time {
+    font-size: 1.167315vw;
+
+}
+
+.rojo-tu-countdown-0-x-countdown-countdown-box-text {
+    font-weight: 700;
+}
+
+.rojo-tu-countdown-0-x-countdown-countdown-box-time {
+    color: #E31A2A;
+    font-weight: 700;
+}

@@ -1,0 +1,30 @@
+.rojo-tu-3d-0-x-3d-3d {
+    height: 100vh;
+}
+
+.rojo-tu-3d-0-x-3d-3d-container,
+.rojo-tu-3d-0-x-3d-3d-box-2,
+.rojo-tu-3d-0-x-3d-3d-box-2-web-3d {
+    height: 100%;
+}
+
+.rojo-tu-3d-0-x-3d-3d-box-2-web-3d iframe {
+    border: none;
+}
+
+.rojo-tu-3d-0-x-3d-3d-box-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.972763vw 0;
+}
+
+.rojo-tu-3d-0-x-3d-3d-box-1-gender{
+    font-size: 1.167315vw;
+    font-weight: 700;
+    color: #E31A2A;
+}
+
+.rojo-tu-3d-0-x-3d-3d-box-1-gender:last-child{
+    padding-left: 0.243191vw;
+}

@@ -1,0 +1,112 @@
+.rojo-tu-login-0-x-login-login {
+    position: relative;
+    line-height: 0;
+}
+
+.rojo-tu-login-0-x-login-login-baner {
+    width: 100%;
+}
+
+.rojo-tu-login-0-x-login-login-container-form {
+    position: absolute;
+    width: 24.319066vw;
+    height: 19.455253vw;
+    background: rgb(239, 209, 209);
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(90%, -50%);
+}
+
+.rojo-tu-login-0-x-login-login-form-child-input {
+    border: none;
+    height: 2.188716vw;
+    border-radius: 10px;
+    padding-left: 0.729572vw;
+    font-size: 0.875486vw;
+    width: 100%;
+}
+
+.rojo-tu-login-0-x-login-login-form-child-input-container-options {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.rojo-tu-login-0-x-login-login-title-span {
+    font-size: 1.702335vw;
+    font-weight: 700;
+    margin-bottom: 1.459144vw;
+    letter-spacing: 1px;
+}
+
+.rojo-tu-login-0-x-login-login-form-child-1{
+    margin-top: 2.5vw;
+}
+
+.rojo-tu-login-0-x-login-login-form-child {
+    margin-bottom: 0.729572vw;
+    display: flex;
+    width: 19.455253vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.rojo-tu-login-0-x-login-login-form-child-4 {
+    justify-content: space-between;
+    margin-bottom: 0.972763vw;
+    margin-top: 0.243191vw;
+}
+
+.rojo-tu-login-0-x-login-login-form-child-span-error {
+    font-size: 0.875486vw;
+    color: #E31A2A;
+    font-weight: 600;
+}
+
+.rojo-tu-login-0-x-login-login-form-submit {
+    background: #E31A2A;
+    border: none;
+    color: white;
+    width: 8.754864vw;
+    height: 2.188716vw;
+    border-radius: 10px;
+    font-size: 0.875486vw;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.rojo-tu-login-0-x-login-nav-link-reset-password {
+    color: black;
+    text-decoration: none;
+    font-size: 0.875486vw;
+    font-weight: 400;
+}
+
+.rojo-tu-login-0-x-login-login-form-child-input-check {
+    font-size: 0.875486vw;
+    font-weight: 400;
+}
+
+.rojo-tu-login-0-x-login-login-form-child-options-error {
+    margin-top: 0.486381vw;
+}
+
+.rojo-tu-login-0-x-login-login-form-child svg {
+    margin-right: 0.486381vw;
+    width: 1.945525vw;
+    height: 1.945525vw;
+}
+
+.rojo-tu-login-0-x-login-login-logo {
+    position: absolute;
+    width: 58.4vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-70%, -70%);
+}

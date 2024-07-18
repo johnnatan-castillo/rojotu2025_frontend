@@ -1,0 +1,98 @@
+.rojo-tu-select-identity-0-x-select-identity-select-identity-overlay {
+    background: #000000ab;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100vh;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-container {
+    background: #e3e3e3;
+    width: 600px;
+    border-radius: 16px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 990;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-2-1,
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-2-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-button {
+    width: 100%;
+    background: #4D4D4D;
+    border: none;
+    color: white;
+    border-radius: 7px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 16px;
+    height: 40px;
+    font-size: 18px;
+    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-in;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-button:hover {
+    background: #ef0f0f;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-child:first-child {
+    width: 10%;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-child:last-child {
+    width: 60%;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-2-title {
+    font-size: 24px;
+    color: rgb(51, 50, 50);
+    text-align: center;
+    font-weight: 600;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-1 {
+    padding: 20px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-2 {
+    padding-bottom: 20px;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-2-icon svg {
+    width: 34px;
+    height: 34px;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-moment-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-moment-box-1 {
+    height: 120px;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-moment-box-2 {
+    margin-bottom: 40px;
+}
+
+.rojo-tu-select-identity-0-x-select-identity-select-identity-box-moment-please {
+    font-size: 20px;
+}

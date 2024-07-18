@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@import "./rojo-tu-header.css";
+@import "./rojo-tu-product-list.css";
+@import "./rojo-tu-my-profile.css";
+@import "./rojo-tu-collection.css";
+@import "./rojo-tu-quickview.css";
+@import "./rojo-tu-spinner.css";
+@import "./rojo-tu-alert.css";
+@import "./rojo-tu-3d.css";
+@import "./rojo-tu-galery.css";
+@import "./rojo-tu-countdown.css";
+@import "./rojo-tu-select-identity.css";
+@import "./rojo-tu-login.css";
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Lato ,Arial, sans-serif;
+    width: 100%;
+}
+
+.rojo-tu-layout-0-x-layout-layout {
+    width: 100%;
+}

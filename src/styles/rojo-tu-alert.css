@@ -1,0 +1,47 @@
+.rojo-tu-alert-0-x-alert-alert {
+    position: fixed;
+    right: 1.945525vw;
+    width: 21.88716vw;
+    height: 3.404669vw;
+    bottom: 3.891051vw;
+    background: #4D4D4D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    z-index: 10001;
+}
+
+.rojo-tu-alert-0-x-alert-alert-container {
+    display: flex;
+    width: 100%;
+    color: white;
+    font-size: 0.875486vw;
+    font-family: 'Lato';
+    padding-left: 0.972763vw;
+    justify-content: center;
+}
+
+.rojo-tu-alert-0-x-alert-alert-box-1 {
+    width: 80%;
+    display: flex;
+    align-items: center;
+}
+
+.rojo-tu-alert-0-x-alert-alert-box-2 {
+    width: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.rojo-tu-alert-0-x-alert-alert-exit {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.rojo-tu-alert-0-x-alert-alert-exit svg {
+    fill: white;
+    width: 1.653696vw;
+    height: 1.653696vw;
+}

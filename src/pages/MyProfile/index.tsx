@@ -1,0 +1,236 @@
+import React, { useCallback, useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import CustomClass from '../../utils/CustomClass';
+import { decryptData } from '../../utils/Decrypt';
+import { getApuUrl } from '../../utils/config';
+
+import Swal from "sweetalert2";
+import { login, logout } from '../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
+import { resetcart } from '../../features/cart/cartSlice';
+
+interface Profile {
+  userNick: string | undefined,
+  userName: string | undefined,
+  email: string | undefined,
+}
+
+interface Form {
+  identidad: "MASCULINO" | "FEMENINO" | null
+}
+
+const component: string = "my-profile"
+const version: string = "0"
+
+const MyProfile = () => {
+
+  const profile = useSelector((state: RootState) => state.auth);
+  const { user, nombre, correo, gender, identidad, rol, grupo, pais, administrador, token } = useSelector((state: RootState) => state.auth);
+
+  const [userFull, setUserFull] = useState<Profile>();
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
+  const [myProfileData, setMyProfileData] = useState<Form>({
+    identidad: null
+  })
+
+  const decryptProfile = useCallback(async () => {
+
+    if (user && nombre && correo) {
+      setUserFull({
+        userNick: decryptData(user).data,
+        userName: decryptData(nombre).data,
+        email: decryptData(correo).data,
+      })
+    }
+
+  }, [correo, nombre, user]);
+
+
+  const handleSaveChanges = async () => {
+
+    if (myProfileData.identidad) {
+      const url = getApuUrl("/actualizarIdentidad");
+
+      const raw = JSON.stringify({
+        "usuario": userFull?.userNick,
+        "identidad": myProfileData.identidad
+      });
+
+      const requestOptions = {
+        method: "POST",
+        headers: {
+          token: token,
+          "Content-Type": "application/json"
+        },
+        body: raw
+      };
+
+      fetch(url, requestOptions)
+        .then((response) => response.json())
+        .then((result: ResponseAPI) => {
+
+          if (result.code !== 200) {
+            return Swal.fire({ title: 'Error al cambiar de expresión de genero', text: `Ha ocurrido un error al intentar cambiar la expresión de genero`, icon: 'error', confirmButtonColor: "#E31A2A" });
+          }
+
+          const copyProfile = { ...profile };
+
+          copyProfile.identidad = myProfileData.identidad
+          copyProfile.token = result.token
+
+
+          dispatch(login(copyProfile));
+
+          setMyProfileData({
+            identidad: null
+          });
+
+          Swal.fire({ title: 'Seleccionado correctamente', text: `Tu expresión de genero ha sido cambiada`, icon: 'success', confirmButtonColor: "#E31A2A" });
+
+
+        })
+        .catch((error) => {
+          console.log(error, " error");
+          Swal.fire({ title: 'Ha ocurrido un error', text: `No se ha definido correctamente tu expresión`, icon: 'error', confirmButtonColor: "#E31A2A" });
+        });
+    }
+
+  }
+
+  const handleLogout = async () => {
+
+    dispatch(logout());
+    dispatch(resetcart())
+    navigate('/login');
+
+  }
+
+  useEffect(() => {
+    decryptProfile()
+  }, [decryptProfile])
+
+
+  return (
+    <div className={`${CustomClass({ component, version, customClass: "my-profile" })}`}>
+      <div className={`${CustomClass({ component, version, customClass: "my-profile-container" })}`}>
+        <div className={`${CustomClass({ component, version, customClass: "my-profile-1" })}`}>
+          <span className={`${CustomClass({ component, version, customClass: "my-profile-title" })}`}>Mi perfil</span>
+        </div>
+        <div className={`${CustomClass({ component, version, customClass: "my-profile-2" })}`}>
+
+          <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child-1" })}`}>
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-user" })}`}>Usuario:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{userFull?.userNick}</span>
+              </div>
+            </div>
+
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-name" })}`}>Nombre:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{userFull?.userName}</span>
+              </div>
+            </div>
+
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-email" })}`}>Correo:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{userFull?.email}</span>
+              </div>
+            </div>
+
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-gender" })}`}>Genero:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{gender}</span>
+              </div>
+            </div>
+
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-preference" })}`}>Me identifico como:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <select onChange={(e: any) => setMyProfileData((prev) => ({
+                  ...prev,
+                  identidad: e.target.value
+                }))} className={`${CustomClass({ component, version, customClass: "my-profile-select-preference" })}`} defaultValue={identidad ? identidad : ""}>
+                  <option value={""} disabled={true}>Selecciona tu expresión de genero</option>
+                  <option value="MASCULINO">Masculino</option>
+                  <option value="FEMENINO">Femenino</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child-2" })}`}>
+
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-role" })}`}>Rol:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{rol}</span>
+              </div>
+            </div>
+
+
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-group" })}`}>Grupo:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{grupo}</span>
+              </div>
+            </div>
+
+            <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-country" })}`}>País:</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{pais}</span>
+              </div>
+            </div>
+
+
+            {administrador &&
+              <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+                <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
+                  <span className={`${CustomClass({ component, version, customClass: "my-profile-admin" })}`}>Es administrador:</span>
+                </div>
+                <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
+                  <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{administrador ? "Sí" : "No"}</span>
+                </div>
+              </div>}
+
+          </div>
+
+        </div>
+        <div className={`${CustomClass({ component, version, customClass: "my-profile-3" })}`}>
+          <div className={`${CustomClass({ component, version, customClass: "my-profile-box-footer-box" })} ${CustomClass({ component, version, customClass: "my-profile-footer-box-1" })}`}>
+            <button onClick={() => handleSaveChanges()} className={`${CustomClass({ component, version, customClass: "my-profile-button-footer" })} ${CustomClass({ component, version, customClass: "my-profile-save-changes" })}`} type="button">Guardar cambios</button>
+          </div>
+          <div className={`${CustomClass({ component, version, customClass: "my-profile-box-footer-box" })} ${CustomClass({ component, version, customClass: "my-profile-footer-box-2" })}`}>
+            <button onClick={() => handleLogout()} className={`${CustomClass({ component, version, customClass: "my-profile-button-footer" })} ${CustomClass({ component, version, customClass: "my-profile-sesion" })}`} type="button">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+    </div >
+  )
+}
+
+export default MyProfile
