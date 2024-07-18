@@ -11,7 +11,7 @@ import LOGO from "../../assets/logo-rojo-tu-login.png"
 import { Link } from 'react-router-dom';
 import CustomClass from '../../utils/CustomClass';
 import { encryptData } from '../../utils/Decrypt';
-// import { addClothingItem } from '../../features/cart/cartSlice';
+import { addClothingItem } from '../../features/cart/cartSlice';
 
 const component: string = "login"
 const version: string = "0"
@@ -161,7 +161,7 @@ const Login: React.FC = () => {
                     return;
                 }
 
-                // data.map((product: Product) => dispatch(addClothingItem({ product, talla: product.talla, limits })))
+                data.map((product: Product) => dispatch(addClothingItem({ product, talla: product.talla, limits })))
 
             })
     }
