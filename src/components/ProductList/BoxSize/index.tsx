@@ -29,7 +29,7 @@ export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product 
 
 
     const handleRemoveClotheTOCart = (size: string) => {
-        dispatch(removeClothingItemThunk({ productId: product.id, talla: size, token }));
+        dispatch(removeClothingItemThunk({ productId: product.id , talla: size, token }));
     }
 
 

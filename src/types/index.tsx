@@ -68,6 +68,7 @@ declare global {
         referencia_prenda_superior?: string | null;
         referencia_prenda_inferior?: string | null;
         referencia_chaqueta?: string | null;
+        id_prenda_carrito: string;
     }
 
     interface ProductListProps {

@@ -175,7 +175,7 @@ export const addClothingItemThunk = createAsyncThunk(
       return rejectWithValue("No se puede agregar más prendas de este tipo");
     }
 
-    const response = await handleCartAdd(product, talla, token);
+    const response = await handleCartAdd(product , talla, token);
     if (response.code === 200) {
       return { type: "add", product, talla, data: response.data };
     } else {
@@ -192,6 +192,9 @@ export const removeClothingItemThunk = createAsyncThunk(
   ) => {
     const { productId, talla, token } = cartOptions;
 
+    console.log(cartOptions);
+    
+
     const state: any = getState() as { cart: cartState };
     const currentCart = state.carts.cart;
 
@@ -203,7 +206,7 @@ export const removeClothingItemThunk = createAsyncThunk(
       return rejectWithValue("La prenda no se encuentra en el carrito");
     }
 
-    const response = await handleCartRemove(productId, currentCart.id, token);
+    const response = await handleCartRemove(productId, currentCart.items[productIndex].id_prenda_carrito, token);
     if (response.code === 200) {
       return { type: "remove", data: { productIndex } };
     } else {
@@ -400,7 +403,7 @@ const cartSlice = createSlice({
           addCount();
         }
 
-        state.cart.items.push({ ...product, talla });
+        state.cart.items.push({ ...product, talla, id_prenda_carrito: data });
         state.cart.message = "Prenda agregado exitosamente";
       })
       .addCase(addClothingItemThunk.rejected, (state, action) => {
