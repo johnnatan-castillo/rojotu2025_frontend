@@ -6,7 +6,7 @@ import { RootState } from '../../redux/store';
 const PrivateRoute: React.FC = () => {
   const token = useSelector((state: RootState) => state.auth.token);  
 
-  return token?.length !== 4 ? <Outlet /> : <Navigate to="/login" />;
+  return token && token?.length !== 4 ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;
