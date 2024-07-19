@@ -87,7 +87,10 @@ const handleCartAdd = async (
     if (result.code !== 200) {
       return { code: result.code, token: result.token };
     } else {
-      return { code: 200, data: result.data.id_carrito, token: result.token };
+      return { code: 200, data: {
+        id_prenda_carrito: result.data.id_prenda_carrito,
+        id_carrito : result.data.id_carrito
+      }, token: result.token };
     }
   } catch (error) {
     console.error("Error:", error);
@@ -96,13 +99,13 @@ const handleCartAdd = async (
 };
 
 const handleCartRemove = async (
-  id_carrito: string,
+  id_prenda_carrito: string,
   token: string
 ) => {
   const url = getApuUrl("/quitarPrenda");
 
   const raw = JSON.stringify({
-    id_carrito,
+    id_prenda_carrito,
   });
 
   const requestOptions = {
@@ -165,11 +168,11 @@ export const addClothingItemThunk = createAsyncThunk(
       (product.segmento_Prenda === "CHAQUETA" &&
         currentCart.counters.other >= prendas_otros) ||
       (product.segmento_Prenda === "VESTIDO" &&
-        (currentCart.counters.upper + 1 >= prendas_superiores ||
-          currentCart.counters.lower + 1 >= prendas_inferiores)) ||
+        (currentCart.counters.upper + 1 > prendas_superiores ||
+          currentCart.counters.lower + 1 > prendas_inferiores)) ||
       (product.segmento_Prenda === "TRAJE" &&
-        (currentCart.counters.upper + 1 >= prendas_superiores ||
-          currentCart.counters.lower + 1 >= prendas_inferiores))
+        (currentCart.counters.upper + 1 > prendas_superiores ||
+          currentCart.counters.lower + 1 > prendas_inferiores))
     ) {
       return rejectWithValue("No se puede agregar más prendas de este tipo");
     }
@@ -202,7 +205,7 @@ export const removeClothingItemThunk = createAsyncThunk(
       return rejectWithValue("La prenda no se encuentra en el carrito");
     }
 
-    const response = await handleCartRemove(currentCart.id, token);
+    const response = await handleCartRemove(currentCart.items[productIndex].id_prenda_carrito, token);
     if (response.code === 200) {
       return { type: "remove", data: { productIndex } };
     } else {
@@ -231,7 +234,7 @@ const cartSlice = createSlice({
           currentCart.counters.upper++;
         } else if (product.segmento_Prenda === "INFERIOR") {
           currentCart.counters.lower++;
-        } else {
+        } else if (product.segmento_Prenda === "CHAQUETA") {
           currentCart.counters.other++;
         }
       };
@@ -379,8 +382,6 @@ const cartSlice = createSlice({
 
         const currentCart = state.cart;
 
-        currentCart.id = data;
-
         currentCart.messageId = uuidv4();
 
         const addCount = () => {
@@ -403,8 +404,8 @@ const cartSlice = createSlice({
           addCount();
         }
 
-        state.cart.id = data
-        state.cart.items.push({ ...product, talla });
+        state.cart.id = data?.id_carrito
+        state.cart.items.push({ ...product, talla, id_prenda_carrito : data?.id_prenda_carrito });
         state.cart.message = "Prenda agregado exitosamente";
       })
       .addCase(addClothingItemThunk.rejected, (state, action) => {
@@ -419,13 +420,23 @@ const cartSlice = createSlice({
         const currentCart = state.cart;
 
         const product = currentCart.items[productIndex];
+
+        
         if (product.segmento_Prenda === "SUPERIOR") {
           currentCart.counters.upper--;
         } else if (product.segmento_Prenda === "INFERIOR") {
           currentCart.counters.lower--;
-        } else {
+        } else if (product.segmento_Prenda === "CHAQUETA") {
           currentCart.counters.other--;
         }
+
+        if (product.segmento_Prenda === "VESTIDO" || product.segmento_Prenda === "TRAJE") {
+          currentCart.counters.upper--;
+          currentCart.counters.lower--;
+        }
+
+
+
         currentCart.items.splice(productIndex, 1);
         currentCart.message = "Prenda eliminada exitosamente";
       })
