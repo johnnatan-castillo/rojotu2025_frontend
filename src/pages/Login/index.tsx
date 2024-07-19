@@ -161,7 +161,8 @@ const Login: React.FC = () => {
                     return;
                 }
 
-                data.map((product: Product) => dispatch(addClothingItem({ product, talla: product.talla, limits })))
+
+                data.prendas.map((product: Product) => dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id })))
 
             })
     }

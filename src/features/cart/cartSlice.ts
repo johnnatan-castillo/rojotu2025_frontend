@@ -19,7 +19,7 @@ interface CartOptionsThunkAdd extends CartOptionsAdd {
   token: string;
 }
 
-interface CartOptionsAdd {
+interface CartOptionsAdd {  
   product: Product;
   limits: {
     prendas_superiores: number;
@@ -27,6 +27,7 @@ interface CartOptionsAdd {
     prendas_otros: number;
   };
   talla?: string;
+  id?: string,
 }
 
 interface CartOptionsRemove {
@@ -95,15 +96,13 @@ const handleCartAdd = async (
 };
 
 const handleCartRemove = async (
-  product: number,
-  id_prenda_carrito: string,
+  id_carrito: string,
   token: string
 ) => {
   const url = getApuUrl("/quitarPrenda");
 
   const raw = JSON.stringify({
-    id_prenda: product,
-    id_prenda_carrito,
+    id_carrito,
   });
 
   const requestOptions = {
@@ -203,7 +202,7 @@ export const removeClothingItemThunk = createAsyncThunk(
       return rejectWithValue("La prenda no se encuentra en el carrito");
     }
 
-    const response = await handleCartRemove(productId, currentCart.items[productIndex].id_prenda_carrito, token);
+    const response = await handleCartRemove(currentCart.id, token);
     if (response.code === 200) {
       return { type: "remove", data: { productIndex } };
     } else {
@@ -217,11 +216,15 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addClothingItem: (state, action: PayloadAction<CartOptionsAdd>) => {
-      const { product, limits, talla } = action.payload;
-
-      const { prendas_superiores, prendas_inferiores, prendas_otros } = limits;
+      const { product, limits, talla, id } = action.payload;
 
       const currentCart = state.cart;
+
+      if(id){
+        currentCart.id = id;
+      }
+
+      const { prendas_superiores, prendas_inferiores, prendas_otros } = limits;
 
       const addCount = () => {
         if (product.segmento_Prenda === "SUPERIOR") {
