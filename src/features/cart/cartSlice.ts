@@ -86,7 +86,7 @@ const handleCartAdd = async (
     if (result.code !== 200) {
       return { code: result.code, token: result.token };
     } else {
-      return { code: 200, data: result.data.id_prenda_carrito, token: result.token };
+      return { code: 200, data: result.data.id_carrito, token: result.token };
     }
   } catch (error) {
     console.error("Error:", error);
