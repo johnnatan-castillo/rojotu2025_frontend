@@ -192,9 +192,6 @@ export const removeClothingItemThunk = createAsyncThunk(
   ) => {
     const { productId, talla, token } = cartOptions;
 
-    console.log(cartOptions);
-    
-
     const state: any = getState() as { cart: cartState };
     const currentCart = state.carts.cart;
 
@@ -403,7 +400,8 @@ const cartSlice = createSlice({
           addCount();
         }
 
-        state.cart.items.push({ ...product, talla, id_prenda_carrito: data });
+        state.cart.id = data
+        state.cart.items.push({ ...product, talla });
         state.cart.message = "Prenda agregado exitosamente";
       })
       .addCase(addClothingItemThunk.rejected, (state, action) => {
