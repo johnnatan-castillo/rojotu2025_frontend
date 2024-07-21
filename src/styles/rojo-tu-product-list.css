@@ -16,6 +16,7 @@
 .rojo-tu-product-list-0-x-product-list-product-list-box .rojo-tu-card-0-x-card-card {
     width: 25%;
     padding: 2px;
+    position: relative;
 }
 
 .rojo-tu-card-0-x-card-card-body-image {
@@ -174,7 +175,7 @@
     position: absolute;
     top: 40%;
     left: 50%;
-    font-size: 0.875486vw;
+    font-size: 0.575486vw;
 }
 
 .rojo-tu-counter-0-x-counter-counter-cart-top,
@@ -287,4 +288,103 @@
 .rojo-tu-buy-button-0-x-buy-button-buy-button-container {
     display: flex;
     align-items: center;
+}
+
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-size-box ,
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-box{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-day{
+    width: 3.945525vw;
+}
+
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-box{
+    width: 100%;
+    flex-direction: column;
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-title-span{
+    font-size: 0.77821vw;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body{
+    display:flex;
+    flex-wrap: wrap;
+    height: 3.125vw;
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-box-title{
+    margin-bottom: 5px;
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body .rojo-tu-card-0-x-card-card-footer-product-sku-size:hover{
+    background: none;
+    color: #4D4D4D;
+    border: 1px solid #4D4D4D;
+    cursor: pointer;
+    pointer-events: none;
+}
+
+
+
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-container{
+    width: 100%;
+}
+
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-button{
+    background: #4D4D4D;
+    color: white;
+    font-size: 0.875486vw;
+    width: 100%;
+    height: 2.188716vw;
+    margin-bottom: 0.372763vw;
+    font-family: 'Lato';
+    cursor: pointer;
+    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-in;
+    box-shadow: none;
+    border: none;
+}
+
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-button:hover{
+    background: #E31A2A;
+    color: white;
+    border: none;
+}
+
+
+.rojo-tu-card-0-x-card-card-header {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 90%;
+    z-index:1;
+}
+
+.rojo-tu-card-0-x-card-card-header-remove-item{
+    display:flex;
+    justify-content: flex-end;
+}
+
+.rojo-tu-card-0-x-card-card-header-remove-item-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.rojo-tu-card-0-x-card-card-header-remove-item svg {
+    fill: #4D4D4D;
+    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-in;
+}
+
+.rojo-tu-card-0-x-card-card-header-remove-item svg:hover {
+    fill: #E31A2A;
 }

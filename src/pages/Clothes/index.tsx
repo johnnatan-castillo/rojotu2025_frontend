@@ -29,6 +29,7 @@ const Clothes = () => {
           showSizes={true}
           userRole={userRole}
           isFetch={true}
+          isPLP={true}
         />
       </Suspense>
     </div>

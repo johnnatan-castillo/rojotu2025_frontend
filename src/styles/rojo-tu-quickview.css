@@ -111,6 +111,10 @@ p.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-descript
     flex-wrap: wrap;
 }
 
+.rojo-tu-quickview-0-x-quickview-card-footer-product-sizes-front{
+    flex-direction: column;
+}
+
 .rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-button:hover {
     background: #E31A2A;
     color: white;
@@ -145,4 +149,27 @@ p.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-descript
     overflow: hidden;
     width: 24.319066vw;
     position: relative;
+}
+
+
+.rojo-tu-quickview-0-x-quickview-card-footer-product-sizes-sizes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.rojo-tu-quickview-0-x-quickview-card-footer-product-sizes-title-clothe {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.rojo-tu-quickview-0-x-quickview-card-footer-product-sizes-title-clothe-span {
+    font-size: 14px;
+    text-transform: capitalize;
+    overflow: hidden;
+    max-width: 18.48249vw;
+    font-weight: 600;
+    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-in;
+    cursor: default;
 }

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
 const Slider = lazy(() => import('../../components/Slider'));
-const Galery = lazy(() => import('../../components/Galery'));
+// const Galery = lazy(() => import('../../components/Galery'));
 
 const component: string = "collection";
 const version: string = "0";
@@ -25,7 +25,7 @@ const Collection = () => {
       <div className={`${CustomClass({ component, version, customClass: "collection-container" })}`}>
         <div className={`${CustomClass({ component, version, customClass: "collection-box" })}`}>
           <Suspense fallback={<Spinner />}>
-            <Galery />
+            {/* <Galery /> */}
             <Slider direction='horizontal' slidesPerView={5} />
           </Suspense>
         </div>

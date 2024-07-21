@@ -19,9 +19,10 @@ interface ProductListProps {
     userRole: string;
     isFetch: boolean
     productsList?: Product[]
+    isPLP: boolean
 }
 
-const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, showQuickView, showSizes, userRole, isFetch, productsList }) => {
+const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, showQuickView, showSizes, isFetch, productsList, isPLP }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const profile = useSelector((state: RootState) => state.auth);
     const [products, setProducts] = useState<Product[]>([]);
@@ -93,7 +94,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
                 <div className={`${CustomClass({ component, version, customClass: "product-list-container-products" })}`}>
                     <div className={`${CustomClass({ component, version, customClass: "product-list-box" })}`}>
                         {displayedProducts.map((product, index) => (
-                            <Card key={index} product={product} showSizes={showSizes} showQuickView={showQuickView} index={index} />
+                            <Card key={index} product={product} showSizes={showSizes} showQuickView={showQuickView} index={index} isPLP={isPLP} />
                         ))}
                     </div>
                     {showArrows && (

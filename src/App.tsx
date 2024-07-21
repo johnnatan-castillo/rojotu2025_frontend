@@ -5,7 +5,7 @@ import ResetPassword from './pages/ResetPassword';
 import Home from './pages/Home';
 import Clothes from './pages/Clothes';
 import MyClothes from './pages/MyClothes';
-import ThreeD from './pages/ThreeD';
+// import ThreeD from './pages/ThreeD';
 import Collection from './pages/Collection';
 import Dashboard from './pages/Dashboard';
 import MyProfile from './pages/MyProfile';
@@ -14,6 +14,7 @@ import NotFound from './pages/NotFound';
 
 import PrivateRoute from './components/PrivateRoute';
 import Layout from './components/Layout';
+import SizeGuide from './pages/SizeGuide';
 
 const App: React.FC = () => {
   return (
@@ -31,7 +32,8 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/clothes" element={<Clothes />} />
             <Route path="/my-clothes" element={<MyClothes />} />
-            <Route path="/3d" element={<ThreeD />} />
+            {/* <Route path="/3d" element={<ThreeD />} /> */}
+            <Route path="/size-guide" element={<SizeGuide />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/my-profile" element={<MyProfile />} />

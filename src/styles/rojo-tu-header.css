@@ -58,7 +58,7 @@
 .rojo-tu-header-0-x-header-span-icon-4,
 .rojo-tu-header-0-x-header-span-icon-5,
 .rojo-tu-header-0-x-header-span-icon-6 {
-    display: none;
+    display: flex;
     color: #4D4D4D;
     position: absolute;
     bottom: -5px;

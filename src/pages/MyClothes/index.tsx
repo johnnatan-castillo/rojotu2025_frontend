@@ -33,6 +33,7 @@ const MyClothes = () => {
           userRole={userRole}
           isFetch={false}
           productsList={items}
+          isPLP={false}
         />
       </Suspense>
     </div>

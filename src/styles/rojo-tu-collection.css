@@ -57,10 +57,10 @@
     align-items: center;
 }
 
-.rojo-tu-collection-0-x-collection-collection .rojo-tu-slider-0-x-slider-slider .swiper-slide{
+/* .rojo-tu-collection-0-x-collection-collection .rojo-tu-slider-0-x-slider-slider .swiper-slide{
     transition: all 0.5s ease-out;
     transition: all 0.5s ease-in;
-}
+} */
 
 .rojo-tu-collection-0-x-collection-collection .rojo-tu-slider-0-x-slider-slider .swiper-slide:hover{
     transform: scale(1.05);

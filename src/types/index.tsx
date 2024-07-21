@@ -60,7 +60,7 @@ declare global {
         genero: string;
         identidad: string;
         tallas: string;
-        dias: string | null;
+        dias: string;
         rol: string;
         pais: string;
         grupo: string;
@@ -69,6 +69,7 @@ declare global {
         referencia_prenda_inferior?: string | null;
         referencia_chaqueta?: string | null;
         id_prenda_carrito: string;
+        prenda_front: boolean
     }
 
     interface ProductListProps {
@@ -83,7 +84,8 @@ declare global {
         product: Product;
         showSizes: boolean;
         showQuickView: boolean;
-        index: number
+        index: number;
+        isPLP: boolean;
     }
 
     interface QuickViewProps {
