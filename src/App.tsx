@@ -15,6 +15,7 @@ import NotFound from './pages/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 import Layout from './components/Layout';
 import SizeGuide from './pages/SizeGuide';
+import PublicRoute from './components/PublicRoute';
 
 const App: React.FC = () => {
   return (
@@ -22,9 +23,12 @@ const App: React.FC = () => {
       <Routes>
 
         {/* Publicas */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route element={<PublicRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+        </Route>
         {/* Publicas */}
+
 
         {/* Privadas */}
         <Route element={<PrivateRoute />}>

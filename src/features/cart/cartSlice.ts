@@ -351,32 +351,6 @@ const cartSlice = createSlice({
       state.cart.message = "Prenda agregada exitosamente";
       return;
     },
-    removeClothingItem: (
-      state,
-      action: PayloadAction<{ productId: number; talla: string; token: string }>
-    ) => {
-      const { productId, talla } = action.payload;
-      const productIndex = state.cart.items.findIndex(
-        (item) => item.id === productId && item.talla === talla
-      );
-
-      state.cart.messageId = uuidv4();
-
-      if (productIndex >= 0) {
-        const product = state.cart.items[productIndex];
-        if (product.segmento_Prenda === "SUPERIOR") {
-          state.cart.counters.back.upper--;
-        } else if (product.segmento_Prenda === "INFERIOR") {
-          state.cart.counters.back.lower--;
-        } else {
-          state.cart.counters.back.other--;
-        }
-        state.cart.items.splice(productIndex, 1);
-        state.cart.message = "Prenda eliminada exitosamente";
-      } else {
-        state.cart.message = "La prenda no se encuentra en el carrito";
-      }
-    },
     resetcart: (state) => {
       state.cart = {
         id: uuidv4(),
@@ -484,6 +458,5 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addClothingItem, removeClothingItem, resetcart } =
-  cartSlice.actions;
+export const { addClothingItem, resetcart } = cartSlice.actions;
 export default cartSlice.reducer;
