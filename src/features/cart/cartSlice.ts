@@ -229,7 +229,7 @@ export const removeClothingItemThunk = createAsyncThunk(
     if (response.code === 200) {
       return { type: "remove", data: { productIndex } };
     } else {
-      return rejectWithValue("Hubo un error al agregar la prenda");
+      return rejectWithValue("Hubo un error al eliminar la prenda");
     }
   }
 );
@@ -451,8 +451,12 @@ const cartSlice = createSlice({
         const { productIndex } = action.payload.data;
 
         const currentCart = state.cart;
-
         const product = currentCart.items[productIndex];
+
+        if (!product) {
+          state.cart.message = "La prenda no se encuentra en el carrito";
+          return;
+        }
 
         if (product.segmento_Prenda === "SUPERIOR") {
           currentCart.counters.back.upper--;

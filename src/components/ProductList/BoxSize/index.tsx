@@ -9,9 +9,10 @@ interface BoxSizePLPI {
     component: string,
     version: string,
     product: Product
+    isPLP: boolean;
 }
 
-export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product }) => {
+export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
     const { rol } = useSelector((state: RootState) => state.auth);
 
     if (!product.tallas) {
@@ -20,18 +21,18 @@ export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product 
 
     return <>
         {
-            rol === "FRONT" && product.prenda_front && <BoxSizePLPFront component={component} version={version} product={product} />
+            rol === "FRONT" && product.prenda_front && <BoxSizePLPFront component={component} version={version} product={product} isPLP={isPLP} />
 
         }
         {
-            rol === "BACK" && <BoxSizePLPBack component={component} version={version} product={product} />
+            rol === "BACK" && <BoxSizePLPBack component={component} version={version} product={product} isPLP={isPLP} />
 
         }
 
     </>
 }
 
-const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product }) => {
+const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
 
     const { prendas_superiores, prendas_inferiores, prendas_otros, token } = useSelector((state: RootState) => state.auth);
     const { items } = useSelector((state: RootState) => state.carts.cart);
@@ -59,36 +60,37 @@ const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product }) 
         <>
             <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size-box" })}`}>
                 {
-                    product.tallas.split("-").map((size: string) => (
-                        items.some((item) => item.referencia === product.referencia && size === item.talla)
-                            ? (
-                                <button
-                                    key={`${product.referencia}-${size}`}
-                                    onClick={() => handleRemoveClotheTOCart(size)}
-                                    className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size" })} ${CustomClass({ component, version, customClass: "card-footer-product-sku-size-selected" })}`}
-                                    type="button"
-                                >
-                                    {size}
-                                </button>
-                            )
-                            : (
-                                <button
-                                    key={`${product.referencia}-${size}`}
-                                    onClick={() => handleAddCart(size)}
-                                    className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size" })}`}
-                                    type="button"
-                                >
-                                    {size}
-                                </button>
-                            )
-                    ))
+                    product.tallas.split("-").map((size: string) => {
+                        const itemInCart = items.find(item => item.referencia === product.referencia && item.talla === size);
+
+                        return itemInCart ? (
+                            <button
+                                key={`${product.referencia}-${size}`}
+                                onClick={() => handleRemoveClotheTOCart(size)}
+                                className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size" })} ${CustomClass({ component, version, customClass: "card-footer-product-sku-size-selected" })}`}
+                                type="button"
+                            >
+                                {size}
+                            </button>
+                        ) : (
+                            <button
+                                key={`${product.referencia}-${size}`}
+                                onClick={() => handleAddCart(size)}
+                                className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size" })}`}
+                                type="button"
+                            >
+                                {size}
+                            </button>
+                        );
+                    })
                 }
+
             </div>
         </>
     )
 }
 
-const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product }) => {
+const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
 
     const [showQuickView, setshowQuickView] = useState(false);
 

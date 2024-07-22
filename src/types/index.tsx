@@ -65,6 +65,7 @@ declare global {
         pais: string;
         grupo: string;
         talla?: string;
+        dia?: string;
         referencia_prenda_superior?: string | null;
         referencia_prenda_inferior?: string | null;
         referencia_chaqueta?: string | null;

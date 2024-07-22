@@ -6,6 +6,8 @@ import { useFetch } from '../../hooks/useFetch';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
+import NOFOUNDIMAGE from "../../assets/plp/no-image.jpg"
+
 const component: string = "galery"
 const version: string = "0"
 
@@ -49,7 +51,7 @@ const Galery: React.FC = () => {
               <Badge component={component} version={version} numberButton={1} id={products[currentIndex].id_prenda_superior} />
               <Badge component={component} version={version} numberButton={2} id={products[currentIndex].id_prenda_inferior} />
               <Badge component={component} version={version} numberButton={3} id={products[currentIndex].id_prenda_otro} />
-              <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-left" })}`} src={products[currentIndex].image} alt="Lookbook Image" />
+              <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-left" })}`} src={products[currentIndex].image ? products[currentIndex].image : NOFOUNDIMAGE} alt="Lookbook Image" />
             </div>
           </div>
         );
@@ -70,7 +72,7 @@ const Galery: React.FC = () => {
               <Badge component={component} version={version} numberButton={2} id={products[currentIndex].id_prenda_inferior} />
               <Badge component={component} version={version} numberButton={3} id={products[currentIndex].id_prenda_otro} />
 
-              <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-center" })}`} src={products[currentIndex].image} alt="Lookbook Image" />
+              <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-center" })}`} src={products[currentIndex].image ? products[currentIndex].image : NOFOUNDIMAGE} alt="Lookbook Image" />
             </div>
           )
 
@@ -97,7 +99,7 @@ const Galery: React.FC = () => {
               <Badge component={component} version={version} numberButton={2} id={products[currentIndex].id_prenda_inferior} />
               <Badge component={component} version={version} numberButton={3} id={products[currentIndex].id_prenda_otro} />
 
-              <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-right" })}`} src={products[currentIndex].image} alt="Lookbook Image" />
+              <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-right" })}`} src={products[currentIndex].image ? products[currentIndex].image : NOFOUNDIMAGE} alt="Lookbook Image" />
             </div>
           </div>
         );

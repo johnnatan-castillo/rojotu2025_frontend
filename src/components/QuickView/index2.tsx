@@ -254,7 +254,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                 products.map(product => (
                     <div key={product.id + product.referencia} className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${CustomClass({ component, version, customClass: "card-footer-product-sizes-front" })}`}>
                         <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes-title-clothe" })}`}>
-                            <span className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes-title-clothe-span" })}`}>{product.segmento_Prenda}</span>
+                            <span className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes-title-clothe-span" })}`}>{product.tipo}</span>
                             <span className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes-title-clothe-span" })}`}>{product.nombre_prenda}</span>
                         </div>
                         <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes-sizes" })}`}>

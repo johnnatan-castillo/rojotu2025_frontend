@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useEffect, useState } from 'react'
 import Spinner from '../../components/Spinner/intex'
 import CustomClass from '../../utils/CustomClass'
 import { useSelector } from 'react-redux';
@@ -15,6 +15,18 @@ const MyClothes = () => {
 
   const userRole = useSelector((state: RootState) => state.auth.rol);
   const { items } = useSelector((state: RootState) => state.carts.cart);
+  const [productsList, setProductsList] = useState<Product[]>([]);
+
+  useEffect(() => {
+
+    if (items.length > 0) {
+      setProductsList(Array.from(new Set(items.map(product => product.id)))
+        .map(id => items.find(product => product.id === id) as Product))
+    }else{
+      setProductsList([])
+    }
+  }, [items])
+
 
   if (!userRole) {
     return <div>
@@ -32,7 +44,7 @@ const MyClothes = () => {
           showSizes={true}
           userRole={userRole}
           isFetch={false}
-          productsList={items}
+          productsList={productsList}
           isPLP={false}
         />
       </Suspense>
