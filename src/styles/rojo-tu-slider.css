@@ -52,3 +52,11 @@
 .rojo-tu-galery-0-x-galery-galery-container-right .rojo-tu-galery-0-x-galery-galery-image-button-quickview-3 {
     transform: translate(-50%, -50%);
 }
+
+
+
+.rojo-tu-slider-0-x-slider-slider-swiper-link-front {
+    background: none;
+    border: none;
+    cursor: pointer;
+}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import CustomClass from '../../../utils/CustomClass';
-import QuickView from '../../QuickView/index2';
+import QuickView from '../../QuickView';
 import { BoxSizePLP } from '../BoxSize';
 import NOFOUNDIMAGE from "../../../assets/plp/no-image.jpg"
 import { removeClothingItemThunk } from '../../../features/cart/cartSlice';

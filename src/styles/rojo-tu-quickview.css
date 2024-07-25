@@ -69,9 +69,10 @@
     cursor: default;
 }
 
-p.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-description {
+.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-description {
     font-size: 0.77821vw;
     font-weight: 300;
+    margin: 10px 0;
 }
 
 .rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-button {
@@ -111,7 +112,7 @@ p.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-descript
     flex-wrap: wrap;
 }
 
-.rojo-tu-quickview-0-x-quickview-card-footer-product-sizes-front{
+.rojo-tu-quickview-0-x-quickview-card-footer-product-sizes-front {
     flex-direction: column;
 }
 
@@ -172,4 +173,25 @@ p.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-descript
     transition: all 0.5s ease-out;
     transition: all 0.5s ease-in;
     cursor: default;
+}
+
+.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-days-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-days {
+    width: 3.945525vw;
+    height: 1.215953vw;
+    display: flex;
+    border: 1px solid #4D4D4D;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2px;
+    color: #4D4D4D;
+    font-size: 0.583658vw;
+    margin-bottom: 0.340467vw;
+    transition: all 0.3s ease-out;
+    background: none;
 }

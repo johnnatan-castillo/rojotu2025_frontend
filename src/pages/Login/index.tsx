@@ -161,8 +161,9 @@ const Login: React.FC = () => {
                     return;
                 }
 
-
-                data.prendas.map((product: Product) => dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id })))
+                if (data.length > 0) {
+                    data.prendas.map((product: Product) => dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id })))
+                }
 
             })
     }

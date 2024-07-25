@@ -12,6 +12,7 @@ import { RootState } from '../../redux/store';
 
 import NOFOUNDIMAGE from "../../assets/plp/no-image.jpg"
 import Badge from '../Galery/SelectClothe';
+import QuickView from '../QuickView';
 
 interface CarruselProps {
     direction: "horizontal" | "vertical";
@@ -80,9 +81,8 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
                 slidesPerView={slidesPerView}
                 spaceBetween={10}
                 pagination={{ clickable: true }}
-                // { delay: 1250, disableOnInteraction: false }
-                autoplay={false}
-                centeredSlides={true}
+                autoplay={{ delay: 1250, disableOnInteraction: false }}
+                centeredSlides={false}
                 loop={true}
                 freeMode={true}
                 navigation={true}
@@ -92,18 +92,12 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
                 {products.map((product, index) => (
                     <SwiperSlide key={index}>
                         <div className={CustomClass({ component, version, customClass: "slider-swiper-container" })}>
-                            <a href="#" className={CustomClass({ component, version, customClass: "slider-swiper-link" })}>
-                                <Badge component={component} version={version} numberButton={1} id={product.id_prenda_superior} />
-                                <Badge component={component} version={version} numberButton={2} id={product.id_prenda_inferior} />
-                                <Badge component={component} version={version} numberButton={3} id={product.id_prenda_otro} />
-                                <img
-                                    src={product.image && product.image.endsWith('.jpg') ? product.image : NOFOUNDIMAGE}
-                                    loading="eager"
-                                    alt={product.id + '-' + product.id_prenda_inferior + '-' + product.id_prenda_superior + '-' + product.id_prenda_otro}
-                                    className={CustomClass({ component, version, customClass: "slider-swiper-image" })}
-                                    crossOrigin="anonymous"
-                                />
-                            </a>
+                            {
+                                profile.rol === "BACK" && <SliderSwiperBack product={product} />
+                            }
+                            {
+                                profile.rol === "FRONT" && <SliderSwiperFront product={product} />
+                            }
                         </div>
                     </SwiperSlide>
                 ))}
@@ -111,5 +105,46 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
         </div>
     );
 }
+
+
+const SliderSwiperBack = ({ product }: { product: LookBook }) => {
+    return <>
+        <a href="#" className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-back" })}`}>
+            <Badge component={component} version={version} numberButton={1} id={product.id_prenda_superior} />
+            <Badge component={component} version={version} numberButton={2} id={product.id_prenda_inferior} />
+            <Badge component={component} version={version} numberButton={3} id={product.id_prenda_otro} />
+            <img
+                src={product.image && product.image.endsWith('.jpg') ? product.image : NOFOUNDIMAGE}
+                loading="eager"
+                alt={product.id + '-' + product.id_prenda_inferior + '-' + product.id_prenda_superior + '-' + product.id_prenda_otro}
+                className={CustomClass({ component, version, customClass: "slider-swiper-image" })}
+                crossOrigin="anonymous"
+            />
+        </a>
+    </>
+}
+
+const SliderSwiperFront = ({ product }: { product: any }) => {
+
+    const [showQuickView, setshowQuickView] = useState(false);
+
+    const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
+
+    return <>
+        <button onClick={() => { setproductQuickView({ ...product, referencia_prenda_superior: product.id_prenda_superior, referencia_prenda_inferior: product.id_prenda_inferior, referencia_chaqueta: product.id_prenda_otro }); setshowQuickView(true); }} className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-front" })}`} type="button">
+            <img
+                src={product.image && product.image.endsWith('.jpg') ? product.image : NOFOUNDIMAGE}
+                loading="eager"
+                alt={product.id + '-' + product.id_prenda_inferior + '-' + product.id_prenda_superior + '-' + product.id_prenda_otro}
+                className={CustomClass({ component, version, customClass: "slider-swiper-image" })}
+                crossOrigin="anonymous"
+            />
+        </button>
+        {showQuickView && Object.keys(productQuickView).length > 0 && (
+            <QuickView product={productQuickView} setproductQuickView={setproductQuickView} />
+        )}
+    </>
+}
+
 
 export default Slider;

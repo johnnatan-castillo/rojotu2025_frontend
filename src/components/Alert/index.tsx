@@ -19,7 +19,7 @@ const Alert = () => {
 
     useEffect(() => {
 
-        if (message) {
+        if (message && message.length > 0 && message !== undefined && message !== null) {
 
             setShow(true);
 

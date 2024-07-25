@@ -3,10 +3,11 @@ import CustomClass from '../../utils/CustomClass';
 import Card from './Card';
 import Counter from './Counter';
 import { useFetch } from '../../hooks/useFetch';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
 import { Link, useLocation } from 'react-router-dom';
 import BuyButton from './BuyButton';
+import { resetFilter } from '../../features/filter/filterSlice';
 
 const component: string = "product-list";
 const version: string = "0";
@@ -25,6 +26,8 @@ interface ProductListProps {
 const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, showQuickView, showSizes, isFetch, productsList, isPLP }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const profile = useSelector((state: RootState) => state.auth);
+    const filter = useSelector((state: RootState) => state.filter.isFilteredBy);
+    const dispatch = useDispatch<AppDispatch>();
     const [products, setProducts] = useState<Product[]>([]);
     const location = useLocation();
     const currentPath = location.pathname;
@@ -35,6 +38,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
     useEffect(() => {
         if (!hasFetched.current && isFetch && !loading && !error && data) {
+            // setProducts(() => ([...data, ...data, ...data, ...data]));
             setProducts(() => (data));
             hasFetched.current = true;
         }
@@ -59,19 +63,33 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
     }, [totalPages]);
 
     const displayedProducts = useMemo(() => {
+
+        if (filter !== undefined && filter !== "") {
+            return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.segmento_Prenda === filter);
+        }
+
         return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-    }, [currentPage, itemsPerPage, products]);
+    }, [currentPage, filter, itemsPerPage, products]);
 
     if (displayedProducts.length === 0) {
         return <>
             <div className={`${CustomClass({ component, version, customClass: "product-list-empty" })}`}>
                 <span className={`${CustomClass({ component, version, customClass: "product-list-empty-label" })}`}>{isFetch ? "No hay productos disponibles" : "No tienes productos en tu carrito"}</span>
+
+                {filter && !isCart && <button className={`${CustomClass({ component, version, customClass: "product-list-empty-remove-filters" })}`} type="button" onClick={() => {
+                    dispatch(resetFilter())
+                }}>Quitar filtros</button>}
+
             </div>
+            {
+                console.log(totalPages)
+                
+            }
             {showArrows && (
                 <div className={`${CustomClass({ component, version, customClass: "product-list-pagination" })}`}>
                     {
                         isFetch ?
-                            <button className={`${CustomClass({ component, version, customClass: "product-list-pagination-prev" })}`} onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
+                            currentPage >= 1 && totalPages >= 1 ? <></> : <button className={`${CustomClass({ component, version, customClass: "product-list-pagination-prev" })}`} onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>
                             :
                             <Link className={`${CustomClass({ component, version, customClass: "product-list-pagination-prev" })} ${CustomClass({ component, version, customClass: "nav-link-1" })}`} to="/clothes">
                                 Ir aprendas
@@ -117,12 +135,7 @@ const useConditionalFetch = (isFetch: boolean, profile: any) => {
             token: profile.token
         },
         body: JSON.stringify({
-            "clima": profile.climate,
-            "grupo": profile.grupo,
-            "rol": profile.rol,
-            "genero": profile.gender,
-            "pais": profile.pais,
-            "identidad": profile.identidad
+            "tipo": "PRENDA"
         })
     });
 

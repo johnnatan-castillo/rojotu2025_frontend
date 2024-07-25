@@ -32,6 +32,10 @@ declare global {
         administrador: boolean,
     }
 
+    interface Filters{
+        isFilteredBy: string
+    }
+
     interface LookBook {
         id: number;
         id_prenda_superior: string;

@@ -237,6 +237,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
 .rojo-tu-product-list-0-x-product-list-product-list-empty-label {
@@ -291,40 +292,40 @@
 }
 
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-size-box ,
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-box{
-    display:flex;
+.rojo-tu-card-0-x-card-card-footer-product-sku-size-box,
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-box {
+    display: flex;
     flex-wrap: wrap;
 }
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-day{
+.rojo-tu-card-0-x-card-card-footer-product-sku-day {
     width: 3.945525vw;
 }
 
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-box{
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-box {
     width: 100%;
     flex-direction: column;
 }
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-title-span{
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-title-span {
     font-size: 0.77821vw;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-body{
-    display:flex;
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body {
+    display: flex;
     flex-wrap: wrap;
     height: 3.125vw;
 }
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-box-title{
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-box-title {
     margin-bottom: 5px;
 }
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-body .rojo-tu-card-0-x-card-card-footer-product-sku-size:hover{
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body .rojo-tu-card-0-x-card-card-footer-product-sku-size:hover {
     background: none;
     color: #4D4D4D;
     border: 1px solid #4D4D4D;
@@ -334,11 +335,11 @@
 
 
 
-.rojo-tu-card-0-x-card-card-footer-body-product-buy-container{
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-container {
     width: 100%;
 }
 
-.rojo-tu-card-0-x-card-card-footer-body-product-buy-button{
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-button {
     background: #4D4D4D;
     color: white;
     font-size: 0.875486vw;
@@ -353,7 +354,7 @@
     border: none;
 }
 
-.rojo-tu-card-0-x-card-card-footer-body-product-buy-button:hover{
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-button:hover {
     background: #E31A2A;
     color: white;
     border: none;
@@ -365,15 +366,15 @@
     top: 10px;
     right: 10px;
     width: 90%;
-    z-index:1;
+    z-index: 1;
 }
 
-.rojo-tu-card-0-x-card-card-header-remove-item{
-    display:flex;
+.rojo-tu-card-0-x-card-card-header-remove-item {
+    display: flex;
     justify-content: flex-end;
 }
 
-.rojo-tu-card-0-x-card-card-header-remove-item-button{
+.rojo-tu-card-0-x-card-card-header-remove-item-button {
     background: none;
     border: none;
     cursor: pointer;
@@ -387,4 +388,53 @@
 
 .rojo-tu-card-0-x-card-card-header-remove-item svg:hover {
     fill: #E31A2A;
+}
+
+.rojo-tu-counter-0-x-counter-counter-cart-number button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.rojo-tu-counter-0-x-counter-counter-cart-number button svg {
+    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-in;
+}
+
+.rojo-tu-counter-0-x-counter-counter-cart-number button svg:hover {
+    background: none;
+    border: none;
+    cursor: pointer;
+    fill: #E31A2A;
+}
+
+.rojo-tu-counter-0-x-counter-counter-cart-top-icon svg {
+    fill: #4D4D4D;
+    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-in;
+}
+
+.rojo-tu-counter-0-x-counter-counter-cart-top-icon svg:hover,
+.rojo-tu-counter-0-x-counter-counter-cart-bottom-icon svg:hover,
+.rojo-tu-counter-0-x-counter-counter-cart-others-icon svg:hover,
+.rojo-tu-counter-0-x-counter-counter-cart-others-icon svg:hover{
+    fill: #E31A2A;
+}
+
+.rojo-tu-product-list-0-x-product-list-product-list-empty-remove-filters {
+    background: #4D4D4D;
+    color: white;
+    font-size: 0.875486vw;
+    width: 7.29572vw;
+    height: 2.188716vw;
+    margin-top: 0.972763vw;
+    font-family: 'Lato';
+    cursor: pointer;
+    margin: 0 0.486381vw;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    margin-top: 20px;
 }

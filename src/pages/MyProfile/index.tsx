@@ -8,7 +8,7 @@ import { getApuUrl } from '../../utils/config';
 import Swal from "sweetalert2";
 import { login, logout } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
-import { resetcart } from '../../features/cart/cartSlice';
+import { clearMessage, resetcart } from '../../features/cart/cartSlice';
 
 interface Profile {
   userNick: string | undefined,
@@ -83,6 +83,8 @@ const MyProfile = () => {
 
 
           dispatch(login(copyProfile));
+          dispatch(clearMessage())
+          dispatch(resetcart());
 
           setMyProfileData({
             identidad: null

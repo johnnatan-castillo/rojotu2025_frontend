@@ -3,7 +3,7 @@ import CustomClass from '../../../utils/CustomClass'
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { addClothingItemThunk, removeClothingItemThunk } from '../../../features/cart/cartSlice';
-import QuickView from '../../QuickView/index2';
+import QuickView from '../../QuickView';
 
 interface BoxSizePLPI {
     component: string,
