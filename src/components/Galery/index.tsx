@@ -48,9 +48,9 @@ const Galery: React.FC = () => {
         leftItems.push(
           <div style={styles.left} key={`left-${currentIndex}`} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-left-box" })}`}>
             <div className={`${CustomClass({ component, version, customClass: "galery-image-button-quickview-container" })}`}>
-              <Badge component={component} version={version} numberButton={1} id={products[currentIndex].id_prenda_superior} />
-              <Badge component={component} version={version} numberButton={2} id={products[currentIndex].id_prenda_inferior} />
-              <Badge component={component} version={version} numberButton={3} id={products[currentIndex].id_prenda_otro} />
+              <Badge component={component} version={version} numberButton={1} id={products[currentIndex].referencia_prenda_superior} />
+              <Badge component={component} version={version} numberButton={2} id={products[currentIndex].referencia_prenda_inferior} />
+              <Badge component={component} version={version} numberButton={3} id={products[currentIndex].referencia_otro} />
               <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-left" })}`} src={products[currentIndex].image ? products[currentIndex].image : NOFOUNDIMAGE} alt="Lookbook Image" />
             </div>
           </div>
@@ -68,9 +68,9 @@ const Galery: React.FC = () => {
           if (currentIndex >= products.length) break;
           centerItemsInto.push(
             <div key={Math.random()} className={`${CustomClass({ component, version, customClass: "galery-image-button-quickview-container" })}`}>
-              <Badge component={component} version={version} numberButton={1} id={products[currentIndex].id_prenda_superior} />
-              <Badge component={component} version={version} numberButton={2} id={products[currentIndex].id_prenda_inferior} />
-              <Badge component={component} version={version} numberButton={3} id={products[currentIndex].id_prenda_otro} />
+              <Badge component={component} version={version} numberButton={1} id={products[currentIndex].referencia_prenda_superior} />
+              <Badge component={component} version={version} numberButton={2} id={products[currentIndex].referencia_prenda_inferior} />
+              <Badge component={component} version={version} numberButton={3} id={products[currentIndex].referencia_otro} />
 
               <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-center" })}`} src={products[currentIndex].image ? products[currentIndex].image : NOFOUNDIMAGE} alt="Lookbook Image" />
             </div>
@@ -95,9 +95,9 @@ const Galery: React.FC = () => {
         rightItems.push(
           <div style={styles.right} key={`right-${currentIndex}`} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-right-box" })}`}>
             <div className={`${CustomClass({ component, version, customClass: "galery-image-button-quickview-container" })}`}>
-              <Badge component={component} version={version} numberButton={1} id={products[currentIndex].id_prenda_superior} />
-              <Badge component={component} version={version} numberButton={2} id={products[currentIndex].id_prenda_inferior} />
-              <Badge component={component} version={version} numberButton={3} id={products[currentIndex].id_prenda_otro} />
+              <Badge component={component} version={version} numberButton={1} id={products[currentIndex].referencia_prenda_superior} />
+              <Badge component={component} version={version} numberButton={2} id={products[currentIndex].referencia_prenda_inferior} />
+              <Badge component={component} version={version} numberButton={3} id={products[currentIndex].referencia_otro} />
 
               <img style={styles.img} className={`${CustomClass({ component, version, customClass: "galery-image" })} ${CustomClass({ component, version, customClass: "galery-image-right" })}`} src={products[currentIndex].image ? products[currentIndex].image : NOFOUNDIMAGE} alt="Lookbook Image" />
             </div>

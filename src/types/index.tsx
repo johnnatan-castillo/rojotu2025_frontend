@@ -38,9 +38,9 @@ declare global {
 
     interface LookBook {
         id: number;
-        id_prenda_superior: string;
-        id_prenda_inferior: string;
-        id_prenda_otro: string;
+        referencia_prenda_superior: string;
+        referencia_prenda_inferior: string;
+        referencia_otro: string;
         image: string
         rol: string;
         clima: string;
@@ -72,9 +72,10 @@ declare global {
         dia?: string;
         referencia_prenda_superior?: string | null;
         referencia_prenda_inferior?: string | null;
-        referencia_chaqueta?: string | null;
-        id_prenda_carrito: string;
-        prenda_front: boolean
+        referencia_otro?: string | null;
+        id_prenda: string;
+        prenda_front: boolean;
+        prenda?: any
     }
 
     interface ProductListProps {

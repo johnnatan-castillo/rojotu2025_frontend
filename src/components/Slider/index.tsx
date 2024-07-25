@@ -29,19 +29,14 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
 
     const [products, setProducts] = useState<LookBook[]>([]);
 
-    const { data, loading, error } = useFetch("/listarlookbooks", {
+    const { data, loading, error } = useFetch("/listarPrendas", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             token: profile.token
         },
         body: JSON.stringify({
-            "clima": profile.climate,
-            "grupo": profile.grupo,
-            "rol": profile.rol,
-            "genero": profile.gender,
-            "pais": profile.pais,
-            "identidad": profile.identidad
+            "tipo": "LOOKBOOK"
         })
     });
 
@@ -110,13 +105,13 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
 const SliderSwiperBack = ({ product }: { product: LookBook }) => {
     return <>
         <a href="#" className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-back" })}`}>
-            <Badge component={component} version={version} numberButton={1} id={product.id_prenda_superior} />
-            <Badge component={component} version={version} numberButton={2} id={product.id_prenda_inferior} />
-            <Badge component={component} version={version} numberButton={3} id={product.id_prenda_otro} />
+            <Badge component={component} version={version} numberButton={1} id={product.referencia_prenda_superior} />
+            <Badge component={component} version={version} numberButton={2} id={product.referencia_prenda_inferior} />
+            <Badge component={component} version={version} numberButton={3} id={product.referencia_otro} />
             <img
                 src={product.image && product.image.endsWith('.jpg') ? product.image : NOFOUNDIMAGE}
                 loading="eager"
-                alt={product.id + '-' + product.id_prenda_inferior + '-' + product.id_prenda_superior + '-' + product.id_prenda_otro}
+                alt={product.id + '-' + product.referencia_prenda_superior + '-' + product.referencia_prenda_inferior + '-' + product.referencia_otro}
                 className={CustomClass({ component, version, customClass: "slider-swiper-image" })}
                 crossOrigin="anonymous"
             />
@@ -131,14 +126,15 @@ const SliderSwiperFront = ({ product }: { product: any }) => {
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
 
     return <>
-        <button onClick={() => { setproductQuickView({ ...product, referencia_prenda_superior: product.id_prenda_superior, referencia_prenda_inferior: product.id_prenda_inferior, referencia_chaqueta: product.id_prenda_otro }); setshowQuickView(true); }} className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-front" })}`} type="button">
+        <button onClick={() => { setproductQuickView({ ...product, referencia_prenda_superior: product.referencia_prenda_superior, id_prenda_inferior: product.id_prenda_inferior, id_prenda_otro: product.id_prenda_otro }); setshowQuickView(true); }} className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-front" })}`} type="button">
             <img
-                src={product.image && product.image.endsWith('.jpg') ? product.image : NOFOUNDIMAGE}
+                src={product.nombre_archivo && product.nombre_archivo.endsWith('.jpg') ? product.nombre_archivo : NOFOUNDIMAGE}
                 loading="eager"
-                alt={product.id + '-' + product.id_prenda_inferior + '-' + product.id_prenda_superior + '-' + product.id_prenda_otro}
+                alt={product.id + '-' + product.referencia_prenda_superior + '-' + product.referencia_prenda_inferior + '-' + product.referencia_otro}
                 className={CustomClass({ component, version, customClass: "slider-swiper-image" })}
                 crossOrigin="anonymous"
             />
+            <span>{product.referencia}</span>
         </button>
         {showQuickView && Object.keys(productQuickView).length > 0 && (
             <QuickView product={productQuickView} setproductQuickView={setproductQuickView} />

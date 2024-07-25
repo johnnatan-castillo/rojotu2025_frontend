@@ -84,7 +84,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                     {/* Información de prenda */}
                     <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications" })}`}>
                         <span className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications-name" })}`}>{nombre_prenda}</span>
-                        <span className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications-description" })}`}>{descripcion}</span>
+                        <span key={Math.random()} className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications-description" })}`}>{descripcion}</span>
                         {
                             rol === "FRONT" &&
                             <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications-days-container" })}`}>
@@ -173,7 +173,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
     const dispatch = useDispatch<AppDispatch>();
 
     const product: any = productSelect.product;
-    const { referencia_prenda_superior, referencia_prenda_inferior, referencia_chaqueta } = product;
+    const { referencia_prenda_superior, referencia_prenda_inferior, referencia_otro } = product;
 
 
     const limits = {
@@ -184,11 +184,19 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
     const [products, setProducts] = useState<Product[]>([]);
     const [selectedSize, setSelectedSize] = useState({
-        size: '',
+        sizes: {
+            superior: "",
+            inferior: "",
+            otro: "",
+        },
         selectedIntoQuickView: false,
     });
 
-    const handleSizeClick = (size: string, productId: number) => {
+    const handleSizeClick = (type: string | boolean, size: string, productId: number) => {
+
+        if (!type) {
+            return;
+        }
 
         const productIndex = products.findIndex((product) => product.id === productId);
         if (productIndex !== -1) {
@@ -197,21 +205,25 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
             setProducts(newProducts);
         }
 
+        setSelectedSize((prev) => ({
+            ...prev,
+            sizes: {
+                superior: type === "superior" ? size : prev.sizes.superior,
+                inferior: type === "inferior" ? size : prev.sizes.inferior,
+                otro: type === "otro" ? size : prev.sizes.otro,
+            },
+            selectedIntoQuickView: true
+        }));
 
-        //Falta poder decirle cuales tallas ha seleccionado el usuario
-
-        setSelectedSize({
-            size,
-            selectedIntoQuickView: !!selectedSize.size,
-        });
     };
 
     const handleAddCart = () => {
-        dispatch(addClothingItemThunk({ product, limits, talla: selectedSize.size, token }));
-        setSelectedSize((prev) => ({
-            ...prev,
-            selectedIntoQuickView: false,
-        }));
+
+
+        dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias }));
+        dispatch(addClothingItemThunk({ product: products[1], limits, talla: selectedSize.sizes.inferior, token, dia: product.dias }));
+        dispatch(addClothingItemThunk({ product: products[2], limits, talla: selectedSize.sizes.otro, token, dia: product.dias }));
+
     };
 
     const handleFetchSearchClothes = useCallback((id: string) => {
@@ -243,8 +255,8 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
     useEffect(() => {
         const references = [
             referencia_prenda_superior,
+            referencia_otro,
             referencia_prenda_inferior,
-            referencia_chaqueta
         ];
 
         references.forEach(ref => {
@@ -252,13 +264,13 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                 handleFetchSearchClothes(ref);
             }
         });
-    }, [handleFetchSearchClothes, referencia_chaqueta, referencia_prenda_inferior, referencia_prenda_superior]);
+    }, [handleFetchSearchClothes, referencia_prenda_superior, referencia_prenda_inferior, referencia_otro,]);
 
 
     return (
         <>
             {
-                products.map(product => (
+                products.map((product, indexP) => (
                     <div key={product.id + product.referencia} className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${CustomClass({ component, version, customClass: "card-footer-product-sizes-front" })}`}>
                         <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes-title-clothe" })}`}>
                             <span className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes-title-clothe-span" })}`}>{product.tipo}</span>
@@ -268,8 +280,12 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                             {(product.tallas && product.tallas.length > 0) && product.tallas.split("-").map((size, index) => (
                                 <button
                                     key={product.id + index + product.referencia}
-                                    onClick={() => handleSizeClick(size, product.id)}
-                                    className={`${CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size" })} ${(items.some((item) => item.referencia === product.referencia && size === item.talla) || size === selectedSize.size) && CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" })}`}
+                                    onClick={() => handleSizeClick(indexP === 0 ? "superior" : indexP === 1 ? "inferior" : indexP === 2 ? "otro" : "", size, product.id)}
+                                    className={`${CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size" })} ${indexP === 0 &&
+                                        selectedSize.sizes.superior === size ?
+                                        CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 1 &&
+                                            selectedSize.sizes.inferior === size ? CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 2 &&
+                                                selectedSize.sizes.otro === size ? CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : ""}`}
                                     type="button"
                                 >
                                     {size}
@@ -281,7 +297,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
             }
             <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })}`}>
                 <button onClick={handleAddCart} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })}`}>
-                    {selectedSize.size ? (selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla") : "Agregar al carrito"}
+                    {selectedSize.sizes ? (selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla") : "Agregar al carrito"}
                 </button>
             </div>
         </>

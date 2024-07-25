@@ -38,7 +38,6 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
     useEffect(() => {
         if (!hasFetched.current && isFetch && !loading && !error && data) {
-            // setProducts(() => ([...data, ...data, ...data, ...data]));
             setProducts(() => (data));
             hasFetched.current = true;
         }
@@ -64,12 +63,12 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
     const displayedProducts = useMemo(() => {
 
-        if (filter !== undefined && filter !== "") {
+        if (filter !== undefined && filter !== "" && !isCart) {
             return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.segmento_Prenda === filter);
         }
 
         return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-    }, [currentPage, filter, itemsPerPage, products]);
+    }, [currentPage, filter, isCart, itemsPerPage, products]);
 
     if (displayedProducts.length === 0) {
         return <>
@@ -81,10 +80,6 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
                 }}>Quitar filtros</button>}
 
             </div>
-            {
-                console.log(totalPages)
-                
-            }
             {showArrows && (
                 <div className={`${CustomClass({ component, version, customClass: "product-list-pagination" })}`}>
                     {
@@ -103,7 +98,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
     return (
         <div className={`${CustomClass({ component, version, customClass: "product-list" })}`}>
             <div className={`${CustomClass({ component, version, customClass: "product-list-counter" })}`}>
-                <div className={`${CustomClass({ component, version, customClass: "product-list-box-counter" })}`}>
+                <div className={`${CustomClass({ component, version, customClass: "product-list-box-counter" })} ${isCart && CustomClass({ component, version, customClass: "product-list-box-counter-block" })}`}>
                     <Counter />
                     {isCart && <BuyButton />}
                 </div>
@@ -135,7 +130,7 @@ const useConditionalFetch = (isFetch: boolean, profile: any) => {
             token: profile.token
         },
         body: JSON.stringify({
-            "tipo": "PRENDA"
+            "tipo": profile.rol === "BACK" ? "PRENDA" : 'OUTFIT'
         })
     });
 

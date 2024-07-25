@@ -35,6 +35,7 @@ interface CartOptionsAdd {
     prendas_otros: number;
   };
   talla?: string;
+  dia?: string;
   id?: string;
 }
 
@@ -77,14 +78,15 @@ const initialState: cartState = {
 const handleCartAdd = async (
   product: Product,
   talla: string,
-  token: string
+  token: string,
+  dia?: string
 ) => {
   const url = getApuUrl("/agregarPrenda");
 
   const raw = JSON.stringify({
     id_prenda: product.id,
     talla,
-    cantidad: 1,
+    ...(dia && { dia }),
   });
 
   const requestOptions = {
@@ -106,8 +108,8 @@ const handleCartAdd = async (
       return {
         code: 200,
         data: {
-          id_prenda_carrito: result.data.id_prenda_carrito,
-          id_carrito: result.data.id_carrito,
+          id_prenda: result.data[0].id_prenda,
+          id_carrito: result.data[0].id_carrito,
         },
         token: result.token,
       };
@@ -118,11 +120,11 @@ const handleCartAdd = async (
   }
 };
 
-const handleCartRemove = async (id_prenda_carrito: string, token: string) => {
+const handleCartRemove = async (id_prenda: string, token: string) => {
   const url = getApuUrl("/quitarPrenda");
 
   const raw = JSON.stringify({
-    id_prenda_carrito,
+    id_prenda,
   });
 
   const requestOptions = {
@@ -152,7 +154,7 @@ const handleCartRemove = async (id_prenda_carrito: string, token: string) => {
 export const addClothingItemThunk = createAsyncThunk(
   "cart/addClothingItem",
   async (cartOptions: CartOptionsThunkAdd, { rejectWithValue, getState }) => {
-    const { product, limits, talla, token } = cartOptions;
+    const { product, limits, talla, token, dia } = cartOptions;
     const { prendas_superiores, prendas_inferiores, prendas_otros } = limits;
 
     const state: any = getState() as { cart: cartState };
@@ -165,15 +167,6 @@ export const addClothingItemThunk = createAsyncThunk(
     const existingItemIndex = currentCart.items.findIndex(
       (item: Product) => item.referencia === product.referencia
     );
-
-    if (existingItemIndex !== -1) {
-      const updatedItems = currentCart.items.map(
-        (item: Product, index: number) =>
-          index === existingItemIndex ? { ...item, talla } : item
-      );
-
-      return { type: "update", product, talla, data: undefined, updatedItems };
-    }
 
     if (
       (product.segmento_Prenda === "SUPERIOR" &&
@@ -197,9 +190,24 @@ export const addClothingItemThunk = createAsyncThunk(
       return rejectWithValue("No se puede agregar más prendas de este tipo");
     }
 
-    const response = await handleCartAdd(product, talla, token);
+    const response = await handleCartAdd(product, talla, token, dia);
     if (response.code === 200) {
-      return { type: "add", product, talla, data: response.data };
+      if (existingItemIndex !== -1) {
+        const updatedItems = currentCart.items.map(
+          (item: Product, index: number) =>
+            index === existingItemIndex ? { ...item, talla } : item
+        );
+
+        return {
+          type: "update",
+          product,
+          talla,
+          data: undefined,
+          updatedItems,
+        };
+      } else {
+        return { type: "add", product, talla, data: response.data };
+      }
     } else {
       return rejectWithValue("Hubo un error al agregar la prenda");
     }
@@ -226,7 +234,7 @@ export const removeClothingItemThunk = createAsyncThunk(
     }
 
     const response = await handleCartRemove(
-      currentCart.items[productIndex].id_prenda_carrito,
+      currentCart.items[productIndex].id_prenda,
       token
     );
     if (response.code === 200) {
@@ -262,7 +270,9 @@ const cartSlice = createSlice({
         return;
       }
 
-      const addCount = () => {
+      const addCount = ({ prenda }: Product) => {
+        const product = prenda;
+
         if (product.segmento_Prenda === "SUPERIOR") {
           currentCart.counters.back.upper++;
         } else if (product.segmento_Prenda === "INFERIOR") {
@@ -330,9 +340,9 @@ const cartSlice = createSlice({
         return;
       }
 
-      currentCart.items.push({ ...product, talla });
+      currentCart.items.push({ ...product.prenda, talla });
 
-      addCount();
+      addCount(product);
 
       state.cart.message = "Prenda agregada exitosamente";
     },
@@ -434,7 +444,7 @@ const cartSlice = createSlice({
             state.cart.items.push({
               ...product,
               talla,
-              id_prenda_carrito: data.id_prenda_carrito,
+              id_prenda: data.id_prenda,
             });
             addCount();
             state.cart.message = "Prenda agregada exitosamente";
