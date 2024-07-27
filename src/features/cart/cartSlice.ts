@@ -554,7 +554,6 @@ const cartSlice = createSlice({
               }
             }
 
-
           };
 
           subtractCount();

@@ -5,7 +5,7 @@ import Counter from './Counter';
 import { useFetch } from '../../hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BuyButton from './BuyButton';
 import { resetFilter } from '../../features/filter/filterSlice';
 
@@ -33,6 +33,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
     const currentPath = location.pathname;
     const isCart = currentPath.includes('/my-clothes');
     const hasFetched = useRef(false);
+    const navigate = useNavigate();
 
     const { data, loading, error }: any = useConditionalFetch(isFetch, profile);
 
@@ -64,10 +65,19 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
     const displayedProducts = useMemo(() => {
 
         if (filter !== undefined && filter !== "" && !isCart) {
-            return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.segmento_Prenda === filter);
+
+            if (profile.rol === "BACK") {
+                return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.segmento_Prenda === filter);
+            } else if (profile.rol === "FRONT") {
+                return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.dias.split("-").includes(filter));
+            } else {
+                navigate("/login")
+            }
+
         }
 
         return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage, filter, isCart, itemsPerPage, products]);
 
     if (displayedProducts.length === 0) {
