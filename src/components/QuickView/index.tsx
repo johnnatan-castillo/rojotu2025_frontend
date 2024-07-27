@@ -1,12 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CustomClass from '../../utils/CustomClass';
 import ReactDOM from 'react-dom';
+import { v4 as uuidv4 } from "uuid";
 import { AppDispatch, RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addClothingItemThunk } from '../../features/cart/cartSlice';
 
 import NOFOUNDIMAGE from "../../assets/plp/no-image.jpg"
 import { getApuUrl } from '../../utils/config';
+import { useNavigate } from 'react-router-dom';
 
 const component: string = "quickview"
 const version: string = "0"
@@ -120,8 +122,9 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
         size: '',
         selectedIntoQuickView: false
     });
-    const { prendas_superiores, prendas_inferiores, prendas_otros, token } = useSelector((state: RootState) => state.auth);
+    const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     const { items } = useSelector((state: RootState) => state.carts.cart);
 
     const limits = {
@@ -138,11 +141,15 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
     };
 
     const handleAddCart = () => {
-        dispatch(addClothingItemThunk({ product, limits, talla: selectedSize.size, token }));
-        setSelectedSize((prev) => ({
-            ...prev,
-            selectedIntoQuickView: false
-        }))
+        if (rol) {
+            dispatch(addClothingItemThunk({ product, limits, talla: selectedSize.size, token, rol }));
+            setSelectedSize((prev) => ({
+                ...prev,
+                selectedIntoQuickView: false
+            }))
+        }else{
+            navigate("/login");
+        }
     }
 
     return (
@@ -168,12 +175,14 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
 }
 
 const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
-    const { prendas_superiores, prendas_inferiores, prendas_otros, token } = useSelector((state: RootState) => state.auth);
-    const { items } = useSelector((state: RootState) => state.carts.cart);
+
+    const id_order = uuidv4();
+    const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
+    const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
     const product: any = productSelect.product;
-    const { referencia_prenda_superior, referencia_prenda_inferior, referencia_otro } = product;
+    const { referencia_prenda_superior, referencia_prenda_inferior, referencia_otro, dias } = product;
 
 
     const limits = {
@@ -219,14 +228,17 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
     const handleAddCart = () => {
 
-
-        dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias }));
-        dispatch(addClothingItemThunk({ product: products[1], limits, talla: selectedSize.sizes.inferior, token, dia: product.dias }));
-        dispatch(addClothingItemThunk({ product: products[2], limits, talla: selectedSize.sizes.otro, token, dia: product.dias }));
+        if (rol) {
+            dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
+            dispatch(addClothingItemThunk({ product: products[1], limits, talla: selectedSize.sizes.inferior, token, dia: product.dias, rol }));
+            dispatch(addClothingItemThunk({ product: products[2], limits, talla: selectedSize.sizes.otro, token, dia: product.dias, rol }));
+        } else {
+            navigate("/login");
+        }
 
     };
 
-    const handleFetchSearchClothes = useCallback((id: string) => {
+    const handleFetchSearchClothes = useCallback((id: string, id_order: string) => {
         const url = getApuUrl("/buscarprenda");
         const raw = JSON.stringify({ id_prenda: id });
 
@@ -244,12 +256,13 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
             .then(({ code, data }) => {
                 if (code === 200) {
                     setProducts((prevProducts) => {
-                        const newProducts = [...prevProducts, data];
+                        const newProducts = [...prevProducts, { ...data, id_order, dias }];
                         return Array.from(new Set(newProducts.map(product => product.id)))
                             .map(id => newProducts.find(product => product.id === id) as Product);
                     });
                 }
             });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
     useEffect(() => {
@@ -261,9 +274,10 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
         references.forEach(ref => {
             if (ref != null && ref !== "") {
-                handleFetchSearchClothes(ref);
+                handleFetchSearchClothes(ref, id_order);
             }
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [handleFetchSearchClothes, referencia_prenda_superior, referencia_prenda_inferior, referencia_otro,]);
 
 

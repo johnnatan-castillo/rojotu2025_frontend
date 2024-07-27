@@ -14,9 +14,11 @@ interface Cart {
       other: number;
     };
     front: {
-      upper: number;
-      lower: number;
-      other: number;
+      LUNES: number;
+      MARTES: number;
+      MIERCOLES: number;
+      JUEVES: number;
+      VIERNES: number;
     };
   };
   message: string | null;
@@ -25,6 +27,7 @@ interface Cart {
 
 interface CartOptionsThunkAdd extends CartOptionsAdd {
   token: string;
+  rol: string;
 }
 
 interface CartOptionsAdd {
@@ -65,9 +68,11 @@ const initialState: cartState = {
         other: 0,
       },
       front: {
-        upper: 0,
-        lower: 0,
-        other: 0,
+        LUNES: 0,
+        MARTES: 0,
+        MIERCOLES: 0,
+        JUEVES: 0,
+        VIERNES: 0,
       },
     },
     message: null,
@@ -101,7 +106,7 @@ const handleCartAdd = async (
   try {
     const response = await fetch(url, requestOptions);
     const result = await response.json();
-
+  
     if (result.code !== 200) {
       return { code: result.code, token: result.token };
     } else {
@@ -114,8 +119,10 @@ const handleCartAdd = async (
         token: result.token,
       };
     }
-  } catch (error) {
-    console.error("Error:", error);
+  } catch (error:any) {
+    console.log(error);
+    
+    console.error("Error:", error.message, error.stack);
     return { code: 404, token };
   }
 };
@@ -154,14 +161,20 @@ const handleCartRemove = async (id_prenda: string, token: string) => {
 export const addClothingItemThunk = createAsyncThunk(
   "cart/addClothingItem",
   async (cartOptions: CartOptionsThunkAdd, { rejectWithValue, getState }) => {
-    const { product, limits, talla, token, dia } = cartOptions;
+    const { product, limits, talla, token, dia, rol } = cartOptions;
     const { prendas_superiores, prendas_inferiores, prendas_otros } = limits;
 
     const state: any = getState() as { cart: cartState };
     const currentCart = state.carts.cart;
 
     if (!talla) {
-      return rejectWithValue("Debe seleccionar una talla");
+      if (rol === "BACK") {
+        return rejectWithValue("Debe seleccionar una talla");
+      } else if (rol === "FRONT") {
+        return rejectWithValue("Debe seleccionar todas las talla");
+      } else {
+        return rejectWithValue("No hay un rol definido");
+      }
     }
 
     const existingItemIndex = currentCart.items.findIndex(
@@ -190,6 +203,20 @@ export const addClothingItemThunk = createAsyncThunk(
       return rejectWithValue("No se puede agregar más prendas de este tipo");
     }
 
+    if (rol === "FRONT") {
+      const days = product.dias.split("-");
+
+      for (const day of days) {
+        if (currentCart.counters.front[day] >= 1) {
+          return rejectWithValue(
+            `No se puede agregar más prendas del dia ${day.toLocaleLowerCase()}`
+          );
+        }
+      }
+    } else if (rol !== "BACK") {
+      return rejectWithValue("Rol no válido");
+    }
+
     const response = await handleCartAdd(product, talla, token, dia);
     if (response.code === 200) {
       if (existingItemIndex !== -1) {
@@ -204,9 +231,10 @@ export const addClothingItemThunk = createAsyncThunk(
           talla,
           data: undefined,
           updatedItems,
+          rol,
         };
       } else {
-        return { type: "add", product, talla, data: response.data };
+        return { type: "add", product, talla, data: response.data, rol };
       }
     } else {
       return rejectWithValue("Hubo un error al agregar la prenda");
@@ -340,7 +368,12 @@ const cartSlice = createSlice({
         return;
       }
 
-      currentCart.items.push({ ...product.prenda, talla });
+      currentCart.items.push({
+        ...product.prenda,
+        talla,
+        id_prenda: product.id_prenda,
+        id_carrito: product.id_carrito,
+      });
 
       addCount(product);
 
@@ -401,9 +434,11 @@ const cartSlice = createSlice({
             other: 0,
           },
           front: {
-            upper: 0,
-            lower: 0,
-            other: 0,
+            LUNES: 0,
+            MARTES: 0,
+            MIERCOLES: 0,
+            JUEVES: 0,
+            VIERNES: 0,
           },
         },
         message: "El carrito se ha limpiado",
@@ -417,7 +452,8 @@ const cartSlice = createSlice({
         state.cart.message = "Agregando prenda...";
       })
       .addCase(addClothingItemThunk.fulfilled, (state, action) => {
-        const { type, product, talla, data, updatedItems } = action.payload;
+        const { type, product, talla, data, updatedItems, rol } =
+          action.payload;
 
         const addCount = () => {
           if (product.segmento_Prenda === "SUPERIOR") {
@@ -436,6 +472,18 @@ const cartSlice = createSlice({
             state.cart.counters.back.upper++;
             state.cart.counters.back.lower++;
             state.cart.counters.back.otherClothe++;
+          }
+
+          if (rol === "FRONT") {
+            const days = product.dias.split("-");
+
+            for (const day of days) {
+              if (day === "LUNES") state.cart.counters.front.LUNES++;
+              if (day === "MARTES") state.cart.counters.front.MARTES++;
+              if (day === "MIERCOLES") state.cart.counters.front.MIERCOLES++;
+              if (day === "JUEVES") state.cart.counters.front.JUEVES++;
+              if (day === "VIERNES") state.cart.counters.front.VIERNES++;
+            }
           }
         };
 

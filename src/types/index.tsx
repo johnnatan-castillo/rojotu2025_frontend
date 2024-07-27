@@ -74,6 +74,8 @@ declare global {
         referencia_prenda_inferior?: string | null;
         referencia_otro?: string | null;
         id_prenda: string;
+        id_carrito: string;
+        id_order: string;
         prenda_front: boolean;
         prenda?: any
     }

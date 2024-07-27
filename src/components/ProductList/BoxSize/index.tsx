@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { addClothingItemThunk, removeClothingItemThunk } from '../../../features/cart/cartSlice';
 import QuickView from '../../QuickView';
+import { useNavigate } from 'react-router-dom';
 
 interface BoxSizePLPI {
     component: string,
@@ -34,9 +35,10 @@ export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product,
 
 const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
 
-    const { prendas_superiores, prendas_inferiores, prendas_otros, token } = useSelector((state: RootState) => state.auth);
+    const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
     const { items } = useSelector((state: RootState) => state.carts.cart);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
 
     const handleAddCart = (size: string) => {
@@ -47,7 +49,13 @@ const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, is
             prendas_otros: parseInt(prendas_otros)
         }
 
-        dispatch(addClothingItemThunk({ product, limits, talla: size, token }));
+        if (rol) {
+            dispatch(addClothingItemThunk({ product, limits, talla: size, token, rol }));
+        } else {
+            navigate("/login");
+        }
+
+
     }
 
 

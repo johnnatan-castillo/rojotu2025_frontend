@@ -11,15 +11,26 @@ const component: string = "card"
 const version: string = "0"
 
 const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, isPLP }) => {
-    const { token } = useSelector((state: RootState) => state.auth);
+    const { token, rol } = useSelector((state: RootState) => state.auth);
     const { items } = useSelector((state: RootState) => state.carts.cart);
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
     const dispatch = useDispatch<AppDispatch>();
 
     const handleRemoveClotheTOCart = async (reference: string) => {
         for (const item of items) {
-            if (item.referencia === reference) {
-                await dispatch(removeClothingItemThunk({ productId: item.id, talla: item.talla, token })).unwrap();
+            if (rol === "BACK") {
+                if (item.referencia === reference) {
+                    await dispatch(removeClothingItemThunk({ productId: item.id, talla: item.talla, token })).unwrap();
+                }
+            } else {
+                if (item.referencia === reference) {
+                    const filterTODelete = items.filter((product) => product.id_order === item.id_order);
+
+                    for(const filter of filterTODelete) {
+                        await dispatch(removeClothingItemThunk({ productId: filter.id, talla: filter.talla, token })).unwrap();
+                    }
+
+                }
             }
         }
     };
