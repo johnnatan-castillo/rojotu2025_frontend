@@ -49,6 +49,7 @@ interface CartOptionsRemove {
 
 interface CartOptionsThunkRemove extends CartOptionsRemove {
   token: string;
+  rol: string;
 }
 
 interface cartState {
@@ -106,7 +107,7 @@ const handleCartAdd = async (
   try {
     const response = await fetch(url, requestOptions);
     const result = await response.json();
-  
+
     if (result.code !== 200) {
       return { code: result.code, token: result.token };
     } else {
@@ -119,9 +120,9 @@ const handleCartAdd = async (
         token: result.token,
       };
     }
-  } catch (error:any) {
+  } catch (error: any) {
     console.log(error);
-    
+
     console.error("Error:", error.message, error.stack);
     return { code: 404, token };
   }
@@ -161,11 +162,21 @@ const handleCartRemove = async (id_prenda: string, token: string) => {
 export const addClothingItemThunk = createAsyncThunk(
   "cart/addClothingItem",
   async (cartOptions: CartOptionsThunkAdd, { rejectWithValue, getState }) => {
-    const { product, limits, talla, token, dia, rol } = cartOptions;
+    const { product, limits, talla, token, dia, rol} = cartOptions;
     const { prendas_superiores, prendas_inferiores, prendas_otros } = limits;
 
     const state: any = getState() as { cart: cartState };
     const currentCart = state.carts.cart;
+
+    console.log((currentCart.counters.back.upper + currentCart.counters.back.lower + currentCart.counters.back.other), " cuount");
+
+    console.log((prendas_superiores + prendas_inferiores + prendas_otros), "limit");
+    
+    
+
+    if((currentCart.counters.back.upper + currentCart.counters.back.lower + currentCart.counters.back.other) > (prendas_superiores + prendas_inferiores + prendas_otros)){
+      return rejectWithValue("Has completado tu seleccion");
+    }
 
     if (!talla) {
       if (rol === "BACK") {
@@ -182,25 +193,19 @@ export const addClothingItemThunk = createAsyncThunk(
     );
 
     if (
-      (product.segmento_Prenda === "SUPERIOR" &&
-        currentCart.counters.back.upper >= prendas_superiores) ||
-      (product.segmento_Prenda === "INFERIOR" &&
-        currentCart.counters.back.lower >= prendas_inferiores) ||
-      (product.segmento_Prenda === "CHAQUETA" &&
-        currentCart.counters.back.other >= prendas_otros) ||
-      (product.segmento_Prenda === "SACO" &&
-        currentCart.counters.back.other + 0.5 > prendas_otros) ||
-      (product.segmento_Prenda === "VESTIDO" &&
-        (currentCart.counters.back.upper + 1 > prendas_superiores ||
-          currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-      (product.segmento_Prenda === "TRAJE" &&
-        (currentCart.counters.back.upper + 1 > prendas_superiores ||
-          currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-      (product.segmento_Prenda === "ENTERIZO" &&
-        (currentCart.counters.back.upper + 1 > prendas_superiores ||
-          currentCart.counters.back.lower + 1 > prendas_inferiores))
-    ) {
-      return rejectWithValue("No se puede agregar más prendas de este tipo");
+      (product.segmento_Prenda === "SUPERIOR" && (currentCart.counters.back.upper + 1) > prendas_superiores) ||
+      (product.segmento_Prenda === "INFERIOR" && (currentCart.counters.back.lower + 1) > prendas_inferiores) ||
+      (product.segmento_Prenda === "OTRO" && (currentCart.counters.back.other + 1) > prendas_otros) ||
+      (product.segmento_Prenda === "SACO" && currentCart.counters.back.other + 0.5 > prendas_otros) ||
+      (product.segmento_Prenda === "VESTIDO" && (currentCart.counters.back.upper + 1 > prendas_superiores || currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
+      (product.segmento_Prenda === "TRAJE" && (currentCart.counters.back.upper + 1 > prendas_superiores || currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
+      (product.segmento_Prenda === "ENTERIZO" && (currentCart.counters.back.upper + 1 > prendas_superiores || currentCart.counters.back.lower + 1 > prendas_inferiores))){
+
+        console.log((currentCart.counters.back.upper + 1) > prendas_superiores, "s");
+        console.log((currentCart.counters.back.lower + 1) > prendas_inferiores, "l");
+        console.log((currentCart.counters.back.other + 1) > prendas_otros, "o");
+
+        return rejectWithValue("Has completado tu seleccion para este tipo de prenda");
     }
 
     if (rol === "FRONT") {
@@ -248,7 +253,7 @@ export const removeClothingItemThunk = createAsyncThunk(
     cartOptions: CartOptionsThunkRemove,
     { rejectWithValue, getState }
   ) => {
-    const { productId, talla, token } = cartOptions;
+    const { productId, talla, token, rol } = cartOptions;
 
     const state: any = getState() as { cart: cartState };
     const currentCart = state.carts.cart;
@@ -266,7 +271,7 @@ export const removeClothingItemThunk = createAsyncThunk(
       token
     );
     if (response.code === 200) {
-      return { type: "remove", data: { productIndex } };
+      return { type: "remove", data: { productIndex, rol } };
     } else {
       return rejectWithValue("Hubo un error al eliminar la prenda");
     }
@@ -305,7 +310,7 @@ const cartSlice = createSlice({
           currentCart.counters.back.upper++;
         } else if (product.segmento_Prenda === "INFERIOR") {
           currentCart.counters.back.lower++;
-        } else if (product.segmento_Prenda === "CHAQUETA") {
+        } else if (product.segmento_Prenda === "OTRO") {
           currentCart.counters.back.other++;
         } else if (product.segmento_Prenda === "SACO") {
           currentCart.counters.back.other += 0.5;
@@ -340,7 +345,7 @@ const cartSlice = createSlice({
         state.cart.message = "No se puede agregar más prendas inferiores";
         return;
       } else if (
-        product.segmento_Prenda === "CHAQUETA" &&
+        product.segmento_Prenda === "OTRO" &&
         currentCart.counters.back.other >= prendas_otros
       ) {
         state.cart.message = "No se puede agregar más prendas de otros tipos";
@@ -395,7 +400,7 @@ const cartSlice = createSlice({
             currentCart.counters.back.upper--;
           } else if (product.segmento_Prenda === "INFERIOR") {
             currentCart.counters.back.lower--;
-          } else if (product.segmento_Prenda === "CHAQUETA") {
+          } else if (product.segmento_Prenda === "OTRO") {
             currentCart.counters.back.other--;
           } else if (product.segmento_Prenda === "SACO") {
             currentCart.counters.back.other -= 0.5;
@@ -460,7 +465,7 @@ const cartSlice = createSlice({
             state.cart.counters.back.upper++;
           } else if (product.segmento_Prenda === "INFERIOR") {
             state.cart.counters.back.lower++;
-          } else if (product.segmento_Prenda === "CHAQUETA") {
+          } else if (product.segmento_Prenda === "OTRO") {
             state.cart.counters.back.other++;
           } else if (product.segmento_Prenda === "SACO") {
             state.cart.counters.back.other += 0.5;
@@ -513,7 +518,7 @@ const cartSlice = createSlice({
         state.cart.message = "Removiendo prenda...";
       })
       .addCase(removeClothingItemThunk.fulfilled, (state, action) => {
-        const { productIndex } = action.payload.data;
+        const { productIndex, rol } = action.payload.data;
 
         if (productIndex !== -1) {
           const product = state.cart.items[productIndex];
@@ -523,7 +528,7 @@ const cartSlice = createSlice({
               state.cart.counters.back.upper--;
             } else if (product.segmento_Prenda === "INFERIOR") {
               state.cart.counters.back.lower--;
-            } else if (product.segmento_Prenda === "CHAQUETA") {
+            } else if (product.segmento_Prenda === "OTRO") {
               state.cart.counters.back.other--;
             } else if (product.segmento_Prenda === "SACO") {
               state.cart.counters.back.other -= 0.5;
@@ -536,6 +541,20 @@ const cartSlice = createSlice({
               state.cart.counters.back.lower--;
               state.cart.counters.back.otherClothe--;
             }
+
+            if (rol === "FRONT") {
+              const days = product.dias.split("-");
+
+              for (const day of days) {
+                if (day === "LUNES") state.cart.counters.front.LUNES--;
+                if (day === "MARTES") state.cart.counters.front.MARTES--;
+                if (day === "MIERCOLES") state.cart.counters.front.MIERCOLES--;
+                if (day === "JUEVES") state.cart.counters.front.JUEVES--;
+                if (day === "VIERNES") state.cart.counters.front.VIERNES--;
+              }
+            }
+
+
           };
 
           subtractCount();

@@ -20,14 +20,17 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
         for (const item of items) {
             if (rol === "BACK") {
                 if (item.referencia === reference) {
-                    await dispatch(removeClothingItemThunk({ productId: item.id, talla: item.talla, token })).unwrap();
+                    await dispatch(removeClothingItemThunk({ productId: item.id, talla: item.talla, token, rol })).unwrap();
                 }
             } else {
                 if (item.referencia === reference) {
-                    const filterTODelete = items.filter((product) => product.id_order === item.id_order);
 
-                    for(const filter of filterTODelete) {
-                        await dispatch(removeClothingItemThunk({ productId: filter.id, talla: filter.talla, token })).unwrap();
+                    if (rol) {
+                        const filterTODelete = items.filter((product) => product.id_order === item.id_order);
+
+                        for (const filter of filterTODelete) {
+                            await dispatch(removeClothingItemThunk({ productId: filter.id, talla: filter.talla, token, rol })).unwrap();
+                        }
                     }
 
                 }

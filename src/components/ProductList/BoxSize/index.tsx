@@ -60,7 +60,11 @@ const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, is
 
 
     const handleRemoveClotheTOCart = (size: string) => {
-        dispatch(removeClothingItemThunk({ productId: product.id, talla: size, token }));
+        if(rol) {
+            dispatch(removeClothingItemThunk({ productId: product.id, talla: size, token, rol }));
+        } else {
+            navigate("/login");
+        }
     }
 
 
