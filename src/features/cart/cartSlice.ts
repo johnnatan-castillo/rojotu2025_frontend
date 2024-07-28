@@ -27,7 +27,6 @@ interface Cart {
 
 interface CartOptionsThunkAdd extends CartOptionsAdd {
   token: string;
-  rol: string;
 }
 
 interface CartOptionsAdd {
@@ -40,6 +39,7 @@ interface CartOptionsAdd {
   talla?: string;
   dia?: string;
   id?: string;
+  rol: string;
 }
 
 interface CartOptionsRemove {
@@ -162,19 +162,18 @@ const handleCartRemove = async (id_prenda: string, token: string) => {
 export const addClothingItemThunk = createAsyncThunk(
   "cart/addClothingItem",
   async (cartOptions: CartOptionsThunkAdd, { rejectWithValue, getState }) => {
-    const { product, limits, talla, token, dia, rol} = cartOptions;
+    const { product, limits, talla, token, dia, rol } = cartOptions;
     const { prendas_superiores, prendas_inferiores, prendas_otros } = limits;
 
     const state: any = getState() as { cart: cartState };
     const currentCart = state.carts.cart;
 
-    console.log((currentCart.counters.back.upper + currentCart.counters.back.lower + currentCart.counters.back.other), " cuount");
-
-    console.log((prendas_superiores + prendas_inferiores + prendas_otros), "limit");
-    
-    
-
-    if((currentCart.counters.back.upper + currentCart.counters.back.lower + currentCart.counters.back.other) > (prendas_superiores + prendas_inferiores + prendas_otros)){
+    if (
+      currentCart.counters.back.upper +
+        currentCart.counters.back.lower +
+        currentCart.counters.back.other >
+      prendas_superiores + prendas_inferiores + prendas_otros
+    ) {
       return rejectWithValue("Has completado tu seleccion");
     }
 
@@ -193,19 +192,27 @@ export const addClothingItemThunk = createAsyncThunk(
     );
 
     if (
-      (product.segmento_Prenda === "SUPERIOR" && (currentCart.counters.back.upper + 1) > prendas_superiores) ||
-      (product.segmento_Prenda === "INFERIOR" && (currentCart.counters.back.lower + 1) > prendas_inferiores) ||
-      (product.segmento_Prenda === "OTRO" && (currentCart.counters.back.other + 1) > prendas_otros) ||
-      (product.segmento_Prenda === "SACO" && currentCart.counters.back.other + 0.5 > prendas_otros) ||
-      (product.segmento_Prenda === "VESTIDO" && (currentCart.counters.back.upper + 1 > prendas_superiores || currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-      (product.segmento_Prenda === "TRAJE" && (currentCart.counters.back.upper + 1 > prendas_superiores || currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-      (product.segmento_Prenda === "ENTERIZO" && (currentCart.counters.back.upper + 1 > prendas_superiores || currentCart.counters.back.lower + 1 > prendas_inferiores))){
-
-        console.log((currentCart.counters.back.upper + 1) > prendas_superiores, "s");
-        console.log((currentCart.counters.back.lower + 1) > prendas_inferiores, "l");
-        console.log((currentCart.counters.back.other + 1) > prendas_otros, "o");
-
-        return rejectWithValue("Has completado tu seleccion para este tipo de prenda");
+      (product.segmento_Prenda === "SUPERIOR" &&
+        currentCart.counters.back.upper + 1 > prendas_superiores) ||
+      (product.segmento_Prenda === "INFERIOR" &&
+        currentCart.counters.back.lower + 1 > prendas_inferiores) ||
+      (product.segmento_Prenda === "OTRO" &&
+        currentCart.counters.back.other + 1 > prendas_otros) ||
+      (product.segmento_Prenda === "SACO" &&
+        currentCart.counters.back.other + 0.5 > prendas_otros) ||
+      (product.segmento_Prenda === "VESTIDO" &&
+        (currentCart.counters.back.upper + 1 > prendas_superiores ||
+          currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
+      (product.segmento_Prenda === "TRAJE" &&
+        (currentCart.counters.back.upper + 1 > prendas_superiores ||
+          currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
+      (product.segmento_Prenda === "ENTERIZO" &&
+        (currentCart.counters.back.upper + 1 > prendas_superiores ||
+          currentCart.counters.back.lower + 1 > prendas_inferiores))
+    ) {
+      return rejectWithValue(
+        "Has completado tu seleccion para este tipo de prenda"
+      );
     }
 
     if (rol === "FRONT") {
@@ -283,7 +290,7 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addClothingItem: (state, action: PayloadAction<CartOptionsAdd>) => {
-      const { product, limits, talla, id } = action.payload;
+      const { product, limits, talla, id, rol } = action.payload;
 
       const currentCart = state.cart;
 
@@ -304,24 +311,34 @@ const cartSlice = createSlice({
       }
 
       const addCount = ({ prenda }: Product) => {
-        const product = prenda;
+        const productP = prenda;
 
-        if (product.segmento_Prenda === "SUPERIOR") {
+        if (productP.segmento_Prenda === "SUPERIOR") {
           currentCart.counters.back.upper++;
-        } else if (product.segmento_Prenda === "INFERIOR") {
+        } else if (productP.segmento_Prenda === "INFERIOR") {
           currentCart.counters.back.lower++;
-        } else if (product.segmento_Prenda === "OTRO") {
+        } else if (productP.segmento_Prenda === "OTRO") {
           currentCart.counters.back.other++;
-        } else if (product.segmento_Prenda === "SACO") {
+        } else if (productP.segmento_Prenda === "SACO") {
           currentCart.counters.back.other += 0.5;
         } else if (
-          product.segmento_Prenda === "VESTIDO" ||
-          product.segmento_Prenda === "TRAJE" ||
-          product.segmento_Prenda === "ENTERIZO"
+          productP.segmento_Prenda === "VESTIDO" ||
+          productP.segmento_Prenda === "TRAJE" ||
+          productP.segmento_Prenda === "ENTERIZO"
         ) {
           currentCart.counters.back.upper++;
           currentCart.counters.back.lower++;
           currentCart.counters.back.otherClothe++;
+        }
+
+        if (rol === "FRONT") {
+          const day = product.dia;
+
+          if (day === "LUNES") state.cart.counters.front.LUNES++;
+          if (day === "MARTES") state.cart.counters.front.MARTES++;
+          if (day === "MIERCOLES") state.cart.counters.front.MIERCOLES++;
+          if (day === "JUEVES") state.cart.counters.front.JUEVES++;
+          if (day === "VIERNES") state.cart.counters.front.VIERNES++;
         }
       };
 
@@ -553,7 +570,6 @@ const cartSlice = createSlice({
                 if (day === "VIERNES") state.cart.counters.front.VIERNES--;
               }
             }
-
           };
 
           subtractCount();

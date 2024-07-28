@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { v4 as uuidv4 } from "uuid";
 import { login } from '../../features/auth/authSlice';
 import { AppDispatch } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
@@ -122,7 +123,7 @@ const Login: React.FC = () => {
                 }
 
 
-                handleRecoverCart({ prendas_superiores, prendas_inferiores, prendas_otros }, token).then(() => {
+                handleRecoverCart({ prendas_superiores, prendas_inferiores, prendas_otros }, token, rol).then(() => {
                     dispatch(login(combineReducers));
                     navigate('/');
                 })
@@ -141,7 +142,7 @@ const Login: React.FC = () => {
             });
     };
 
-    const handleRecoverCart = async (limits: { prendas_superiores: number; prendas_inferiores: number; prendas_otros: number; }, token: string) => {
+    const handleRecoverCart = async (limits: { prendas_superiores: number; prendas_inferiores: number; prendas_otros: number; }, token: string, rol: string) => {
         const url = getApuUrl("/buscarCarrito");
 
         const requestOptions = {
@@ -162,7 +163,64 @@ const Login: React.FC = () => {
                 }
 
                 if (data.length > 0) {
-                    data.map((product: Product) => dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id })))
+
+                    const cartOrderId = {
+                        LUNES: uuidv4(),
+                        MARTES: uuidv4(),
+                        MIERCOLES: uuidv4(),
+                        JUEVES: uuidv4(),
+                        VIERNES: uuidv4(),
+                        SABADO: uuidv4(),
+                    }
+
+                    data.map((product: Product) => {
+
+                        if (rol === "BACK") {
+                            return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                        } else if (rol === "FRONT") {
+
+                            if (product.dia === "LUNES") {
+                                product.prenda.id_order = cartOrderId[product.dia];
+                                product.prenda.dias = product.dia;
+
+                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                            }
+
+                            if (product.dia === "MARTES") {
+                                product.prenda.id_order = cartOrderId[product.dia];
+                                product.prenda.dias = product.dia;
+
+                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                            }
+
+                            if (product.dia === "MIERCOLES") {
+                                product.prenda.id_order = cartOrderId[product.dia];
+                                product.prenda.dias = product.dia;
+
+                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                            }
+
+                            if (product.dia === "JUEVES") {
+                                product.prenda.id_order = cartOrderId[product.dia];
+                                product.prenda.dias = product.dia;
+
+                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                            }
+
+                            if (product.dia === "VIERNES") {
+                                product.prenda.id_order = cartOrderId[product.dia];
+                                product.prenda.dias = product.dia;
+
+                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                            }
+
+                        } else {
+                            return navigate('/login');
+                        }
+
+                        return null;
+
+                    })
                 }
 
             })
