@@ -51,54 +51,78 @@ const MyProfile = () => {
 
   const handleSaveChanges = async () => {
 
-    if (myProfileData.identidad) {
-      const url = getApuUrl("/actualizarIdentidad");
 
-      const raw = JSON.stringify({
-        "usuario": userFull?.userNick,
-        "identidad": myProfileData.identidad
-      });
+    Swal.fire({
+      title: "¡Importante!",
+      text: `Esta acción borrara la selección de prendas, ¿Esta de acuerdo?`,
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Continuar",
+      confirmButtonColor: "#4D4D4D",
+      denyButtonText: `No guardar`
+    }).then((result) => {
 
-      const requestOptions = {
-        method: "POST",
-        headers: {
-          token: token,
-          "Content-Type": "application/json"
-        },
-        body: raw
-      };
+      if (result.isConfirmed) {
 
-      fetch(url, requestOptions)
-        .then((response) => response.json())
-        .then((result: ResponseAPI) => {
+        if (myProfileData.identidad) {
+          const url = getApuUrl("/actualizarIdentidad");
 
-          if (result.code !== 200) {
-            return Swal.fire({ title: 'Error al cambiar de expresión de genero', text: `Ha ocurrido un error al intentar cambiar la expresión de genero`, icon: 'error', confirmButtonColor: "#E31A2A" });
-          }
-
-          const copyProfile = { ...profile };
-
-          copyProfile.identidad = myProfileData.identidad
-          copyProfile.token = result.token
-
-
-          dispatch(login(copyProfile));
-          dispatch(clearMessage())
-          dispatch(resetcart());
-
-          setMyProfileData({
-            identidad: null
+          const raw = JSON.stringify({
+            "usuario": userFull?.userNick,
+            "identidad": myProfileData.identidad
           });
 
-          Swal.fire({ title: 'Seleccionado correctamente', text: `Tu expresión de genero ha sido cambiada`, icon: 'success', confirmButtonColor: "#E31A2A" });
+          const requestOptions = {
+            method: "POST",
+            headers: {
+              token: token,
+              "Content-Type": "application/json"
+            },
+            body: raw
+          };
+
+          fetch(url, requestOptions)
+            .then((response) => response.json())
+            .then((result: ResponseAPI) => {
+
+              if (result.code !== 200) {
+                return Swal.fire({ title: 'Error al cambiar de expresión de genero', text: `Ha ocurrido un error al intentar cambiar la expresión de genero`, icon: 'error', confirmButtonColor: "#E31A2A" });
+              }
+
+              const copyProfile = { ...profile };
+
+              copyProfile.identidad = myProfileData.identidad
+              copyProfile.token = result.token
 
 
-        })
-        .catch((error) => {
-          console.log(error, " error");
-          Swal.fire({ title: 'Ha ocurrido un error', text: `No se ha definido correctamente tu expresión`, icon: 'error', confirmButtonColor: "#E31A2A" });
-        });
-    }
+              dispatch(login(copyProfile));
+              dispatch(clearMessage())
+              dispatch(resetcart());
+
+              setMyProfileData({
+                identidad: null
+              });
+
+              Swal.fire({ title: 'Seleccionado correctamente', text: `Tu expresión de genero ha sido cambiada`, icon: 'success', confirmButtonColor: "#E31A2A" });
+
+
+            })
+            .catch((error) => {
+              console.log(error, " error");
+              Swal.fire({ title: 'Ha ocurrido un error', text: `No se ha definido correctamente tu expresión`, icon: 'error', confirmButtonColor: "#E31A2A" });
+            });
+        }
+
+      } else if (result.isDenied) {
+        Swal.fire({
+          title: 'No se ha guardado',
+          text: `No has realizado ningún cambio en tu expresión de genero`,
+          icon: 'info',
+          confirmButtonColor: "#E31A2A"
+        }
+        );
+      }
+    });
 
   }
 
