@@ -8,7 +8,6 @@ import MyClothes from './pages/MyClothes';
 // import ThreeD from './pages/ThreeD';
 import Collection from './pages/Collection';
 import Dashboard from './pages/Dashboard';
-import MyProfile from './pages/MyProfile';
 import NotFound from './pages/NotFound';
 
 
@@ -40,7 +39,6 @@ const App: React.FC = () => {
             <Route path="/size-guide" element={<SizeGuide />} />
             <Route path="/collection" element={<Collection />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/my-profile" element={<MyProfile />} />
           </Route>
         </Route>
         {/* Privadas */}
