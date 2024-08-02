@@ -82,13 +82,26 @@
 
 
 .rojo-tu-card-0-x-card-card-footer-product-sku,
-.rojo-tu-card-0-x-card-card-footer-container-name {
+.rojo-tu-card-0-x-card-card-footer-container-name,
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-size-text {
     font-size: 0.77821vw;
     text-transform: capitalize;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     max-width: 12.159533vw;
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body-my-cart{
+    flex-direction: column;
+}
+
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-size-1{
+    margin-bottom: 0.390625vw
+}
+
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-size-2{
+    width: 100%;
 }
 
 .rojo-tu-card-0-x-card-card-footer-product-sku-size {
@@ -441,4 +454,14 @@
 
 .rojo-tu-product-list-0-x-product-list-product-list-box-counter-block .rojo-tu-counter-0-x-counter-counter-cart-number button{
     pointer-events: none;
+}
+
+.rojo-tu-buy-button-0-x-buy-button-buy-button-button-block{
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body-my-cart{
+    height:  auto;
 }

@@ -112,4 +112,15 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: white;
+    border-radius: 15px;
+}
+
+
+.rojo-tu-my-profile-0-x-my-profile-my-profile-overlay{
+    background: #000000ab;
+   position: fixed;
+   top: 0;
+   z-index: 999;
+   width: 100%;
+   height: 100vh;
 }

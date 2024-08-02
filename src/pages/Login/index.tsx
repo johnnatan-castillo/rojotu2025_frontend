@@ -12,7 +12,7 @@ import LOGO from "../../assets/logo-rojo-tu-login.png"
 import { Link } from 'react-router-dom';
 import CustomClass from '../../utils/CustomClass';
 import { encryptData } from '../../utils/Decrypt';
-import { addClothingItem } from '../../features/cart/cartSlice';
+import { addClothingItem, setStatus } from '../../features/cart/cartSlice';
 
 const component: string = "login"
 const version: string = "0"
@@ -162,7 +162,7 @@ const Login: React.FC = () => {
                     return;
                 }
 
-                if (data.length > 0) {
+                if (data.carrito.length > 0) {
 
                     const cartOrderId = {
                         LUNES: uuidv4(),
@@ -173,7 +173,7 @@ const Login: React.FC = () => {
                         SABADO: uuidv4(),
                     }
 
-                    data.map((product: Product) => {
+                    data.carrito.map((product: Product) => {
 
                         if (rol === "BACK") {
                             return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
@@ -220,7 +220,10 @@ const Login: React.FC = () => {
 
                         return null;
 
-                    })
+                    });
+
+
+                    dispatch(setStatus({ status: data.estado }));
                 }
 
             })

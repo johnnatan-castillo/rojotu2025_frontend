@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { addClothingItemThunk, removeClothingItemThunk } from '../../../features/cart/cartSlice';
 import QuickView from '../../QuickView';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface BoxSizePLPI {
     component: string,
@@ -60,7 +60,7 @@ const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, is
 
 
     const handleRemoveClotheTOCart = (size: string) => {
-        if(rol) {
+        if (rol) {
             dispatch(removeClothingItemThunk({ productId: product.id, talla: size, token, rol }));
         } else {
             navigate("/login");
@@ -105,6 +105,9 @@ const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, is
 const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
 
     const [showQuickView, setshowQuickView] = useState(false);
+    const location = useLocation();
+    const currentPath = location.pathname;
+    const isCart = currentPath.includes('/my-clothes');
 
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
 
@@ -114,7 +117,7 @@ const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, i
                 <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-days-box-title" })}`}>
                     <span className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-days-title-span" })}`}>Dias de uso</span>
                 </div>
-                <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-days-body" })}`}>
+                <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-days-body" })} ${isCart && CustomClass({ component, version, customClass: "card-footer-product-sku-days-body-my-cart" })}`}>
                     {
                         product.dias.split("-").map((day: string) => (
                             <button
@@ -127,10 +130,35 @@ const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, i
                         ))
                     }
                 </div>
-                <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-days-body" })}`}>
-                    <div className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-container" })}`}>
-                        <button onClick={() => { setproductQuickView(product); setshowQuickView(true); }} className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-button" })}`}>Seleccionar tallas</button>
+                <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-days-body" })} ${isCart && CustomClass({ component, version, customClass: "card-footer-product-sku-days-body-my-cart" })}`}>
+                    {
+                        isCart &&
+                        <div className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-size-1" })}`}>
+                            <span className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-size-text" })}`}>Talla seleccionada</span>
+                        </div>
+                    }
+                    <div className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-size-2" })}`}>
+                        {
+                            !isCart &&
+
+                            <div className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-container" })}`}>
+                                <button onClick={() => { setproductQuickView(product); setshowQuickView(true); }} className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-button" })}`}>Seleccionar tallas</button>
+                            </div>
+                        }
+
+                        {
+                            isCart &&
+
+                            <button
+                                key={`${product.referencia}`}
+                                className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size" })}`}
+                                type="button"
+                            >
+                                {product.talla}
+                            </button>
+                        }
                     </div>
+
                 </div>
             </div>
             {showQuickView && Object.keys(productQuickView).length > 0 && (

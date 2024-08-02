@@ -195,3 +195,12 @@
     transition: all 0.3s ease-out;
     background: none;
 }
+
+.rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-container-block{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-button-block{
+    pointer-events: none;
+}

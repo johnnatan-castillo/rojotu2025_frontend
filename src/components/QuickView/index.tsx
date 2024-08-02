@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import { v4 as uuidv4 } from "uuid";
 import { AppDispatch, RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
-import { addClothingItemThunk } from '../../features/cart/cartSlice';
+import { addClothingItemThunk, setMessage } from '../../features/cart/cartSlice';
 
 import NOFOUNDIMAGE from "../../assets/plp/no-image.jpg"
 import { getApuUrl } from '../../utils/config';
@@ -147,7 +147,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
                 ...prev,
                 selectedIntoQuickView: false
             }))
-        }else{
+        } else {
             navigate("/login");
         }
     }
@@ -178,6 +178,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
     const id_order = uuidv4();
     const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
+    const { status } = useSelector((state: RootState) => state.carts.cart);
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -229,9 +230,47 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
     const handleAddCart = () => {
 
         if (rol) {
-            dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
-            dispatch(addClothingItemThunk({ product: products[1], limits, talla: selectedSize.sizes.inferior, token, dia: product.dias, rol }));
-            dispatch(addClothingItemThunk({ product: products[2], limits, talla: selectedSize.sizes.otro, token, dia: product.dias, rol }));
+
+            let canIPass = false;
+            let countClothes = 0;
+            const countProducts = products.length;
+
+            const { superior, inferior, otro } = selectedSize.sizes;
+
+            if (superior) {
+                countClothes++;
+            }
+
+            if (inferior) {
+                countClothes++;
+            }
+
+            if (otro) {
+                countClothes++;
+            }
+
+            if (countClothes === 1 && countProducts === 1) {
+                canIPass = true;
+                dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
+            }
+
+            if (countClothes === 2 && countProducts === 2) {
+                canIPass = true;
+                dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
+                dispatch(addClothingItemThunk({ product: products[1], limits, talla: selectedSize.sizes.inferior, token, dia: product.dias, rol }));
+            }
+
+            if (countClothes === 3 && countProducts === 3) {
+                canIPass = true;
+                dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
+                dispatch(addClothingItemThunk({ product: products[1], limits, talla: selectedSize.sizes.inferior, token, dia: product.dias, rol }));
+                dispatch(addClothingItemThunk({ product: products[2], limits, talla: selectedSize.sizes.otro, token, dia: product.dias, rol }));
+            }
+
+            if (!canIPass) {
+                dispatch(setMessage({ message: "Debes de seleccionar todas las tallas" }));
+            }
+
         } else {
             navigate("/login");
         }
@@ -262,7 +301,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                     });
                 }
             });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
     useEffect(() => {
@@ -272,11 +311,16 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
             referencia_prenda_inferior,
         ];
 
-        references.forEach(ref => {
-            if (ref != null && ref !== "") {
-                handleFetchSearchClothes(ref, id_order);
-            }
-        });
+        if (referencia_prenda_superior || referencia_otro || referencia_prenda_inferior) {
+            references.forEach(ref => {
+                if (ref != null && ref !== "") {
+                    handleFetchSearchClothes(ref, id_order);
+                }
+            });
+        }else{
+            handleFetchSearchClothes(product.id, id_order);
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [handleFetchSearchClothes, referencia_prenda_superior, referencia_prenda_inferior, referencia_otro,]);
 
@@ -309,8 +353,8 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                     </div>
                 ))
             }
-            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })}`}>
-                <button onClick={handleAddCart} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })}`}>
+            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
+                <button onClick={handleAddCart} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-button-block" })}`}>
                     {selectedSize.sizes ? (selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla") : "Agregar al carrito"}
                 </button>
             </div>

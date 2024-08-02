@@ -21,6 +21,7 @@ interface Cart {
       VIERNES: number;
     };
   };
+  status: "creado" | "pendiente" | "enviado";
   message: string | null;
   messageId: string | null;
 }
@@ -36,6 +37,7 @@ interface CartOptionsAdd {
     prendas_inferiores: number;
     prendas_otros: number;
   };
+  status?: "creado" | "pendiente" | "enviado";
   talla?: string;
   dia?: string;
   id?: string;
@@ -76,6 +78,7 @@ const initialState: cartState = {
         VIERNES: 0,
       },
     },
+    status: "creado",
     message: null,
     messageId: null,
   },
@@ -439,6 +442,16 @@ const cartSlice = createSlice({
         state.cart.messageId = uuidv4();
       }
     },
+    setStatus: (state, action: PayloadAction<{ status: "creado" | "pendiente" | "enviado" }>) => {
+
+      const { status } = action.payload;
+
+      state.cart.status = status;
+    },
+    setMessage: (state, action: PayloadAction<{ message: string }>) => {
+      state.cart.message = action.payload.message;
+      state.cart.messageId = uuidv4();
+    },
     clearMessage: (state) => {
       state.cart.message = "Se ha limpiado el mensaje";
       state.cart.messageId = "0000000000";
@@ -463,6 +476,7 @@ const cartSlice = createSlice({
             VIERNES: 0,
           },
         },
+        status: "creado",
         message: "El carrito se ha limpiado",
         messageId: "1010101010",
       };
@@ -588,6 +602,12 @@ const cartSlice = createSlice({
   },
 });
 
-export const { addClothingItem, removeClothingItem, clearMessage, resetcart } =
-  cartSlice.actions;
+export const {
+  addClothingItem,
+  removeClothingItem,
+  setMessage,
+  clearMessage,
+  resetcart,
+  setStatus
+} = cartSlice.actions;
 export default cartSlice.reducer;
