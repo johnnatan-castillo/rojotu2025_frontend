@@ -111,7 +111,7 @@ const Dashboard = () => {
       <div>
         <div>
           <div>
-            <span>Filtro por pedidos</span>
+            <span>Filtro por pais</span>
           </div>
           <div>
             <select onChange={(e) => { setCountrySelect(e.target.value) }}>

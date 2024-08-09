@@ -128,7 +128,7 @@ const Header: React.FC = () => {
     useEffect(() => {
 
         if (primer_ingreso) {
-            handleRecoverPassword();
+            // handleRecoverPassword();
         }
 
     }, [])
