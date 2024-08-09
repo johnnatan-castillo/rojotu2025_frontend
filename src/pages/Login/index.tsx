@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from "uuid";
+import Swal from "sweetalert2";
 import { login } from '../../features/auth/authSlice';
 import { AppDispatch } from '../../redux/store';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +10,6 @@ import { getApuUrl } from '../../utils/config';
 import BANERLOGIN from "../../assets/baner-rojo-tu-login.jpg"
 import LOGO from "../../assets/logo-rojo-tu-login.png"
 
-import { Link } from 'react-router-dom';
 import CustomClass from '../../utils/CustomClass';
 import { encryptData } from '../../utils/Decrypt';
 import { addClothingItem, setStatus } from '../../features/cart/cartSlice';
@@ -162,72 +162,188 @@ const Login: React.FC = () => {
                     return;
                 }
 
-                if (data.carrito.length > 0) {
+                if (data) {
+                    if (data.carrito) {
+                        if (data.carrito.length > 0) {
 
-                    const cartOrderId = {
-                        LUNES: uuidv4(),
-                        MARTES: uuidv4(),
-                        MIERCOLES: uuidv4(),
-                        JUEVES: uuidv4(),
-                        VIERNES: uuidv4(),
-                        SABADO: uuidv4(),
-                    }
-
-                    data.carrito.map((product: Product) => {
-
-                        if (rol === "BACK") {
-                            return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
-                        } else if (rol === "FRONT") {
-
-                            if (product.dia === "LUNES") {
-                                product.prenda.id_order = cartOrderId[product.dia];
-                                product.prenda.dias = product.dia;
-
-                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                            const cartOrderId = {
+                                LUNES: uuidv4(),
+                                MARTES: uuidv4(),
+                                MIERCOLES: uuidv4(),
+                                JUEVES: uuidv4(),
+                                VIERNES: uuidv4(),
+                                SABADO: uuidv4(),
                             }
 
-                            if (product.dia === "MARTES") {
-                                product.prenda.id_order = cartOrderId[product.dia];
-                                product.prenda.dias = product.dia;
+                            data.carrito.map((product: Product) => {
 
-                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
-                            }
+                                if (rol === "BACK") {
+                                    return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                                } else if (rol === "FRONT") {
 
-                            if (product.dia === "MIERCOLES") {
-                                product.prenda.id_order = cartOrderId[product.dia];
-                                product.prenda.dias = product.dia;
+                                    if (product.dia === "LUNES") {
+                                        product.prenda.id_order = cartOrderId[product.dia];
+                                        product.prenda.dias = product.dia;
 
-                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
-                            }
+                                        return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                                    }
 
-                            if (product.dia === "JUEVES") {
-                                product.prenda.id_order = cartOrderId[product.dia];
-                                product.prenda.dias = product.dia;
+                                    if (product.dia === "MARTES") {
+                                        product.prenda.id_order = cartOrderId[product.dia];
+                                        product.prenda.dias = product.dia;
 
-                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
-                            }
+                                        return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                                    }
 
-                            if (product.dia === "VIERNES") {
-                                product.prenda.id_order = cartOrderId[product.dia];
-                                product.prenda.dias = product.dia;
+                                    if (product.dia === "MIERCOLES") {
+                                        product.prenda.id_order = cartOrderId[product.dia];
+                                        product.prenda.dias = product.dia;
 
-                                return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
-                            }
+                                        return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                                    }
 
-                        } else {
-                            return navigate('/login');
+                                    if (product.dia === "JUEVES") {
+                                        product.prenda.id_order = cartOrderId[product.dia];
+                                        product.prenda.dias = product.dia;
+
+                                        return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                                    }
+
+                                    if (product.dia === "VIERNES") {
+                                        product.prenda.id_order = cartOrderId[product.dia];
+                                        product.prenda.dias = product.dia;
+
+                                        return dispatch(addClothingItem({ product, talla: product.talla, limits, id: data.carrito_id, rol }))
+                                    }
+
+                                } else {
+                                    return navigate('/login');
+                                }
+
+                                return null;
+
+                            });
+
+
+                            dispatch(setStatus({ status: data.estado }));
                         }
-
-                        return null;
-
-                    });
-
-
-                    dispatch(setStatus({ status: data.estado }));
+                    }
                 }
 
             })
     }
+
+    const handleRecoverPassword = async () => {
+        const { value: email } = await Swal.fire({
+            title: 'Ingresa tu dirección de correo electronico',
+            input: 'text',
+            inputLabel: 'Correo electronico',
+            inputPlaceholder: 'example@correo.com',
+            confirmButtonColor: "#E31A2A",
+            confirmButtonText: "Recuperar contraseña"
+        })
+
+        if (email) {
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "usuario": encryptData(email).data
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+            };
+
+            let requestCode;
+
+            try {
+
+                const url = getApuUrl("/solicitarCodigo");
+
+                requestCode = await fetch(url, requestOptions);
+                requestCode = await requestCode.json();
+
+            } catch (error) {
+                return Swal.fire({ title: 'Error al solicitar el codigo', text: 'Ha ocurrido un error al solicitar el codigo para restablecer la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
+            }
+
+            if (requestCode.code === 200) {
+
+                Swal.fire({
+                    title: `Se ha enviado el correo`,
+                    input: 'text',
+                    inputLabel: 'Codigo de verificación',
+                    inputPlaceholder: '12345',
+                    html: `<p>Se ha enviado un email a tu correo para restablecer la contraseña</p><span><span><strong>${email}</strong></span>`,
+                    confirmButtonColor: "#E31A2A"
+                }).then(({ value: codigo }) => {
+
+                    Swal.fire({
+                        title: `Nueva contraseña`,
+                        input: 'text',
+                        inputLabel: 'Contraseña nueva',
+                        inputPlaceholder: '12345',
+                        text: ``,
+                        confirmButtonColor: "#E31A2A"
+                    }).then(({ value: contrasena }) => {
+
+                        var myHeaders1 = new Headers();
+                        myHeaders1.append("Content-Type", "application/json");
+
+                        var raw1 = JSON.stringify({
+                            "usuario": encryptData(email).data,
+                            "codigo": codigo,
+                            "nueva_contrasena": encryptData(contrasena).data
+                        });
+
+                        var requestOptions1 = {
+                            method: 'POST',
+                            headers: myHeaders1,
+                            body: raw1
+                        };
+
+                        let requestChangePassword;
+
+                        try {
+                            const request = async () => {
+                                try {
+
+                                    const url = getApuUrl("/cambiarContrasena")
+
+                                    requestChangePassword = await fetch(url, requestOptions1);
+                                    requestChangePassword = await requestChangePassword.json();
+
+                                    if (requestChangePassword.code === 200) {
+                                        return Swal.fire({ title: 'Se ha cambiado la contraseña', text: "Tu contraseña ha sido actualizada correctamente, puedes seguir navegando", icon: 'success', confirmButtonColor: "#E31A2A" });
+
+                                    } else if (requestChangePassword.code === 401) {
+                                        return Swal.fire({ title: 'Codigo invalido', text: requestChangePassword.message, icon: 'info', confirmButtonColor: "#E31A2A" });
+                                    }
+
+                                } catch (error) {
+                                    return Swal.fire({ title: 'Error al intentar cambiar la contraseña', text: 'Ha ocurrido un error al intentar cambiar la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
+                                }
+                            }
+
+                            request();
+                        } catch (error) {
+                            return Swal.fire({ title: 'Error al intentar cambiar la contraseña', text: 'Ha ocurrido un error al intentar cambiar la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
+                        }
+                    })
+
+                })
+
+            } else {
+                return Swal.fire({ title: 'Error al solicitar el codigo', text: requestCode.message, icon: 'info', confirmButtonColor: "#E31A2A" });
+            }
+
+        }
+    }
+
 
     return (
         <div className={`${CustomClass({ component, version, customClass: "login" })}`}>
@@ -279,9 +395,9 @@ const Login: React.FC = () => {
                         <label className={`${CustomClass({ component, version, customClass: "login-form-child-input-check" })} ${CustomClass({ component, version, customClass: "login-form-child-label-remember" })}`} htmlFor="checkbox-login">Recordarme</label>
                     </div>
                     <div className={`${CustomClass({ component, version, customClass: "login-form-child-input-container-options" })} ${CustomClass({ component, version, customClass: "login-form-child-options-reset" })}`}>
-                        <Link className={`${CustomClass({ component, version, customClass: "nav-link-reset-password" })} ${CustomClass({ component, version, customClass: "nav-link-reset-password" })}`} to="/reset-password">
+                        <button onClick={() => { handleRecoverPassword() }} className={`${CustomClass({ component, version, customClass: "nav-link-reset-password" })} ${CustomClass({ component, version, customClass: "nav-link-reset-password" })}`} type="button">
                             <span className={`${CustomClass({ component, version, customClass: "span-icon-reset-password" })} ${CustomClass({ component, version, customClass: "span-icon-reset-password" })}`}>Recuperar contraseña</span>
-                        </Link>
+                        </button>
                     </div>
                 </div>
                 <div className={`${CustomClass({ component, version, customClass: "login-form-child" })} ${CustomClass({ component, version, customClass: "login-form-child-5" })}`}>

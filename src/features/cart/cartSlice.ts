@@ -194,28 +194,30 @@ export const addClothingItemThunk = createAsyncThunk(
       (item: Product) => item.referencia === product.referencia
     );
 
-    if (
-      (product.segmento_Prenda === "SUPERIOR" &&
-        currentCart.counters.back.upper + 1 > prendas_superiores) ||
-      (product.segmento_Prenda === "INFERIOR" &&
-        currentCart.counters.back.lower + 1 > prendas_inferiores) ||
-      (product.segmento_Prenda === "OTRO" &&
-        currentCart.counters.back.other + 1 > prendas_otros) ||
-      (product.segmento_Prenda === "SACO" &&
-        currentCart.counters.back.other + 0.5 > prendas_otros) ||
-      (product.segmento_Prenda === "VESTIDO" &&
-        (currentCart.counters.back.upper + 1 > prendas_superiores ||
-          currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-      (product.segmento_Prenda === "TRAJE" &&
-        (currentCart.counters.back.upper + 1 > prendas_superiores ||
-          currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-      (product.segmento_Prenda === "ENTERIZO" &&
-        (currentCart.counters.back.upper + 1 > prendas_superiores ||
-          currentCart.counters.back.lower + 1 > prendas_inferiores))
-    ) {
-      return rejectWithValue(
-        "Has completado tu seleccion para este tipo de prenda"
-      );
+    if(rol === "BACK"){
+      if (
+        (product.segmento_Prenda === "SUPERIOR" &&
+          currentCart.counters.back.upper + 1 > prendas_superiores) ||
+        (product.segmento_Prenda === "INFERIOR" &&
+          currentCart.counters.back.lower + 1 > prendas_inferiores) ||
+        (product.segmento_Prenda === "OTRO" &&
+          currentCart.counters.back.other + 1 > prendas_otros) ||
+        (product.segmento_Prenda === "SACO" &&
+          currentCart.counters.back.other + 0.5 > prendas_otros) ||
+        (product.segmento_Prenda === "VESTIDO" &&
+          (currentCart.counters.back.upper + 1 > prendas_superiores ||
+            currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
+        (product.segmento_Prenda === "TRAJE" &&
+          (currentCart.counters.back.upper + 1 > prendas_superiores ||
+            currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
+        (product.segmento_Prenda === "ENTERIZO" &&
+          (currentCart.counters.back.upper + 1 > prendas_superiores ||
+            currentCart.counters.back.lower + 1 > prendas_inferiores))
+      ) {
+        return rejectWithValue(
+          "Has completado tu seleccion para este tipo de prenda"
+        );
+      }
     }
 
     if (rol === "FRONT") {

@@ -1,24 +1,137 @@
-import React, { useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import CustomClass from '../../utils/CustomClass';
+import Swal from "sweetalert2";
 
 import logo from '../../assets/logo-rojo-tu.png';
-import { decryptData } from '../../utils/Decrypt';
-import SelectIdentity from '../SelectIdentity';
+import { decryptData, encryptData } from '../../utils/Decrypt';
+// import SelectIdentity from '../SelectIdentity';
 import MyProfile from '../../pages/MyProfile';
+import { getApuUrl } from '../../utils/config';
 
 const component: string = "header"
 const version: string = "0"
 
 const Header: React.FC = () => {
 
-    const { nombre, administrador } = useSelector((state: RootState) => state.auth);
+    const { nombre, administrador, primer_ingreso, user } = useSelector((state: RootState) => state.auth);
     const [showProfile, setShowProfile] = useState(false);
 
     const userName = decryptData(nombre).data;
 
+    const handleRecoverPassword = async () => {
+        var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "usuario": user
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+            };
+
+            let requestCode;
+
+            try {
+
+                const url = getApuUrl("/solicitarCodigo");
+
+                requestCode = await fetch(url, requestOptions);
+                requestCode = await requestCode.json();
+
+            } catch (error) {
+                return Swal.fire({ title: 'Error al solicitar el codigo', text: 'Ha ocurrido un error al solicitar el codigo para restablecer la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
+            }
+
+            if (requestCode.code === 200) {
+                
+                handleShowProfile();
+                
+
+            } else {
+                return Swal.fire({ title: 'Error al solicitar el codigo', text: requestCode.message, icon: 'info', confirmButtonColor: "#E31A2A" });
+            }
+    }
+
+    const handleShowProfile = () => {
+        Swal.fire({
+            title: `Se ha enviado el correo`,
+            input: 'text',
+            inputLabel: 'Codigo de verificación',
+            inputPlaceholder: '12345',
+            html: `<p>Se ha enviado un email a tu correo para restablecer la contraseña</p><span><span><strong>${decryptData(user).data}</strong></span>`,
+            confirmButtonColor: "#E31A2A"
+        }).then(({ value: codigo }) => {
+
+            Swal.fire({
+                title: `Nueva contraseña`,
+                input: 'text',
+                inputLabel: 'Contraseña nueva',
+                inputPlaceholder: '12345',
+                text: ``,
+                confirmButtonColor: "#E31A2A"
+            }).then(({ value: contrasena }) => {
+
+                var myHeaders1 = new Headers();
+                myHeaders1.append("Content-Type", "application/json");
+
+                var raw1 = JSON.stringify({
+                    "usuario": user,
+                    "codigo": codigo,
+                    "nueva_contrasena": encryptData(contrasena).data
+                });
+
+                var requestOptions1 = {
+                    method: 'POST',
+                    headers: myHeaders1,
+                    body: raw1
+                };
+
+                let requestChangePassword;
+
+                try {
+                    const request = async () => {
+                        try {
+
+                            const url = getApuUrl("/cambiarContrasena")
+
+                            requestChangePassword = await fetch(url, requestOptions1);
+                            requestChangePassword = await requestChangePassword.json();
+
+                            if (requestChangePassword.code === 200) {
+                                return Swal.fire({ title: 'Se ha cambiado la contraseña', text: "Tu contraseña ha sido actualizada correctamente, puedes seguir navegando", icon: 'success', confirmButtonColor: "#E31A2A" });
+
+                            } else if (requestChangePassword.code === 401) {
+                                return Swal.fire({ title: 'Codigo invalido', text: requestChangePassword.message, icon: 'info', confirmButtonColor: "#E31A2A" });
+                            }
+
+                        } catch (error) {
+                            return Swal.fire({ title: 'Error al intentar cambiar la contraseña', text: 'Ha ocurrido un error al intentar cambiar la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
+                        }
+                    }
+
+                    request();
+                } catch (error) {
+                    return Swal.fire({ title: 'Error al intentar cambiar la contraseña', text: 'Ha ocurrido un error al intentar cambiar la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
+                }
+            })
+
+        })
+    }
+
+    useEffect(() => {
+
+        if (primer_ingreso) {
+            handleRecoverPassword();
+        }
+
+    }, [])
 
 
     return (
@@ -105,7 +218,7 @@ const Header: React.FC = () => {
             {
                 showProfile && <MyProfile setShowProfile={setShowProfile} />
             }
-            <SelectIdentity />
+            {/* <SelectIdentity /> */}
         </header>
     );
 };

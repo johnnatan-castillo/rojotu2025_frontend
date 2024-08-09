@@ -27,7 +27,7 @@ const version: string = "0"
 const MyProfile = ({ setShowProfile }: any) => {
 
   const profile = useSelector((state: RootState) => state.auth);
-  const { user, nombre, correo, gender, identidad, rol, grupo, pais, administrador, token } = useSelector((state: RootState) => state.auth);
+  const { user, nombre, correo, gender, rol, grupo, pais, administrador, token } = useSelector((state: RootState) => state.auth);
 
   const [userFull, setUserFull] = useState<Profile>();
   const dispatch = useDispatch<AppDispatch>();
@@ -205,7 +205,7 @@ const MyProfile = ({ setShowProfile }: any) => {
                 </div>
               </div>
 
-              <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
+              {/* <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
                 <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
                   <span className={`${CustomClass({ component, version, customClass: "my-profile-preference" })}`}>Me identifico como:</span>
                 </div>
@@ -219,7 +219,7 @@ const MyProfile = ({ setShowProfile }: any) => {
                     <option value="FEMENINO">Femenino</option>
                   </select>
                 </div>
-              </div>
+              </div> */}
 
             </div>
 

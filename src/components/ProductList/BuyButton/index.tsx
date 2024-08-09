@@ -40,9 +40,6 @@ const BuyButton = () => {
                     dispatch(setStatus({ status: "enviado" }));
                 }
 
-
-
-
             })
     }
 
