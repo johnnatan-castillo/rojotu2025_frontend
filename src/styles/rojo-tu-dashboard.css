@@ -222,3 +222,24 @@
     flex-direction: column;
     justify-content: flex-end;
 }
+
+.rojo-tu-dasboard-0-x-dasboard-table-pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-pagination-next,
+.rojo-tu-dasboard-0-x-dasboard-table-pagination-prev{
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+    color: white;
+    border-radius: 16px;
+    background: #E31A2A;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    margin: 0 20px;
+}

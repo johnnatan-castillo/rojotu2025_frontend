@@ -3,7 +3,7 @@ import { RootState } from '../../redux/store';
 import { useSelector } from 'react-redux';
 import { getApuUrl } from '../../utils/config';
 import CustomClass from '../../utils/CustomClass';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 
 
 const component: string = "dasboard"
@@ -231,11 +231,20 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
     setCurrentPage(prev => (prev < totalPages ? prev + 1 : prev));
   }, [totalPages]);
 
+
+  const displayedProducts = useMemo(() => {
+
+    return sucursales.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, itemsPerPage, sucursales]);
+
   useEffect(() => {
 
     let sucursalesFormat: { country: string, city: string, totals: any }[] = []
 
+    // eslint-disable-next-line array-callback-return
     Object.keys(products).map((country: any) => {
+      // eslint-disable-next-line array-callback-return
       Object.keys(products[country]).map((city: any) => {
 
         sucursalesFormat.push({
@@ -251,13 +260,19 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
 
     setSucursales(sucursalesFormat)
 
-  }, [products])
+  }, [products]);
 
 
   return <div className={`${CustomClass({ component, version, customClass: "table-container" })}`}>
+
+    <div className={`${CustomClass({ component, version, customClass: "table-pagination" })}`}>
+      {currentPage !== 1 && <button className={`${CustomClass({ component, version, customClass: "table-pagination-prev" })}`} onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>}
+      {totalPages > 1 && currentPage !== totalPages && <button className={`${CustomClass({ component, version, customClass: "table-pagination-next" })}`} onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>}
+    </div>
+
     <div className={`${CustomClass({ component, version, customClass: "table-box" })}`}>
       {
-        sucursales.map((sucursal, index) => (
+        displayedProducts.map((sucursal, index) => (
           <div className={`${CustomClass({ component, version, customClass: "table-card" })} ${CustomClass({ component, version, customClass: `table-card-${index}` })}`}>
             <div className={`${CustomClass({ component, version, customClass: "table-card-body" })}`}>
               <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })}`}>{sucursal.totals.carrito_enviado}</span>
@@ -275,10 +290,6 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
         ))
       }
 
-    </div>
-    <div className={`${CustomClass({ component, version, customClass: "table-pagination" })}`}>
-      {currentPage !== 1 && <button className={`${CustomClass({ component, version, customClass: "table-pagination-prev" })}`} onClick={handlePrevPage} disabled={currentPage === 1}>Anterior</button>}
-      {totalPages > 1 && currentPage !== totalPages && <button className={`${CustomClass({ component, version, customClass: "table-pagination-next" })}`} onClick={handleNextPage} disabled={currentPage === totalPages}>Siguiente</button>}
     </div>
   </div>
 }
