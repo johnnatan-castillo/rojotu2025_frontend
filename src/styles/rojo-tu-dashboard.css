@@ -1,3 +1,224 @@
-.tv-lightweight-charts svg{
-    display: none;
+.rojo-tu-dasboard-0-x-dasboard-dasboard{
+    margin-top: 5rem;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global {
+    background: #4D4D4D;
+    width: 297px;
+    height: 174px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 14px;
+    position: relative;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-container {
+    background: white;
+    display: flex;
+    width: 268px;
+    height: 150px;
+    border-radius: 16px;
+    margin-top: -20px;
+    box-shadow: -2px -6px 13px -9px rgba(227,26,42,1);
+    justify-content: center;
+    align-items: center;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-span-value{
+    color: #E31A2A;
+    font-weight: 900;
+    font-size: 40px;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-title {
+    color: white;
+    font-weight: 900;
+    font-size: 20px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-1 {
+    display: flex;
+    justify-content: center;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global{
+    margin: 0 20px
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line{
+    width: 80%;
+    margin-top: 40px;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-2,
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-3{
+    display:flex;
+    justify-content: center;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-table-container{
+    background: #4D4D4D;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card{
+    width: 257px;
+    height: 245px;
+    background: white;
+    padding: 12px 14px;
+    border-radius: 16px;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-body{
+    display:flex;
+    flex-direction: column;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-body-value {
+    font-size: 40px;
+    color: #E31A2A;
+    font-weight: 900;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-bosy-title{
+    font-size: 20px;
+    color: #E31A2A;
+    font-weight: 900; 
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-body-information {
+    background: #4D4D4D;
+    color: white;
+    font-weight: 900;
+    font-size: 16px;
+    padding: 5px 5px;
+    padding-left: 12px;
+    margin-bottom: 5px;
+    border-radius: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-table-box {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card{
+    margin: 15px
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-body:last-child {
+    margin-top: 5px;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-items-per-surcursal{
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-4{
+    display: flex;
+    justify-content: center;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-container {
+    width: 80%;
+    border-radius: 16px;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-2 {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 38px;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line-span{
+    color: #4D4D4D;
+    font-weight: 900;
+    font-size: 30px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-filters-box {
+    width: 80%;
+    display: flex;
+    background: #4D4D4D;
+    border-radius: 16px;
+    padding-left: 50px;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-3{
+    margin: 10px 0;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-filters{
+    margin-right: 50px;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-filters{
+    padding: 20px 0;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-filters-select{
+    height: 40px;
+    border-radius: 16px;
+    width: 250px;
+    padding: 0 20px;
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons {
+    display:flex;
+    align-items: center;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons-remove{
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+    color: white;
+    border-radius: 16px;
+    background: #E31A2A;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    
+}
+
+
+.rojo-tu-dasboard-0-x-dasboard-table-container-items-per-surcursal .rojo-tu-dasboard-0-x-dasboard-table-card-information-items-per-surcursal{
+    width: 540px;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-body-box:first-child{
+    width: 40%;
+}
+
+.rojo-tu-dasboard-0-x-dasboard-table-card-body-box:last-child{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }

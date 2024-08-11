@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
-import ResetPassword from './pages/ResetPassword';
 import Home from './pages/Home';
 import Clothes from './pages/Clothes';
 import MyClothes from './pages/MyClothes';
@@ -24,7 +23,6 @@ const App: React.FC = () => {
         {/* Publicas */}
         <Route element={<PublicRoute />}>
           <Route path="/login" element={<Login />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
         </Route>
         {/* Publicas */}
 
