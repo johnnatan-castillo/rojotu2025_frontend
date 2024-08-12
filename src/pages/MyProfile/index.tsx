@@ -50,6 +50,7 @@ const MyProfile = ({ setShowProfile }: any) => {
   }, [correo, nombre, user]);
 
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSaveChanges = async () => {
 
 
@@ -268,9 +269,9 @@ const MyProfile = ({ setShowProfile }: any) => {
 
           </div>
           <div className={`${CustomClass({ component, version, customClass: "my-profile-3" })}`}>
-            <div className={`${CustomClass({ component, version, customClass: "my-profile-box-footer-box" })} ${CustomClass({ component, version, customClass: "my-profile-footer-box-1" })}`}>
+            {/* <div className={`${CustomClass({ component, version, customClass: "my-profile-box-footer-box" })} ${CustomClass({ component, version, customClass: "my-profile-footer-box-1" })}`}>
               <button onClick={() => handleSaveChanges()} className={`${CustomClass({ component, version, customClass: "my-profile-button-footer" })} ${CustomClass({ component, version, customClass: "my-profile-save-changes" })}`} type="button">Guardar cambios</button>
-            </div>
+            </div> */}
             <div className={`${CustomClass({ component, version, customClass: "my-profile-box-footer-box" })} ${CustomClass({ component, version, customClass: "my-profile-footer-box-2" })}`}>
               <button onClick={() => handleLogout()} className={`${CustomClass({ component, version, customClass: "my-profile-button-footer" })} ${CustomClass({ component, version, customClass: "my-profile-sesion" })}`} type="button">Cerrar sesión</button>
             </div>

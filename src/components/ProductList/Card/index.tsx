@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomClass from '../../../utils/CustomClass';
 import QuickView from '../../QuickView';
 import { BoxSizePLP } from '../BoxSize';
-import NOFOUNDIMAGE from "../../../assets/plp/no-image.jpg"
 import { removeClothingItemThunk } from '../../../features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/store';
@@ -13,6 +12,7 @@ const version: string = "0"
 const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, isPLP }) => {
     const { token, rol } = useSelector((state: RootState) => state.auth);
     const { items } = useSelector((state: RootState) => state.carts.cart);
+    const [imageSrc, setImageSrc] = useState("");
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -37,6 +37,22 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
             }
         }
     };
+    // product.ubicacion_archivo && product.ubicacion_archivo.endsWith('.jpg') ? product.ubicacion_archivo : NOFOUNDIMAGE
+
+    useEffect(() => {
+        const loadImage = async () => {
+            try {
+                const image = await import(`../../../assets/plp/${product.ubicacion_archivo}`);
+                setImageSrc(image.default);
+            } catch (error) {
+                const image = await import("../../../assets/plp/no-image.jpg");
+                setImageSrc(image.default);
+                
+            }
+        };
+
+        loadImage();
+    }, [product.ubicacion_archivo]);
 
 
     return (
@@ -70,7 +86,7 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
                         </button>
                     </div>
                 )}
-                <img className={`${CustomClass({ component, version, customClass: "card-body-image" })}`} src={product.ubicacion_archivo && product.ubicacion_archivo.endsWith('.jpg') ? product.ubicacion_archivo : NOFOUNDIMAGE} alt={product.nombre_archivo} />
+                <img className={`${CustomClass({ component, version, customClass: "card-body-image" })}`} src={imageSrc} alt={product.nombre_archivo} />
             </div>
 
             {/* Footer */}
