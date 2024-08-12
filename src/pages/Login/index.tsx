@@ -91,6 +91,7 @@ const Login: React.FC = () => {
                 const gender = data?.genero;
                 const climate = data?.clima;
                 const grupo = data?.grupo;
+                const cargo = data?.cargo;
                 const pais = data?.pais;
                 const identidad = data?.identidad;
                 const prendas_superiores = data?.prendas_superiores;
@@ -110,6 +111,7 @@ const Login: React.FC = () => {
                     gender,
                     climate,
                     grupo,
+                    cargo,
                     pais,
                     identidad,
                     prendas_superiores,

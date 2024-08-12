@@ -30,13 +30,13 @@
 .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-span-value{
     color: #E31A2A;
     font-weight: 900;
-    font-size: 40px;
+    font-size: 2.730134vw;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-title {
     color: white;
     font-weight: 900;
-    font-size: 20px;
+    font-size: 1.215067vw;
     margin-top: 5px;
     margin-left: 10px;
 }
@@ -70,8 +70,8 @@
 }
 
 .rojo-tu-dasboard-0-x-dasboard-table-card{
-    width: 257px;
-    height: 245px;
+    width: 16.796875vw;
+    height: 14.884569vw;
     background: white;
     padding: 12px 14px;
     border-radius: 16px;
@@ -83,13 +83,13 @@
 }
 
 .rojo-tu-dasboard-0-x-dasboard-table-card-body-value {
-    font-size: 40px;
+    font-size: 2.430134vw;
     color: #E31A2A;
     font-weight: 900;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-table-card-bosy-title{
-    font-size: 20px;
+    font-size: 1.215067vw;
     color: #E31A2A;
     font-weight: 900; 
 }
@@ -98,9 +98,9 @@
     background: #4D4D4D;
     color: white;
     font-weight: 900;
-    font-size: 16px;
+    font-size: 0.972053vw;
     padding: 5px 5px;
-    padding-left: 12px;
+    padding-left: 0.72904vw;
     margin-bottom: 5px;
     border-radius: 16px;
     white-space: nowrap;
@@ -162,7 +162,7 @@
     display: flex;
     background: #4D4D4D;
     border-radius: 16px;
-    padding-left: 50px;
+    padding-left: 1.953125vw;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-box-3{
@@ -170,15 +170,15 @@
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-filters{
-    margin-right: 50px;
+    margin-right: 1.953125vw;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-filters{
-    padding: 20px 0;
+    padding: 1.215067vw 0;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-select{
-    height: 40px;
+    height: 2.430134vw;
     border-radius: 16px;
     width: 250px;
     padding: 0 20px;
@@ -191,9 +191,9 @@
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons-remove{
-    width: 150px;
-    height: 40px;
-    font-size: 16px;
+    width: 9.113001vw;
+    height: 2.430134vw;
+    font-size: 0.972053vw;
     color: white;
     border-radius: 16px;
     background: #E31A2A;
@@ -232,9 +232,9 @@
 
 .rojo-tu-dasboard-0-x-dasboard-table-pagination-next,
 .rojo-tu-dasboard-0-x-dasboard-table-pagination-prev{
-    width: 150px;
-    height: 40px;
-    font-size: 16px;
+    width: 9.113001vw;
+    height: 2.430134vw;
+    font-size: 0.972053vw;
     color: white;
     border-radius: 16px;
     background: #E31A2A;

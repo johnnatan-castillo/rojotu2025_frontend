@@ -7,6 +7,7 @@ const initialState: AuthState = {
   gender: null,
   climate: "",
   grupo: "",
+  cargo: "",
   pais: "",
   identidad: null,
   prendas_superiores: "",
@@ -36,6 +37,7 @@ const authSlice = createSlice({
       state.gender = action.payload.gender;
       state.climate = action.payload.climate;
       state.grupo = action.payload.grupo;
+      state.cargo = action.payload.cargo;
       state.pais = action.payload.pais;
       state.identidad = action.payload.identidad;
       state.prendas_superiores = action.payload.prendas_superiores;
@@ -60,6 +62,7 @@ const authSlice = createSlice({
       state.gender = null;
       state.climate = "";
       state.grupo = "";
+      state.cargo = "";
       state.pais = "";
       state.identidad = null;
       state.prendas_superiores = "";

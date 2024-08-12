@@ -15,6 +15,7 @@ declare global {
         gender: "MASCULINO" | "FEMENINO" | null,
         climate: string,
         grupo: string,
+        cargo:string,
         pais: string,
         identidad: "MASCULINO" | "FEMENINO" | null,
         prendas_superiores: string,

@@ -134,7 +134,6 @@ const SliderSwiperFront = ({ product }: { product: any }) => {
                 className={CustomClass({ component, version, customClass: "slider-swiper-image" })}
                 crossOrigin="anonymous"
             />
-            <span>{product.referencia}</span>
         </button>
         {showQuickView && Object.keys(productQuickView).length > 0 && (
             <QuickView product={productQuickView} setproductQuickView={setproductQuickView} />

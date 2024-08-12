@@ -59,79 +59,69 @@ const Header: React.FC = () => {
             }
     }
 
-    const handleShowProfile = () => {
-        Swal.fire({
+    const handleShowProfile = async () => {
+        const { value: codigo } = await Swal.fire({
             title: `Se ha enviado el correo`,
             input: 'text',
-            inputLabel: 'Codigo de verificación',
+            inputLabel: 'Código de verificación',
             inputPlaceholder: '12345',
-            html: `<p>Se ha enviado un email a tu correo para restablecer la contraseña</p><span><span><strong>${decryptData(user).data}</strong></span>`,
+            html: `<p>Se ha enviado un email a tu correo para restablecer la contraseña</p><span><strong>${decryptData(user).data}</strong></span>`,
             confirmButtonColor: "#E31A2A"
-        }).then(({ value: codigo }) => {
-
-            Swal.fire({
+        });
+    
+        if (codigo) {
+            const { value: contrasena } = await Swal.fire({
                 title: `Nueva contraseña`,
                 input: 'text',
                 inputLabel: 'Contraseña nueva',
                 inputPlaceholder: '12345',
-                text: ``,
                 confirmButtonColor: "#E31A2A"
-            }).then(({ value: contrasena }) => {
-
+            });
+    
+            if (contrasena) {
                 var myHeaders1 = new Headers();
                 myHeaders1.append("Content-Type", "application/json");
-
+    
                 var raw1 = JSON.stringify({
                     "usuario": user,
                     "codigo": codigo,
                     "nueva_contrasena": encryptData(contrasena).data
                 });
-
+    
                 var requestOptions1 = {
                     method: 'POST',
                     headers: myHeaders1,
                     body: raw1
                 };
-
-                let requestChangePassword;
-
+    
                 try {
-                    const request = async () => {
-                        try {
-
-                            const url = getApuUrl("/cambiarContrasena")
-
-                            requestChangePassword = await fetch(url, requestOptions1);
-                            requestChangePassword = await requestChangePassword.json();
-
-                            if (requestChangePassword.code === 200) {
-                                return Swal.fire({ title: 'Se ha cambiado la contraseña', text: "Tu contraseña ha sido actualizada correctamente, puedes seguir navegando", icon: 'success', confirmButtonColor: "#E31A2A" });
-
-                            } else if (requestChangePassword.code === 401) {
-                                return Swal.fire({ title: 'Codigo invalido', text: requestChangePassword.message, icon: 'info', confirmButtonColor: "#E31A2A" });
-                            }
-
-                        } catch (error) {
-                            return Swal.fire({ title: 'Error al intentar cambiar la contraseña', text: 'Ha ocurrido un error al intentar cambiar la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
-                        }
+                    const url = getApuUrl("/cambiarContrasena");
+    
+                    let requestChangePassword:any = await fetch(url, requestOptions1);
+                    requestChangePassword = await requestChangePassword.json();
+    
+                    if (requestChangePassword.code === 200) {
+                        return Swal.fire({ title: 'Se ha cambiado la contraseña', text: "Tu contraseña ha sido actualizada correctamente, puedes seguir navegando", icon: 'success', confirmButtonColor: "#E31A2A" });
+                    } else if (requestChangePassword.code === 401) {
+                        return Swal.fire({ title: 'Código inválido', text: requestChangePassword.message, icon: 'info', confirmButtonColor: "#E31A2A" });
                     }
-
-                    request();
                 } catch (error) {
                     return Swal.fire({ title: 'Error al intentar cambiar la contraseña', text: 'Ha ocurrido un error al intentar cambiar la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
                 }
-            })
-
-        })
-    }
+            }
+        }
+    };
+    
 
     useEffect(() => {
 
         if (primer_ingreso) {
-            // handleRecoverPassword();
+            handleRecoverPassword();
         }
 
     }, [])
+
+    
 
 
     return (
