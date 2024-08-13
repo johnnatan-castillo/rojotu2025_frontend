@@ -10,7 +10,6 @@ import { useFetch } from '../../hooks/useFetch';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
-import NOFOUNDIMAGE from "../../assets/plp/no-image.jpg"
 import Badge from '../Galery/SelectClothe';
 import QuickView from '../QuickView';
 
@@ -23,7 +22,7 @@ const component: string = "slider";
 const version: string = "0";
 
 const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
-    const swiperRef = useRef<any>(null);
+    const swiperRef = useRef<any>(null);    
 
     const profile = useSelector((state: RootState) => state.auth);
 
@@ -103,13 +102,31 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
 
 
 const SliderSwiperBack = ({ product }: { product: LookBook }) => {
+
+    const [imageSrc, setImageSrc] = useState("");
+
+    useEffect(() => {
+        const loadImage = async () => {
+            try {
+                const image = await import(`../../assets/plp/${product.ubicacion_archivo}`);
+                setImageSrc(image.default);
+            } catch (error) {
+                const image = await import("../../assets/plp/no-image.jpg");
+                setImageSrc(image.default);
+                
+            }
+        };
+
+        loadImage();
+    }, [product.ubicacion_archivo]);
+
     return <>
         <a href="#" className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-back" })}`}>
             <Badge component={component} version={version} numberButton={1} id={product.referencia_prenda_superior} />
             <Badge component={component} version={version} numberButton={2} id={product.referencia_prenda_inferior} />
             <Badge component={component} version={version} numberButton={3} id={product.referencia_otro} />
             <img
-                src={product.image && product.image.endsWith('.jpg') ? product.image : NOFOUNDIMAGE}
+                src={imageSrc}
                 loading="eager"
                 alt={product.id + '-' + product.referencia_prenda_superior + '-' + product.referencia_prenda_inferior + '-' + product.referencia_otro}
                 className={CustomClass({ component, version, customClass: "slider-swiper-image" })}
@@ -125,10 +142,27 @@ const SliderSwiperFront = ({ product }: { product: any }) => {
 
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
 
+    const [imageSrc, setImageSrc] = useState("");
+
+    useEffect(() => {
+        const loadImage = async () => {
+            try {
+                const image = await import(`../../assets/plp/${product.ubicacion_archivo}`);
+                setImageSrc(image.default);
+            } catch (error) {
+                const image = await import("../../assets/plp/no-image.jpg");
+                setImageSrc(image.default);
+                
+            }
+        };
+
+        loadImage();
+    }, [product.ubicacion_archivo]);
+
     return <>
         <button onClick={() => { setproductQuickView({ ...product, referencia_prenda_superior: product.referencia_prenda_superior, id_prenda_inferior: product.id_prenda_inferior, id_prenda_otro: product.id_prenda_otro }); setshowQuickView(true); }} className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-front" })}`} type="button">
             <img
-                src={product.nombre_archivo && product.nombre_archivo.endsWith('.jpg') ? product.nombre_archivo : NOFOUNDIMAGE}
+                src={imageSrc}
                 loading="eager"
                 alt={product.id + '-' + product.referencia_prenda_superior + '-' + product.referencia_prenda_inferior + '-' + product.referencia_otro}
                 className={CustomClass({ component, version, customClass: "slider-swiper-image" })}

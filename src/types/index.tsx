@@ -43,6 +43,7 @@ declare global {
         referencia_prenda_inferior: string;
         referencia_otro: string;
         image: string
+        ubicacion_archivo: string
         rol: string;
         clima: string;
         identidad: string;

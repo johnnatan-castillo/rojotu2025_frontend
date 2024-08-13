@@ -105,7 +105,8 @@
 }
 
 .rojo-tu-card-0-x-card-card-footer-product-sku-size {
-    width: 1.945525vw;
+    width: auto;
+    min-width: 1.945525vw;
     height: 1.215953vw;
     display: flex;
     border: 1px solid #4D4D4D;
@@ -464,4 +465,10 @@
 
 .rojo-tu-card-0-x-card-card-footer-product-sku-days-body-my-cart{
     height:  auto;
+}
+
+.rojo-tu-card-0-x-card-card-footer-product-sizes-block,
+.rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-container-block {
+    opacity: 0.5;
+    pointer-events: none;
 }

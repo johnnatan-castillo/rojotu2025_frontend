@@ -204,3 +204,8 @@
 .rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-button-block{
     pointer-events: none;
 }
+
+.rojo-tu-quickview-0-x-quickview-card-footer-product-sizes-block{
+    opacity: 0.5;
+    pointer-events: none;
+}

@@ -6,7 +6,6 @@ import { AppDispatch, RootState } from '../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { addClothingItemThunk, setMessage } from '../../features/cart/cartSlice';
 
-import NOFOUNDIMAGE from "../../assets/plp/no-image.jpg"
 import { getApuUrl } from '../../utils/config';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,6 +16,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     const { rol } = useSelector((state: RootState) => state.auth);
     const { nombre_prenda, descripcion, dias } = product;
     const imageRef: any = useRef(null);
+    const [imageSrc, setImageSrc] = useState("");
     const [isZoomed, setIsZoomed] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -44,6 +44,21 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     const handleHideQuickView = () => {
         setproductQuickView({} as Product); // Limpia el producto cuando se cierra
     };
+
+    useEffect(() => {
+        const loadImage = async () => {
+            try {
+                const image = await import(`../../assets/plp/${product.ubicacion_archivo}`);
+                setImageSrc(image.default);
+            } catch (error) {
+                const image = await import("../../assets/plp/no-image.jpg");
+                setImageSrc(image.default);
+                
+            }
+        };
+
+        loadImage();
+    }, [product.ubicacion_archivo]);
 
     return ReactDOM.createPortal(
         <div className={`${CustomClass({ component, version, customClass: "quickview" })}`}>
@@ -80,7 +95,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                         onMouseMove={handleMouseMove} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-container" })}`}>
                         <img ref={imageRef} style={{
                             transformOrigin: `${position.x * 100}% ${position.y * 100}%`
-                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={product.ubicacion_archivo && product.ubicacion_archivo.endsWith('.jpg') ? product.ubicacion_archivo : NOFOUNDIMAGE} alt={nombre_prenda} />
+                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={imageSrc} alt={nombre_prenda} />
                     </div>
 
                     {/* Información de prenda */}
@@ -154,7 +169,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
 
     return (
         <>
-            {tallas && <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })}`}>
+            {tallas && <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
                 {
                     product.tallas.split("-").map((size: string, index: number) => (
                         <button key={index + Math.random()} onClick={() => handleSizeClick(size)}
@@ -167,7 +182,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
                 }
             </div>}
 
-            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })}`}>
+            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
                 <button onClick={() => handleAddCart()} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })}`}>{selectedSize.size ? selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla" : "Agregar al carrito"}</button>
             </div>
         </>

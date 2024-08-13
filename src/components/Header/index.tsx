@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
 import CustomClass from '../../utils/CustomClass';
 import Swal from "sweetalert2";
 
@@ -11,6 +11,7 @@ import { decryptData, encryptData } from '../../utils/Decrypt';
 // import SelectIdentity from '../SelectIdentity';
 import MyProfile from '../../pages/MyProfile';
 import { getApuUrl } from '../../utils/config';
+import { updateUserInfo } from '../../features/auth/authSlice';
 
 const component: string = "header"
 const version: string = "0"
@@ -19,6 +20,7 @@ const Header: React.FC = () => {
 
     const { nombre, administrador, primer_ingreso, user } = useSelector((state: RootState) => state.auth);
     const [showProfile, setShowProfile] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
 
     const userName = decryptData(nombre).data;
 
@@ -101,6 +103,9 @@ const Header: React.FC = () => {
                     requestChangePassword = await requestChangePassword.json();
     
                     if (requestChangePassword.code === 200) {
+
+                        dispatch(updateUserInfo({primer_ingreso: false}))
+
                         return Swal.fire({ title: 'Se ha cambiado la contraseña', text: "Tu contraseña ha sido actualizada correctamente, puedes seguir navegando", icon: 'success', confirmButtonColor: "#E31A2A" });
                     } else if (requestChangePassword.code === 401) {
                         return Swal.fire({ title: 'Código inválido', text: requestChangePassword.message, icon: 'info', confirmButtonColor: "#E31A2A" });

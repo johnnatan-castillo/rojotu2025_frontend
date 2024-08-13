@@ -79,8 +79,14 @@ const authSlice = createSlice({
       state.primer_ingreso = false;
       state.administrador = false;
     },
-  }
+    updateUserInfo: (
+      state,
+      action: PayloadAction<{ primer_ingreso: boolean }>
+    ) => {
+      state.primer_ingreso = action.payload.primer_ingreso;
+    },
+  },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, updateUserInfo } = authSlice.actions;
 export default authSlice.reducer;
