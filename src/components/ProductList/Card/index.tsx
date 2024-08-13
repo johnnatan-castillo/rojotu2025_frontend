@@ -97,7 +97,7 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
                     <span className={`${CustomClass({ component, version, customClass: "card-footer-product-name" })}`}>{product.nombre_prenda}</span>
                 </div>
                 {showSizes && product.tallas && (
-                    <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
+                    <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${status ==="enviado" && CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
                         <BoxSizePLP component={component} version={version} product={product} isPLP={isPLP} />
                     </div>
                 )}

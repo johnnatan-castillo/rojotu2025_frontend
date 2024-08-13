@@ -140,7 +140,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
     const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const { items } = useSelector((state: RootState) => state.carts.cart);
+    const { items, status } = useSelector((state: RootState) => state.carts.cart);
 
     const limits = {
         prendas_superiores: parseInt(prendas_superiores),
@@ -169,7 +169,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
 
     return (
         <>
-            {tallas && <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
+            {tallas && <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${ status ==="enviado" && CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
                 {
                     product.tallas.split("-").map((size: string, index: number) => (
                         <button key={index + Math.random()} onClick={() => handleSizeClick(size)}
@@ -182,7 +182,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
                 }
             </div>}
 
-            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
+            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status ==="enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
                 <button onClick={() => handleAddCart()} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })}`}>{selectedSize.size ? selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla" : "Agregar al carrito"}</button>
             </div>
         </>
