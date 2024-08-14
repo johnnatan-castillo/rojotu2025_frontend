@@ -65,7 +65,6 @@ const Header: React.FC = () => {
         [primer_ingreso],
     )
 
-
     const handleShowProfile = async () => {
         const { value: codigo } = await Swal.fire({
             title: `Se ha enviado el correo`,

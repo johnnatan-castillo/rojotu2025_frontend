@@ -11,7 +11,7 @@ const version: string = "0";
 const Home = () => {
   return (
     <div className={`${CustomClass({ component, version, customClass: "home" })}`}>
-      <Countdown targetDate="2024-08-14T18:59:59" />
+      <Countdown targetDate="2024-08-15T00:00:00" />
     </div>
   )
 }
