@@ -13,7 +13,7 @@ const version: string = "0"
 const Dashboard = () => {
 
   const userRole = useSelector((state: RootState) => state.auth);
-  const [usersPerDay, setUsersPerDay] = useState([]);
+  const [usersPerDay, setUsersPerDay] = useState<any>([]);
   const [reportBig, setReportBig] = useState<any>({});
 
   const [dataFilterByCountry, setDataFilterByCountry] = useState<any>({})
@@ -122,9 +122,9 @@ const Dashboard = () => {
 
         <div className={`${CustomClass({ component, version, customClass: "dasboard-status-global" })}`}>
           <div className={`${CustomClass({ component, version, customClass: "dasboard-status-global-container" })}`}>
-            <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-span-value" })}`}>1.000.000</span>
+            <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-span-value" })}`}>{usersPerDay?.total}</span>
           </div>
-          <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-title" })}`}>Inicio de sesión por día</span>
+          <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-title" })}`}>Total de inicios de sesión</span>
         </div>
 
         <div className={`${CustomClass({ component, version, customClass: "dasboard-status-global" })}`}>
@@ -147,7 +147,7 @@ const Dashboard = () => {
           <span className={`${CustomClass({ component, version, customClass: "dasboard-chart-line-span" })}`}>Metrica de inicio de sesion por día</span>
         </div>
         <div className={`${CustomClass({ component, version, customClass: "dasboard-chart-line" })}`}>
-          <ListChart data={usersPerDay} />
+          <ListChart data={usersPerDay?.detalle} />
         </div>
       </div>
       <div className={`${CustomClass({ component, version, customClass: "dasboard-box-3" })}`}>
@@ -309,6 +309,9 @@ const ItemsPerSurcursal: React.FC<ItemsPerSurcursalI> = ({ sucursal }) => {
     return <></>
   }
 
+  console.log(sucursal);
+  
+
   return <div className={`${CustomClass({ component, version, customClass: "table-container" })} ${CustomClass({ component, version, customClass: "table-container-items-per-surcursal" })}`}>
 
     <div className={`${CustomClass({ component, version, customClass: "table-box" })} ${CustomClass({ component, version, customClass: "table-box-1" })}`}>
@@ -368,6 +371,11 @@ interface LineChartComponentProps {
 }
 
 const ListChart: React.FC<LineChartComponentProps> = ({ data }) => {
+
+  if(!data){
+    return <></>
+  }
+
   // Formatear la fecha a "MMM DD"
   const formattedData = data.map(item => ({
     ...item,

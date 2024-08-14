@@ -2,12 +2,12 @@ import React, { useEffect, useState, useMemo, useCallback, useRef } from 'react'
 import CustomClass from '../../utils/CustomClass';
 import Card from './Card';
 import Counter from './Counter';
-import { useFetch } from '../../hooks/useFetch';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BuyButton from './BuyButton';
 import { resetFilter } from '../../features/filter/filterSlice';
+import { getApuUrl } from '../../utils/config';
 
 const component: string = "product-list";
 const version: string = "0";
@@ -35,12 +35,59 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
     const hasFetched = useRef(false);
     const navigate = useNavigate();
 
-    const { data, loading, error }: any = useConditionalFetch(isFetch, profile);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [data, setData] = useState([]);
+
+
+    const fetchClothes = () => {
+
+        const url = getApuUrl("/listarPrendas");
+
+        const raw = JSON.stringify({
+            "tipo": profile.rol === "BACK" ? "PRENDA" : 'OUTFIT'
+        });
+
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                token: profile.token
+            },
+            body: raw,
+        };
+
+        fetch(url, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.code === 200) {
+                    setData(result.data);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                setError(true);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
 
     useEffect(() => {
-        if (!hasFetched.current && isFetch && !loading && !error && data) {
-            setProducts(() => (data));
+
+        if(!hasFetched.current){
+            setLoading(true);
+            fetchClothes();
             hasFetched.current = true;
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+
+    useEffect(() => {
+        if (hasFetched.current && isFetch && !loading && !error && data) {
+            setProducts(() => (data));
         }
     }, [data, error, loading, isFetch]);
 
@@ -130,21 +177,6 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
             </div>
         </div>
     );
-};
-
-const useConditionalFetch = (isFetch: boolean, profile: any) => {
-    const { data, loading, error } = useFetch("/listarPrendas", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            token: profile.token
-        },
-        body: JSON.stringify({
-            "tipo": profile.rol === "BACK" ? "PRENDA" : 'OUTFIT'
-        })
-    });
-
-    return { data, loading, error };
 };
 
 export default ProductList;

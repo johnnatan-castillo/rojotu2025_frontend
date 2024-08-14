@@ -6,12 +6,12 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import CustomClass from '../../utils/CustomClass';
-import { useFetch } from '../../hooks/useFetch';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 
 import Badge from '../Galery/SelectClothe';
 import QuickView from '../QuickView';
+import { getApuUrl } from '../../utils/config';
 
 interface CarruselProps {
     direction: "horizontal" | "vertical";
@@ -22,22 +22,61 @@ const component: string = "slider";
 const version: string = "0";
 
 const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
-    const swiperRef = useRef<any>(null);    
+    const swiperRef = useRef<any>(null);
 
     const profile = useSelector((state: RootState) => state.auth);
 
     const [products, setProducts] = useState<LookBook[]>([]);
 
-    const { data, loading, error } = useFetch("/listarPrendas", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            token: profile.token
-        },
-        body: JSON.stringify({
+    const hasFetched = useRef(false);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(false);
+    const [data, setData] = useState([]);
+
+
+    const fetchClothes = () => {
+
+        const url = getApuUrl("/listarPrendas");
+
+        const raw = JSON.stringify({
             "tipo": "LOOKBOOK"
-        })
-    });
+        });
+
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                token: profile.token
+            },
+            body: raw,
+        };
+
+        fetch(url, requestOptions)
+            .then((response) => response.json())
+            .then((result) => {
+                if (result.code === 200) {
+                    setData(result.data);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                setError(true);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
+    }
+
+    useEffect(() => {
+
+        if (!hasFetched.current) {
+            setLoading(true);
+            fetchClothes();
+            hasFetched.current = true;
+        }
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     useEffect(() => {
         if (!loading && !error && data) {
@@ -113,7 +152,7 @@ const SliderSwiperBack = ({ product }: { product: LookBook }) => {
             } catch (error) {
                 const image = await import("../../assets/plp/no-image.jpg");
                 setImageSrc(image.default);
-                
+
             }
         };
 
@@ -152,7 +191,7 @@ const SliderSwiperFront = ({ product }: { product: any }) => {
             } catch (error) {
                 const image = await import("../../assets/plp/no-image.jpg");
                 setImageSrc(image.default);
-                
+
             }
         };
 

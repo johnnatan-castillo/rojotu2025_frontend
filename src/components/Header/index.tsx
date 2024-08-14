@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
@@ -21,11 +21,13 @@ const Header: React.FC = () => {
     const { nombre, administrador, primer_ingreso, user } = useSelector((state: RootState) => state.auth);
     const [showProfile, setShowProfile] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
+    const hasRun = useRef(false);
 
     const userName = decryptData(nombre).data;
 
-    const handleRecoverPassword = async () => {
-        var myHeaders = new Headers();
+    const handleRecoverPassword = useCallback(
+        async () => {
+            var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
 
             var raw = JSON.stringify({
@@ -52,14 +54,17 @@ const Header: React.FC = () => {
             }
 
             if (requestCode.code === 200) {
-                
+
                 handleShowProfile();
-                
+
 
             } else {
                 return Swal.fire({ title: 'Error al solicitar el codigo', text: requestCode.message, icon: 'info', confirmButtonColor: "#E31A2A" });
             }
-    }
+        },
+        [primer_ingreso],
+    )
+
 
     const handleShowProfile = async () => {
         const { value: codigo } = await Swal.fire({
@@ -70,7 +75,7 @@ const Header: React.FC = () => {
             html: `<p>Se ha enviado un email a tu correo para restablecer la contraseña</p><span><strong>${decryptData(user).data}</strong></span>`,
             confirmButtonColor: "#E31A2A"
         });
-    
+
         if (codigo) {
             const { value: contrasena } = await Swal.fire({
                 title: `Nueva contraseña`,
@@ -79,32 +84,32 @@ const Header: React.FC = () => {
                 inputPlaceholder: '12345',
                 confirmButtonColor: "#E31A2A"
             });
-    
+
             if (contrasena) {
                 var myHeaders1 = new Headers();
                 myHeaders1.append("Content-Type", "application/json");
-    
+
                 var raw1 = JSON.stringify({
                     "usuario": user,
                     "codigo": codigo,
                     "nueva_contrasena": encryptData(contrasena).data
                 });
-    
+
                 var requestOptions1 = {
                     method: 'POST',
                     headers: myHeaders1,
                     body: raw1
                 };
-    
+
                 try {
                     const url = getApuUrl("/cambiarContrasena");
-    
-                    let requestChangePassword:any = await fetch(url, requestOptions1);
+
+                    let requestChangePassword: any = await fetch(url, requestOptions1);
                     requestChangePassword = await requestChangePassword.json();
-    
+
                     if (requestChangePassword.code === 200) {
 
-                        dispatch(updateUserInfo({primer_ingreso: false}))
+                        dispatch(updateUserInfo({ primer_ingreso: false }))
 
                         return Swal.fire({ title: 'Se ha cambiado la contraseña', text: "Tu contraseña ha sido actualizada correctamente, puedes seguir navegando", icon: 'success', confirmButtonColor: "#E31A2A" });
                     } else if (requestChangePassword.code === 401) {
@@ -116,17 +121,15 @@ const Header: React.FC = () => {
             }
         }
     };
-    
 
     useEffect(() => {
-
-        if (primer_ingreso) {
+        if (primer_ingreso && !hasRun.current) { 
             handleRecoverPassword();
+            hasRun.current = true;
         }
+    }, [primer_ingreso]);
 
-    }, [])
 
-    
 
 
     return (

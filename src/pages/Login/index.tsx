@@ -351,7 +351,7 @@ const Login: React.FC = () => {
         <div className={`${CustomClass({ component, version, customClass: "login" })}`}>
             <img className={`${CustomClass({ component, version, customClass: "login-logo" })}`} src={LOGO} alt="Logo Rojo tú" />
             <img className={`${CustomClass({ component, version, customClass: "login-baner" })}`} src={BANERLOGIN} alt="Baner login rojo tú" />
-            <form onSubmit={handleSubmit} className={`${CustomClass({ component, version, customClass: "login-container-form" })}`}>
+            <form onSubmit={(e) => handleSubmit(e)} className={`${CustomClass({ component, version, customClass: "login-container-form" })}`}>
                 <div className={`${CustomClass({ component, version, customClass: "login-form-child" })} ${CustomClass({ component, version, customClass: "login-form-child-1" })}`}>
                     <span className={`${CustomClass({ component, version, customClass: "login-title-span" })}`}>Iniciar Sesión</span>
                 </div>
