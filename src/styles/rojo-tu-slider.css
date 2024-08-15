@@ -1,8 +1,5 @@
 .rojo-tu-slider-0-x-slider-galery-image-button-quickview-span {
-    width: 1.070039vw;
-    height: 1.070039vw;
     border-radius: 16px;
-    font-size: 0.77821vw;
     display: flex;
     color: white;
     border: 1px solid white;
@@ -15,8 +12,6 @@
     background: none;
     border: none;
     position: absolute;
-    top: 50%;
-    left: 50%;
     cursor: pointer;
     z-index: 10;
 }
@@ -60,3 +55,40 @@
     border: none;
     cursor: pointer;
 }
+
+
+/*--- Inicio estilos ---*/ 
+
+@media only screen and (min-width: 1026px) {
+
+    .rojo-tu-slider-0-x-slider-galery-image-button-quickview-span {
+        width: 1.070039vw;
+        height: 1.070039vw;
+        font-size: 0.77821vw;
+    }
+
+    .rojo-tu-slider-0-x-slider-galery-image-button-quickview-button {
+        top: 50%;
+        left: 50%;
+    }
+    
+
+}
+
+@media only screen and (max-width: 1025px) {
+
+    .rojo-tu-slider-0-x-slider-galery-image-button-quickview-span {
+        width: 20px;
+        height: 20px;
+        font-size: 14px;
+    }
+
+    .rojo-tu-slider-0-x-slider-galery-image-button-quickview-button {
+        top: 65%;
+        left: 52%;
+    }
+
+}
+
+ /*--- Fin estilos ---*/ 
+

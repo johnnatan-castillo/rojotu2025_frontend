@@ -17,7 +17,6 @@
 }
 
 .rojo-tu-my-profile-0-x-my-profile-my-profile-title {
-    font-size: 1.167315vw;
     font-weight: 700;
 }
 
@@ -27,8 +26,6 @@
 }
 
 .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child {
-    margin-bottom: 0.583658vw;
-    padding: 0.486381vw 1.459144vw;
     display: flex;
 }
 
@@ -37,13 +34,11 @@
 }
 
 .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-1 span {
-    font-size: 0.875486vw;
     font-weight: 700;
 }
 
 .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 span,
 .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 select {
-    font-size: 0.875486vw;
     font-weight: 400;
 }
 
@@ -95,7 +90,7 @@
 
 
 
-.rojo-tu-my-profile-0-x-my-profile-my-profile-button-close{
+.rojo-tu-my-profile-0-x-my-profile-my-profile-button-close {
     background: none;
     border: none;
     position: absolute;
@@ -106,7 +101,7 @@
 
 
 
-.rojo-tu-my-profile-0-x-my-profile-my-profile{
+.rojo-tu-my-profile-0-x-my-profile-my-profile {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -116,11 +111,72 @@
 }
 
 
-.rojo-tu-my-profile-0-x-my-profile-my-profile-overlay{
+.rojo-tu-my-profile-0-x-my-profile-my-profile-overlay {
     background: #000000ab;
-   position: fixed;
-   top: 0;
-   z-index: 999;
-   width: 100%;
-   height: 100vh;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+    height: 100vh;
 }
+
+
+
+/*--- Inicio estilos ---*/
+
+@media only screen and (min-width: 1026px) {
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-title {
+        font-size: 1.167315vw;
+    }
+
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-1 span {
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 span,
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 select {
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child {
+        margin-bottom: 0.583658vw;
+        padding: 0.486381vw 1.459144vw;
+        display: flex;
+    }
+
+
+}
+
+@media only screen and (max-width: 1025px) {
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-title {
+        font-size: 20px;
+        margin-top: 10px;
+        display: block;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-1 span {
+        font-size: 14px;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 span,
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 select {
+        font-size: 14px;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child {
+        margin-bottom: 20px;
+        padding: 14px 5px;
+        display: flex;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile{
+        width: 400px;
+        height: 400px;
+    }
+
+}
+
+/*--- Fin estilos ---*/

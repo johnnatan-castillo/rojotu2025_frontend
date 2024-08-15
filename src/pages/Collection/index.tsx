@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import CustomClass from '../../utils/CustomClass';
 import Spinner from '../../components/Spinner/intex';
 import { useSelector } from 'react-redux';
@@ -14,11 +14,24 @@ const Collection = () => {
 
   const userRole = useSelector((state: RootState) => state.auth.rol);
 
+  const [slidesPerView, setSlidesPerView] = useState(0);
+
+  useEffect(() => {
+    
+    setSlidesPerView(window.innerWidth <= 600? 2 : 5);
+  
+  }, [])
+
+
   if (!userRole) {
     return <div>
       <span>Inicia sesión para ver los productos</span>
     </div>
   }
+
+
+ 
+  
 
   return (
     <div className={`${CustomClass({ component, version, customClass: "collection" })}`}>
@@ -26,7 +39,7 @@ const Collection = () => {
         <div className={`${CustomClass({ component, version, customClass: "collection-box" })}`}>
           <Suspense fallback={<Spinner />}>
             {/* <Galery /> */}
-            <Slider direction='horizontal' slidesPerView={5} />
+            <Slider direction='horizontal' slidesPerView={slidesPerView} />
           </Suspense>
         </div>
       </div>

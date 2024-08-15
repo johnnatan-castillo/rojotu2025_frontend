@@ -237,7 +237,6 @@
 }
 
 .rojo-tu-product-list-0-x-product-list-product-list-empty-label {
-    font-size: 1.167315vw;
     font-weight: 600;
 }
 
@@ -415,13 +414,8 @@
 .rojo-tu-product-list-0-x-product-list-product-list-empty-remove-filters {
     background: #4D4D4D;
     color: white;
-    font-size: 0.875486vw;
-    width: 7.29572vw;
-    height: 2.188716vw;
-    margin-top: 0.972763vw;
     font-family: 'Lato';
     cursor: pointer;
-    margin: 0 0.486381vw;
     text-decoration: none;
     display: flex;
     justify-content: center;
@@ -521,6 +515,18 @@
         justify-content: center;
     }
 
+    .rojo-tu-product-list-0-x-product-list-product-list-empty-label {
+        font-size: 1.167315vw;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-empty-remove-filters {
+        font-size: 0.875486vw;
+        width: 7.29572vw;
+        height: 2.188716vw;
+        margin-top: 0.972763vw;
+        margin: 0 0.486381vw;
+    }
+
 }
 
 @media only screen and (max-width: 1025px) {
@@ -585,6 +591,17 @@
 
     .rojo-tu-counter-0-x-counter-counter-cart-number {
         padding-right: 40px;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-empty-label {
+        font-size: 16px;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-empty-remove-filters {
+        font-size: 15px;
+        width: 150px;
+        height: 30px;
+        margin-top: 16px;
     }
 
 }
