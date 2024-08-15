@@ -55,10 +55,6 @@
     align-items: center;
 }
 
-.rojo-tu-my-profile-0-x-my-profile-my-profile-1 {
-    margin: 1.215953vw 0;
-}
-
 .rojo-tu-my-profile-0-x-my-profile-my-profile-3 {
     width: 100%;
     margin: 0.972763vw 0;
@@ -70,13 +66,9 @@
 }
 
 .rojo-tu-my-profile-0-x-my-profile-my-profile-button-footer {
-    width: 9.727626vw;
-    height: 1.945525vw;
     background: #4D4D4D;
     border: none;
     color: white;
-    margin-bottom: 0.486381vw;
-    font-size: 0.875486vw;
     font-family: 'Lato';
     cursor: pointer;
     transition: all 0.5s ease-out;
@@ -146,19 +138,29 @@
         display: flex;
     }
 
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-button-footer {
+        width: 9.727626vw;
+        height: 1.945525vw;
+        margin-bottom: 0.486381vw;
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-1 {
+        margin: 1.215953vw 0;
+    }
 
 }
 
 @media only screen and (max-width: 1025px) {
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-title {
-        font-size: 20px;
+        font-size: 24px;
         margin-top: 10px;
         display: block;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-1 span {
-        font-size: 14px;
+        font-size: 15px;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 span,
@@ -167,15 +169,31 @@
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child {
-        margin-bottom: 20px;
-        padding: 14px 5px;
+        margin-bottom: 15px;
+        padding: 0px 5px;
         display: flex;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile{
-        width: 400px;
+        width: 95%;
         height: 400px;
     }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-button-footer {
+        width: 200px;
+        height: 40px;
+        font-size: 18px;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-button-close svg{
+        width: 34px;
+        height: 34px;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-1 {
+        margin: 10px 0;
+    }
+    
 
 }
 
