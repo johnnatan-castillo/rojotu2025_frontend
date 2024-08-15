@@ -14,7 +14,6 @@
 }
 
 .rojo-tu-product-list-0-x-product-list-product-list-box .rojo-tu-card-0-x-card-card {
-    width: 25%;
     padding: 2px;
     position: relative;
 }
@@ -84,30 +83,26 @@
 .rojo-tu-card-0-x-card-card-footer-product-sku,
 .rojo-tu-card-0-x-card-card-footer-container-name,
 .rojo-tu-card-0-x-card-card-footer-body-product-buy-size-text {
-    font-size: 0.77821vw;
     text-transform: capitalize;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    max-width: 12.159533vw;
 }
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-body-my-cart{
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body-my-cart {
     flex-direction: column;
 }
 
-.rojo-tu-card-0-x-card-card-footer-body-product-buy-size-1{
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-size-1 {
     margin-bottom: 0.390625vw
 }
 
-.rojo-tu-card-0-x-card-card-footer-body-product-buy-size-2{
+.rojo-tu-card-0-x-card-card-footer-body-product-buy-size-2 {
     width: 100%;
 }
 
 .rojo-tu-card-0-x-card-card-footer-product-sku-size {
     width: auto;
-    min-width: 1.945525vw;
-    height: 1.215953vw;
     display: flex;
     border: 1px solid #4D4D4D;
     text-align: center;
@@ -115,8 +110,6 @@
     justify-content: center;
     margin: 0 2px;
     color: #4D4D4D;
-    font-size: 0.583658vw;
-    margin-bottom: 0.340467vw;
     transition: all 0.3s ease-out;
     background: none;
 }
@@ -154,20 +147,15 @@
 
 .rojo-tu-counter-0-x-counter-counter-cart-number svg {
     fill: #4D4D4D;
-    width: 3.11284vw;
-    height: 3.11284vw;
 }
 
 
 .rojo-tu-product-list-0-x-product-list-product-list-counter {
     position: sticky;
-    top: 9.738521vw;
     background: white;
     z-index: 990;
-    height: 4.377432vw;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 .rojo-tu-counter-0-x-counter-counter-cart-number {
@@ -179,24 +167,18 @@
 .rojo-tu-counter-0-x-counter-counter-cart-bottom-count,
 .rojo-tu-counter-0-x-counter-counter-cart-others-count {
     display: flex;
-    width: 1.070039vw;
-    height: 1.070039vw;
     background: #E31A2A;
     color: white;
     justify-content: center;
     align-items: center;
     border-radius: 100px;
     position: absolute;
-    top: 40%;
-    left: 50%;
-    font-size: 0.575486vw;
 }
 
 .rojo-tu-counter-0-x-counter-counter-cart-top,
 .rojo-tu-counter-0-x-counter-counter-cart-bottom,
 .rojo-tu-counter-0-x-counter-counter-cart-others {
     position: relative;
-    width: 5.593385vw;
 }
 
 .rojo-tu-product-list-0-x-product-list-product-list-pagination-prev {
@@ -273,16 +255,12 @@
     position: relative;
     width: 100%;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 .rojo-tu-buy-button-0-x-buy-button-buy-button-button {
     position: absolute;
     right: 0.972763vw;
-    width: 7.29572vw;
-    height: 1.945525vw;
-    font-size: 0.77821vw;
     background: #4D4D4D;
     color: white;
     border-radius: 5px;
@@ -293,7 +271,6 @@
     cursor: pointer;
     transition: all 0.5s ease-out;
     transition: all 0.5s ease-in;
-    font-size: 0.77821vw;
 }
 
 .rojo-tu-buy-button-0-x-buy-button-buy-button-button:hover {
@@ -431,7 +408,7 @@
 .rojo-tu-counter-0-x-counter-counter-cart-top-icon svg:hover,
 .rojo-tu-counter-0-x-counter-counter-cart-bottom-icon svg:hover,
 .rojo-tu-counter-0-x-counter-counter-cart-others-icon svg:hover,
-.rojo-tu-counter-0-x-counter-counter-cart-others-icon svg:hover{
+.rojo-tu-counter-0-x-counter-counter-cart-others-icon svg:hover {
     fill: #E31A2A;
 }
 
@@ -453,18 +430,18 @@
     margin-top: 20px;
 }
 
-.rojo-tu-product-list-0-x-product-list-product-list-box-counter-block .rojo-tu-counter-0-x-counter-counter-cart-number button{
+.rojo-tu-product-list-0-x-product-list-product-list-box-counter-block .rojo-tu-counter-0-x-counter-counter-cart-number button {
     pointer-events: none;
 }
 
-.rojo-tu-buy-button-0-x-buy-button-buy-button-button-block{
+.rojo-tu-buy-button-0-x-buy-button-buy-button-button-block {
     opacity: 0.5;
     pointer-events: none;
     cursor: not-allowed
 }
 
-.rojo-tu-card-0-x-card-card-footer-product-sku-days-body-my-cart{
-    height:  auto;
+.rojo-tu-card-0-x-card-card-footer-product-sku-days-body-my-cart {
+    height: auto;
 }
 
 .rojo-tu-card-0-x-card-card-footer-product-sizes-block,
@@ -472,3 +449,144 @@
     opacity: 0.5;
     pointer-events: none;
 }
+
+
+/*--- Inicio estilos ---*/
+
+@media only screen and (min-width: 1026px) {
+    .rojo-tu-product-list-0-x-product-list-product-list-box .rojo-tu-card-0-x-card-card {
+        width: 25%;
+    }
+
+    .rojo-tu-card-0-x-card-card-footer-product-sku,
+    .rojo-tu-card-0-x-card-card-footer-container-name,
+    .rojo-tu-card-0-x-card-card-footer-body-product-buy-size-text {
+        font-size: 0.77821vw;
+        max-width: 12.159533vw;
+    }
+
+
+    .rojo-tu-card-0-x-card-card-footer-product-sku-size {
+        min-width: 1.945525vw;
+        height: 1.215953vw;
+        font-size: 0.583658vw;
+        margin-bottom: 0.340467vw;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-container-products {
+        max-width: 80%;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-counter {
+        top: 9.738521vw;
+        height: 4.377432vw;
+    }
+
+    .rojo-tu-counter-0-x-counter-counter-cart-number svg {
+        width: 3.11284vw;
+        height: 3.11284vw;
+    }
+
+
+    .rojo-tu-counter-0-x-counter-counter-cart-top,
+    .rojo-tu-counter-0-x-counter-counter-cart-bottom,
+    .rojo-tu-counter-0-x-counter-counter-cart-others {
+        width: 5.593385vw;
+    }
+
+
+    .rojo-tu-counter-0-x-counter-counter-cart-top-count,
+    .rojo-tu-counter-0-x-counter-counter-cart-bottom-count,
+    .rojo-tu-counter-0-x-counter-counter-cart-others-count {
+        width: 1.070039vw;
+        height: 1.070039vw;
+        top: 40%;
+        left: 50%;
+        font-size: 0.575486vw;
+    }
+
+
+    .rojo-tu-buy-button-0-x-buy-button-buy-button-button {
+        right: 0.972763vw;
+        width: 7.29572vw;
+        height: 1.945525vw;
+        font-size: 0.77821vw;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-box-counter {
+        justify-content: center;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-counter {
+        justify-content: center;
+    }
+
+}
+
+@media only screen and (max-width: 1025px) {
+    .rojo-tu-product-list-0-x-product-list-product-list-box .rojo-tu-card-0-x-card-card {
+        width: 50%;
+    }
+
+    .rojo-tu-card-0-x-card-card-footer-product-sku,
+    .rojo-tu-card-0-x-card-card-footer-container-name,
+    .rojo-tu-card-0-x-card-card-footer-body-product-buy-size-text {
+        font-size: 16px;
+        max-width: 160px;
+    }
+
+    .rojo-tu-card-0-x-card-card-footer-product-sku-size {
+        min-width: 1.945525vw;
+        height: 20px;
+        font-size: 10px;
+        margin-bottom: 10px;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-container-products {
+        max-width: 95%;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-counter {
+        top: 27.6vw;
+        height: 60px;
+    }
+
+    .rojo-tu-counter-0-x-counter-counter-cart-number svg {
+        width: 45px;
+        height: 45px;
+    }
+
+    .rojo-tu-counter-0-x-counter-counter,
+    .rojo-tu-counter-0-x-counter-counter-cart-number {
+        width: 100%;
+    }
+
+    .rojo-tu-counter-0-x-counter-counter-cart-top-count,
+    .rojo-tu-counter-0-x-counter-counter-cart-bottom-count,
+    .rojo-tu-counter-0-x-counter-counter-cart-others-count {
+        width: 15px;
+        height: 15px;
+        top: 40%;
+        left: 50%;
+        font-size: 8px;
+    }
+
+    .rojo-tu-buy-button-0-x-buy-button-buy-button-button {
+        right: 0.972763vw;
+        width: 70px;
+        height: 20px;
+        font-size: 9px;
+    }
+
+    .rojo-tu-product-list-0-x-product-list-product-list-counter {
+        align-items: flex-end;
+        padding-bottom: 10px;
+    }
+
+    .rojo-tu-counter-0-x-counter-counter-cart-number {
+        padding-right: 40px;
+    }
+
+}
+
+/*--- Fin estilos ---*/
