@@ -53,7 +53,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
             } catch (error) {
                 const image = await import("../../assets/plp/no-image.jpg");
                 setImageSrc(image.default);
-                
+
             }
         };
 
@@ -167,9 +167,26 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
         }
     }
 
+    useEffect(() => {
+
+        if (items) {
+
+            const result = items.find(item => item.referencia === product.referencia)
+
+            if(result && result.talla){
+                setSelectedSize({
+                    size: result.talla,
+                    selectedIntoQuickView: false
+                })
+            }
+        }
+
+    }, [items, product.referencia])
+
+
     return (
         <>
-            {tallas && <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${ status ==="enviado" && CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
+            {tallas && <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${status === "enviado" && CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
                 {
                     product.tallas.split("-").map((size: string, index: number) => (
                         <button key={index + Math.random()} onClick={() => handleSizeClick(size)}
@@ -182,7 +199,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
                 }
             </div>}
 
-            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status ==="enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
+            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
                 <button onClick={() => handleAddCart()} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })}`}>{selectedSize.size ? selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla" : "Agregar al carrito"}</button>
             </div>
         </>
@@ -332,7 +349,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                     handleFetchSearchClothes(ref, id_order);
                 }
             });
-        }else{
+        } else {
             handleFetchSearchClothes(product.id, id_order);
         }
 

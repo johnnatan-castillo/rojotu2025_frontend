@@ -30,13 +30,13 @@
 .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-span-value{
     color: #E31A2A;
     font-weight: 900;
-    font-size: 2.730134vw;
+    font-size: 40px;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-title {
     color: white;
     font-weight: 900;
-    font-size: 1.215067vw;
+    font-size: 20px;
     margin-top: 5px;
     margin-left: 10px;
 }
@@ -180,8 +180,9 @@
 .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-select{
     height: 2.430134vw;
     border-radius: 16px;
-    width: 250px;
+    width: 15.069319vw;
     padding: 0 20px;
+    font-size: 0.972053vw;
 }
 
 

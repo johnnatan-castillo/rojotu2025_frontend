@@ -75,7 +75,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
     useEffect(() => {
 
-        if(!hasFetched.current){
+        if (!hasFetched.current) {
             setLoading(true);
             fetchClothes();
             hasFetched.current = true;
@@ -114,7 +114,9 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
         if (filter !== undefined && filter !== "" && !isCart) {
 
             if (profile.rol === "BACK") {
-                return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.segmento_Prenda === filter);
+                return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+                    .filter(product => filter.split('/').includes(product.segmento_Prenda));
+
             } else if (profile.rol === "FRONT") {
                 return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.dias.split("-").includes(filter));
             } else {
