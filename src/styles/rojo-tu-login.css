@@ -7,27 +7,9 @@
     width: 100%;
 }
 
-.rojo-tu-login-0-x-login-login-container-form {
-    position: absolute;
-    width: 24.319066vw;
-    height: 19.455253vw;
-    background: rgb(239, 209, 209);
-    border-radius: 25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    top: 50%;
-    left: 50%;
-    transform: translate(90%, -50%);
-}
-
 .rojo-tu-login-0-x-login-login-form-child-input {
     border: none;
-    height: 2.188716vw;
     border-radius: 10px;
-    padding-left: 0.729572vw;
-    font-size: 0.875486vw;
     width: 100%;
 }
 
@@ -38,20 +20,12 @@
 }
 
 .rojo-tu-login-0-x-login-login-title-span {
-    font-size: 1.702335vw;
     font-weight: 700;
-    margin-bottom: 1.459144vw;
     letter-spacing: 1px;
 }
 
-.rojo-tu-login-0-x-login-login-form-child-1{
-    margin-top: 2.5vw;
-}
-
 .rojo-tu-login-0-x-login-login-form-child {
-    margin-bottom: 0.729572vw;
     display: flex;
-    width: 19.455253vw;
     justify-content: center;
     align-items: center;
 }
@@ -72,10 +46,7 @@
     background: #E31A2A;
     border: none;
     color: white;
-    width: 8.754864vw;
-    height: 2.188716vw;
     border-radius: 10px;
-    font-size: 0.875486vw;
     cursor: pointer;
     font-weight: 700;
     letter-spacing: 0.3px;
@@ -84,7 +55,6 @@
 .rojo-tu-login-0-x-login-nav-link-reset-password {
     color: black;
     text-decoration: none;
-    font-size: 0.875486vw;
     font-weight: 400;
     background: none;
     border: none;
@@ -92,7 +62,6 @@
 }
 
 .rojo-tu-login-0-x-login-login-form-child-input-check {
-    font-size: 0.875486vw;
     font-weight: 400;
 }
 
@@ -100,16 +69,178 @@
     margin-top: 0.486381vw;
 }
 
-.rojo-tu-login-0-x-login-login-form-child svg {
-    margin-right: 0.486381vw;
-    width: 1.945525vw;
-    height: 1.945525vw;
+
+
+
+/*--- Inicio estilos ---*/
+
+@media only screen and (min-width: 1026px) {
+    .rojo-tu-login-0-x-login-login-container-form {
+        position: absolute;
+        width: 24.319066vw;
+        height: 19.455253vw;
+        background: rgb(239, 209, 209);
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(90%, -50%);
+    }
+
+    .rojo-tu-login-0-x-login-login-logo {
+        position: absolute;
+        width: 58.4vw;
+        top: 50%;
+        left: 50%;
+        transform: translate(-70%, -70%);
+    }
+
+    .rojo-tu-login-0-x-login-login-title-span {
+        font-size: 1.702335vw;
+        margin-bottom: 1.459144vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child-input {
+        border: none;
+        height: 2.188716vw;
+        padding-left: 0.729572vw;
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child {
+        margin-bottom: 0.729572vw;
+        width: 19.455253vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child-1 {
+        margin-top: 2.5vw;
+    }
+
+    .rojo-tu-login-0-x-login-nav-link-reset-password {
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child-input-check {
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-submit {
+        width: 8.754864vw;
+        height: 2.188716vw;
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child svg {
+        margin-right: 0.486381vw;
+        width: 1.945525vw;
+        height: 1.945525vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child {
+        margin-bottom: 0.729572vw;
+    }
 }
 
-.rojo-tu-login-0-x-login-login-logo {
-    position: absolute;
-    width: 58.4vw;
-    top: 50%;
-    left: 50%;
-    transform: translate(-70%, -70%);
+@media only screen and (max-width: 1025px) {
+
+    .rojo-tu-login-0-x-login-login,
+    .rojo-tu-login-0-x-login-login-baner {
+        height: 100vh;
+    }
+
+    .rojo-tu-login-0-x-login-login-baner {
+        object-fit: cover;
+        background: #E31A2A;
+    }
+
+    .rojo-tu-login-0-x-login-login {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rojo-tu-login-0-x-login-login-logo {
+        position: absolute;
+        width: 90.697674vw;
+        top: 18%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .rojo-tu-login-0-x-login-login-container-form {
+        position: absolute;
+        width: 93.023256vw;
+        height: 93.023256vw;
+        background: rgb(239, 209, 209);
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .rojo-tu-login-0-x-login-login-title-span {
+        font-size: 5.581395vw;
+        margin-bottom: 3.488372vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child-input {
+        border: none;
+        height: 9.302326vw;
+        padding-left: 2.325581vw;
+        font-size: 3.72093vw;
+        margin-left: 2.325581vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child-input-check {
+        font-size: 3.953488vw;
+    }
+
+    .rojo-tu-login-0-x-login-span-icon-reset-password {
+        font-size: 3.72093vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child {
+        margin-bottom: 10px;
+        width: 85%;
+    }
+
+
+    .rojo-tu-login-0-x-login-login-form-submit {
+        width: 32.55814vw;
+        height: 6.976744vw;
+        font-size: 3.72093vw;
+        margin-top: 3.488372vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child svg {
+        width: 5.813953vw;
+        height: 5.813953vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-form-child-remember {
+        width: 3.72093vw;
+        height: 3.72093vw;
+    }
 }
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait), only screen and (min-width: 1024px) and (max-width: 768px) and (orientation: landscape) {
+    .rojo-tu-login-0-x-login-login-logo{
+        top: 7%;
+        width: 81.697674vw;
+    }
+  }
+  
+  @media only screen and (min-width: 540px) and (max-width: 720px) and (orientation: portrait), only screen and (min-width: 1180px) and (max-width: 820px) and (orientation: landscape) {
+    .rojo-tu-login-0-x-login-login-logo{
+        top: 7%;
+        width: 81.697674vw;
+    }
+  }
+
+/*--- Fin estilos ---*/
