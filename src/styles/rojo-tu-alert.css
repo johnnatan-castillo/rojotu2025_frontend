@@ -1,8 +1,6 @@
 .rojo-tu-alert-0-x-alert-alert {
     position: fixed;
     right: 1.945525vw;
-    width: 21.88716vw;
-    height: 3.404669vw;
     bottom: 3.891051vw;
     background: #4D4D4D;
     display: flex;
@@ -16,7 +14,6 @@
     display: flex;
     width: 100%;
     color: white;
-    font-size: 0.875486vw;
     font-family: 'Lato';
     padding-left: 0.972763vw;
     justify-content: center;
@@ -40,8 +37,37 @@
     cursor: pointer;
 }
 
-.rojo-tu-alert-0-x-alert-alert-exit svg {
-    fill: white;
-    width: 1.653696vw;
-    height: 1.653696vw;
+
+
+/*--- Inicio estilos ---*/ 
+
+@media only screen and (min-width: 1026px) {
+    .rojo-tu-alert-0-x-alert-alert-container {
+        font-size: 0.875486vw;
+    }
+
+    .rojo-tu-alert-0-x-alert-alert-exit svg {
+        fill: white;
+        width: 1.653696vw;
+        height: 1.653696vw;
+    }
+
+    .rojo-tu-alert-0-x-alert-alert {
+        width: 21.88716vw;
+        height: 3.404669vw;
+    }
 }
+
+@media only screen and (max-width: 1025px) {
+    .rojo-tu-alert-0-x-alert-alert-container {
+        font-size: 3.72093vw;
+    }
+
+    .rojo-tu-alert-0-x-alert-alert {
+        width: 65.116279vw;
+        height: 9.302326vw;
+    }
+}
+
+ /*--- Fin estilos ---*/ 
+

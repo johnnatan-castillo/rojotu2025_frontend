@@ -233,12 +233,12 @@
     }
 
     .rojo-tu-header-0-x-header-span-name {
-        font-size: 10px;
+        font-size: 2.325581vw;
     }
 
     .rojo-tu-header-0-x-header-nav-link-profile svg {
-        width: 20px;
-        height: 20px;
+        width: 4.651163vw;
+        height: 4.651163vw;
     }
 
     .rojo-tu-header-0-x-header-container {
@@ -251,7 +251,7 @@
     
     .rojo-tu-header-0-x-header-header{
         background: white;
-        height: 105px;
+        height: 24.418605vw;
     }
 }
 

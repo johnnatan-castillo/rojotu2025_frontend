@@ -154,46 +154,70 @@
 @media only screen and (max-width: 1025px) {
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-title {
-        font-size: 24px;
-        margin-top: 10px;
+        font-size: 5.581395vw;
+        margin-top: 2.325581vw;
         display: block;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-1 span {
-        font-size: 15px;
+        font-size: 3.488372vw;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 span,
     .rojo-tu-my-profile-0-x-my-profile-my-profile-container-child-2 select {
-        font-size: 14px;
+        font-size: 3.255814vw;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child {
-        margin-bottom: 15px;
-        padding: 0px 5px;
+        margin-bottom: 3.488372vw;
+        padding: 0px 1.162791vw;
         display: flex;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile{
         width: 95%;
-        height: 400px;
+        height: 93.023256vw;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-button-footer {
-        width: 200px;
-        height: 40px;
-        font-size: 18px;
+        width: 46.511628vw;
+        height: 9.302326vw;
+        font-size: 4.186047vw;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-button-close svg{
-        width: 34px;
-        height: 34px;
+        width: 7.906977vw;
+        height: 7.906977vw;
     }
 
     .rojo-tu-my-profile-0-x-my-profile-my-profile-1 {
-        margin: 10px 0;
+        margin: 2.325581vw 0;
     }
     
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-container {
+        width: 100%;
+    }
+    
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child-1,
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child-2{
+        width: 50%;
+    }
+
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-2-child-2{
+        padding-left: 6.976744vw;
+    }
+    
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-1{
+        margin-top: 4.651163vw;
+    }
+    
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-2{
+        margin-top: 4.651163vw;
+    }
+    
+    .rojo-tu-my-profile-0-x-my-profile-my-profile-3{
+        margin-top: 6.976744vw;
+    }
 
 }
 
