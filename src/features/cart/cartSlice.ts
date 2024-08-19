@@ -194,7 +194,7 @@ export const addClothingItemThunk = createAsyncThunk(
       (item: Product) => item.referencia === product.referencia
     );
 
-    if(rol === "BACK"){
+    if (rol === "BACK") {
       if (
         (product.segmento_Prenda === "SUPERIOR" &&
           currentCart.counters.back.upper + 1 > prendas_superiores) ||
@@ -203,6 +203,8 @@ export const addClothingItemThunk = createAsyncThunk(
         (product.segmento_Prenda === "CHAQUETA" &&
           currentCart.counters.back.other + 1 > prendas_otros) ||
         (product.segmento_Prenda === "SACO" &&
+          currentCart.counters.back.other + 0.5 > prendas_otros) ||
+        (product.segmento_Prenda === "SUETER" &&
           currentCart.counters.back.other + 0.5 > prendas_otros) ||
         (product.segmento_Prenda === "VESTIDO" &&
           (currentCart.counters.back.upper + 1 > prendas_superiores ||
@@ -444,8 +446,10 @@ const cartSlice = createSlice({
         state.cart.messageId = uuidv4();
       }
     },
-    setStatus: (state, action: PayloadAction<{ status: "creado" | "pendiente" | "enviado" }>) => {
-
+    setStatus: (
+      state,
+      action: PayloadAction<{ status: "creado" | "pendiente" | "enviado" }>
+    ) => {
       const { status } = action.payload;
 
       state.cart.status = status;
@@ -610,6 +614,6 @@ export const {
   setMessage,
   clearMessage,
   resetcart,
-  setStatus
+  setStatus,
 } = cartSlice.actions;
 export default cartSlice.reducer;
