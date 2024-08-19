@@ -128,14 +128,14 @@ const Dashboard = () => {
 
         <div className={`${CustomClass({ component, version, customClass: "dasboard-status-global" })}`}>
           <div className={`${CustomClass({ component, version, customClass: "dasboard-status-global-container" })}`}>
-            <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-span-value" })}`}>{reportBig.total_carritos_enviados}</span>
+            <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-span-value" })}`}>{reportBig.carritos_enviados_totales}</span>
           </div>
           <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-title" })}`}>Pedidos enviados</span>
         </div>
 
         <div className={`${CustomClass({ component, version, customClass: "dasboard-status-global" })}`}>
           <div className={`${CustomClass({ component, version, customClass: "dasboard-status-global-container" })}`}>
-            <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-span-value" })}`}>{reportBig.total_carritos_no_enviados}</span>
+            <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-span-value" })}`}>{reportBig.carritos_no_enviados_totales}</span>
           </div>
           <span className={`${CustomClass({ component, version, customClass: "dasboard-status-global-title" })}`}>Pedidos no enviados</span>
         </div>
@@ -221,7 +221,7 @@ interface TableI {
 const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [sucursales, setSucursales] = useState<{ country: string, city: string, totals: any }[]>([])
+  const [sucursales, setSucursales] = useState<{ country: string, city: string, data: any }[]>([])
 
   const totalPages = useMemo(() => {
     return Math.ceil(sucursales.length / itemsPerPage);
@@ -244,7 +244,7 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
 
   useEffect(() => {
 
-    let sucursalesFormat: { country: string, city: string, totals: any }[] = []
+    let sucursalesFormat: { country: string, city: string, data: any }[] = []
 
     // eslint-disable-next-line array-callback-return
     Object.keys(products).map((country: any) => {
@@ -254,7 +254,7 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
         sucursalesFormat.push({
           country,
           city,
-          totals: products[country][city].totals
+          data: products[country][city]
         });
 
       })
@@ -277,13 +277,13 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
     <div className={`${CustomClass({ component, version, customClass: "table-box" })}`}>
       {
         displayedProducts.map((sucursal, index) => (
-          <div className={`${CustomClass({ component, version, customClass: "table-card" })} ${CustomClass({ component, version, customClass: `table-card-${index}` })}`}>
+          <div key={index} className={`${CustomClass({ component, version, customClass: "table-card" })} ${CustomClass({ component, version, customClass: `table-card-${index}` })}`}>
             <div className={`${CustomClass({ component, version, customClass: "table-card-body" })}`}>
-              <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })}`}>{sucursal.totals.carritos_enviados}</span>
+              <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })}`}>{sucursal.data.totals.carritos_enviados}</span>
               <span className={`${CustomClass({ component, version, customClass: "table-card-bosy-title" })}`}>Enviados</span>
             </div>
             <div className={`${CustomClass({ component, version, customClass: "table-card-body" })}`}>
-              <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })}`}>{sucursal.totals.carritos_no_enviados}</span>
+              <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })}`}>{sucursal.data.totals.carritos_no_enviados}</span>
               <span className={`${CustomClass({ component, version, customClass: "table-card-bosy-title" })}`}>No enviados</span>
             </div>
 
@@ -310,7 +310,8 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
 
 interface ItemsPerSurcursalI {
   sucursal: {
-    datos: any
+    carritos: any
+    ingresos: []
     totals: any
     country: string
     city: string
@@ -322,9 +323,6 @@ const ItemsPerSurcursal: React.FC<ItemsPerSurcursalI> = ({ sucursal }) => {
   if (Object.keys(sucursal).length === 0) {
     return <></>
   }
-
-  console.log(sucursal);
-
 
   return <div className={`${CustomClass({ component, version, customClass: "table-container" })} ${CustomClass({ component, version, customClass: "table-container-items-per-surcursal" })}`}>
 
@@ -355,11 +353,44 @@ const ItemsPerSurcursal: React.FC<ItemsPerSurcursalI> = ({ sucursal }) => {
     </div>
 
     <div className={`${CustomClass({ component, version, customClass: "table-box" })} ${CustomClass({ component, version, customClass: "table-box-2" })}`}>
+
       {
-        sucursal.datos.map((item: any, index: number) => (
+        Object.keys(sucursal.carritos).map((item: string, index) => (
+          <div key={index}>
+            <div className={`${CustomClass({ component, version, customClass: "table-card" })} ${CustomClass({ component, version, customClass: "table-card-items-per-surcursal" })} ${CustomClass({ component, version, customClass: `table-card-${index}` })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "table-card-body" })} ${CustomClass({ component, version, customClass: "table-card-body-items-per-surcursal" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })} ${CustomClass({ component, version, customClass: "table-card-body-value-items-per-surcursal" })}`}>{sucursal.carritos[item].carritos_enviados}</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "table-card-body" })} ${CustomClass({ component, version, customClass: "table-card-body-items-per-surcursal" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "table-card-body-information" })} ${CustomClass({ component, version, customClass: "table-card-body-information-items-per-surcursal" })}`}>{item}</span>
+                <span className={`${CustomClass({ component, version, customClass: "table-card-bosy-title" })} ${CustomClass({ component, version, customClass: "table-card-body-information-items-per-surcursal" })}`}>Pedidos enviados</span>
+
+              </div>
+            </div>
+
+            <div className={`${CustomClass({ component, version, customClass: "table-card" })} ${CustomClass({ component, version, customClass: "table-card-items-per-surcursal" })} ${CustomClass({ component, version, customClass: `table-card-${index}` })}`}>
+              <div className={`${CustomClass({ component, version, customClass: "table-card-body" })} ${CustomClass({ component, version, customClass: "table-card-body-items-per-surcursal" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })} ${CustomClass({ component, version, customClass: "table-card-body-value-items-per-surcursal" })}`}>{sucursal.carritos[item].carritos_no_enviados}</span>
+              </div>
+              <div className={`${CustomClass({ component, version, customClass: "table-card-body" })} ${CustomClass({ component, version, customClass: "table-card-body-items-per-surcursal" })}`}>
+                <span className={`${CustomClass({ component, version, customClass: "table-card-body-information" })} ${CustomClass({ component, version, customClass: "table-card-body-information-items-per-surcursal" })}`}>{item}</span>
+                <span className={`${CustomClass({ component, version, customClass: "table-card-bosy-title" })} ${CustomClass({ component, version, customClass: "table-card-body-information-items-per-surcursal" })}`}>Pedidos no enviados</span>
+
+              </div>
+            </div>
+          </div>
+        ))
+      }
+
+    </div>
+
+    <div className={`${CustomClass({ component, version, customClass: "table-box" })} ${CustomClass({ component, version, customClass: "table-box-2" })}`}>
+
+      {
+        sucursal.ingresos.map((item: any, index) => (
           <div className={`${CustomClass({ component, version, customClass: "table-card" })} ${CustomClass({ component, version, customClass: "table-card-items-per-surcursal" })} ${CustomClass({ component, version, customClass: `table-card-${index}` })}`}>
             <div className={`${CustomClass({ component, version, customClass: "table-card-body" })} ${CustomClass({ component, version, customClass: "table-card-body-items-per-surcursal" })}`}>
-              <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })} ${CustomClass({ component, version, customClass: "table-card-body-value-items-per-surcursal" })}`}>{item.count}</span>
+              <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })} ${CustomClass({ component, version, customClass: "table-card-body-value-items-per-surcursal" })}`}>{item.cantidad}</span>
             </div>
             <div className={`${CustomClass({ component, version, customClass: "table-card-body" })} ${CustomClass({ component, version, customClass: "table-card-body-items-per-surcursal" })}`}>
               <span className={`${CustomClass({ component, version, customClass: "table-card-body-information" })} ${CustomClass({ component, version, customClass: "table-card-body-information-items-per-surcursal" })}`}>{item.genero}</span>
@@ -368,6 +399,7 @@ const ItemsPerSurcursal: React.FC<ItemsPerSurcursalI> = ({ sucursal }) => {
           </div>
         ))
       }
+
     </div>
 
   </div>
