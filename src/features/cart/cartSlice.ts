@@ -324,9 +324,12 @@ const cartSlice = createSlice({
           currentCart.counters.back.upper++;
         } else if (productP.segmento_Prenda === "INFERIOR") {
           currentCart.counters.back.lower++;
-        } else if (productP.segmento_Prenda === "OTRO") {
+        } else if (productP.segmento_Prenda === "CHAQUETA") {
           currentCart.counters.back.other++;
-        } else if (productP.segmento_Prenda === "SACO") {
+        } else if (
+          productP.segmento_Prenda === "SACO" ||
+          productP.segmento_Prenda === "SUETER"
+        ) {
           currentCart.counters.back.other += 0.5;
         } else if (
           productP.segmento_Prenda === "VESTIDO" ||
@@ -369,7 +372,13 @@ const cartSlice = createSlice({
         state.cart.message = "No se puede agregar más prendas inferiores";
         return;
       } else if (
-        product.segmento_Prenda === "OTRO" &&
+        product.segmento_Prenda === "CHAQUETA" &&
+        currentCart.counters.back.other >= prendas_otros
+      ) {
+        state.cart.message = "No se puede agregar más prendas de otros tipos";
+        return;
+      } else if (
+        (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") &&
         currentCart.counters.back.other >= prendas_otros
       ) {
         state.cart.message = "No se puede agregar más prendas de otros tipos";
@@ -424,9 +433,9 @@ const cartSlice = createSlice({
             currentCart.counters.back.upper--;
           } else if (product.segmento_Prenda === "INFERIOR") {
             currentCart.counters.back.lower--;
-          } else if (product.segmento_Prenda === "OTRO") {
+          } else if (product.segmento_Prenda === "CHAQUETA") {
             currentCart.counters.back.other--;
-          } else if (product.segmento_Prenda === "SACO") {
+          } else if (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") {
             currentCart.counters.back.other -= 0.5;
           } else if (
             product.segmento_Prenda === "VESTIDO" ||
@@ -502,9 +511,9 @@ const cartSlice = createSlice({
             state.cart.counters.back.upper++;
           } else if (product.segmento_Prenda === "INFERIOR") {
             state.cart.counters.back.lower++;
-          } else if (product.segmento_Prenda === "OTRO") {
+          } else if (product.segmento_Prenda === "CHAQUETA") {
             state.cart.counters.back.other++;
-          } else if (product.segmento_Prenda === "SACO") {
+          } else if (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") {
             state.cart.counters.back.other += 0.5;
           } else if (
             product.segmento_Prenda === "VESTIDO" ||
@@ -565,9 +574,9 @@ const cartSlice = createSlice({
               state.cart.counters.back.upper--;
             } else if (product.segmento_Prenda === "INFERIOR") {
               state.cart.counters.back.lower--;
-            } else if (product.segmento_Prenda === "OTRO") {
+            } else if (product.segmento_Prenda === "CHAQUETA") {
               state.cart.counters.back.other--;
-            } else if (product.segmento_Prenda === "SACO") {
+            } else if (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") {
               state.cart.counters.back.other -= 0.5;
             } else if (
               product.segmento_Prenda === "VESTIDO" ||
