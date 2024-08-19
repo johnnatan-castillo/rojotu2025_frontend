@@ -200,7 +200,7 @@ export const addClothingItemThunk = createAsyncThunk(
           currentCart.counters.back.upper + 1 > prendas_superiores) ||
         (product.segmento_Prenda === "INFERIOR" &&
           currentCart.counters.back.lower + 1 > prendas_inferiores) ||
-        (product.segmento_Prenda === "OTRO" &&
+        (product.segmento_Prenda === "CHAQUETA" &&
           currentCart.counters.back.other + 1 > prendas_otros) ||
         (product.segmento_Prenda === "SACO" &&
           currentCart.counters.back.other + 0.5 > prendas_otros) ||

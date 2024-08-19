@@ -281,7 +281,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                 countClothes++;
             }
 
-            if (countClothes === 1 && countProducts === 1) {
+            if (countClothes === 1 && countProducts === 1 && rol === "BACK") {
                 canIPass = true;
                 dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
             }
