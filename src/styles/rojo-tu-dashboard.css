@@ -125,7 +125,6 @@
 
 
 .rojo-tu-dasboard-0-x-dasboard-table-card-items-per-surcursal{
-    height: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -244,3 +243,17 @@
     font-weight: 700;
     margin: 0 20px;
 }
+
+
+/*--- Inicio estilos ---*/ 
+
+@media only screen and (min-width: 1026px) {
+    .rojo-tu-dasboard-0-x-dasboard-table-card-items-per-surcursal{
+        height: 12.802276vw;
+    }
+}
+
+@media only screen and (max-width: 1025px) {}
+
+ /*--- Fin estilos ---*/ 
+

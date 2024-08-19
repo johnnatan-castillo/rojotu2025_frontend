@@ -356,7 +356,7 @@ const ItemsPerSurcursal: React.FC<ItemsPerSurcursalI> = ({ sucursal }) => {
 
       {
         Object.keys(sucursal.carritos).map((item: string, index) => (
-          <div key={index}>
+          <>
             <div className={`${CustomClass({ component, version, customClass: "table-card" })} ${CustomClass({ component, version, customClass: "table-card-items-per-surcursal" })} ${CustomClass({ component, version, customClass: `table-card-${index}` })}`}>
               <div className={`${CustomClass({ component, version, customClass: "table-card-body" })} ${CustomClass({ component, version, customClass: "table-card-body-items-per-surcursal" })}`}>
                 <span className={`${CustomClass({ component, version, customClass: "table-card-body-value" })} ${CustomClass({ component, version, customClass: "table-card-body-value-items-per-surcursal" })}`}>{sucursal.carritos[item].carritos_enviados}</span>
@@ -378,7 +378,7 @@ const ItemsPerSurcursal: React.FC<ItemsPerSurcursalI> = ({ sucursal }) => {
 
               </div>
             </div>
-          </div>
+          </>
         ))
       }
 
