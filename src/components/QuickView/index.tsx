@@ -105,7 +105,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                         {
                             rol === "FRONT" &&
                             <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications-days-container" })}`}>
-                                {dias.split("-").map((day) => (<span className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications-days" })}`}>{day}</span>))}
+                                {dias?.split("-").map((day) => (<span className={`${CustomClass({ component, version, customClass: "quickview-body-product-specifications-days" })}`}>{day}</span>))}
                             </div>
                         }
 
