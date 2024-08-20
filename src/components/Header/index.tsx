@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import CustomClass from '../../utils/CustomClass';
@@ -11,7 +11,7 @@ import { decryptData, encryptData } from '../../utils/Decrypt';
 // import SelectIdentity from '../SelectIdentity';
 import MyProfile from '../../pages/MyProfile';
 import { getApuUrl } from '../../utils/config';
-import { updateUserInfo } from '../../features/auth/authSlice';
+import { logout, updateUserInfo } from '../../features/auth/authSlice';
 
 const component: string = "header"
 const version: string = "0"
@@ -21,6 +21,7 @@ const Header: React.FC = () => {
     const { nombre, administrador, primer_ingreso, user } = useSelector((state: RootState) => state.auth);
     const [showProfile, setShowProfile] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
     const hasRun = useRef(false);
 
     const userName = decryptData(nombre).data;
@@ -118,6 +119,10 @@ const Header: React.FC = () => {
                     return Swal.fire({ title: 'Error al intentar cambiar la contraseña', text: 'Ha ocurrido un error al intentar cambiar la contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
                 }
             }
+        }else{
+            Swal.fire({ title: 'Obligatorio', text: 'No has cambiado tu contraseña', icon: 'info', confirmButtonColor: "#E31A2A" });
+            dispatch(logout())
+            navigate("/login");
         }
     };
 
