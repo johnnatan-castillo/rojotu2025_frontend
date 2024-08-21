@@ -17,6 +17,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     const { nombre_prenda, descripcion, dias } = product;
     const imageRef: any = useRef(null);
     const [imageSrc, setImageSrc] = useState("");
+    const [images, setImages] = useState<string[]>([]);
     const [isZoomed, setIsZoomed] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
@@ -60,6 +61,29 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
         loadImage();
     }, [product.ubicacion_archivo]);
 
+    useEffect(() => {
+        const fetchImages = async () => {
+            try {
+
+                const imagePromises = product.detalles.map(async (detalle) => {
+                    const nameImage = Object.values(detalle)[0];
+                    const image = await import(`../../assets/plp/${nameImage}`);
+                    return image.default;
+                });
+
+                const resolvedImages = await Promise.all(imagePromises);
+                setImages([imageSrc, ...resolvedImages]);
+
+            } catch (error) {
+                console.log("Error al intentar cargar la imagen");
+            }
+        };
+
+        product?.detalles?.length > 0 && fetchImages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [product]);
+
+
     return ReactDOM.createPortal(
         <div className={`${CustomClass({ component, version, customClass: "quickview" })}`}>
             <div className={`${CustomClass({ component, version, customClass: "quickview-container" })}`}>
@@ -96,6 +120,33 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                         <img ref={imageRef} style={{
                             transformOrigin: `${position.x * 100}% ${position.y * 100}%`
                         }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={imageSrc} alt={nombre_prenda} />
+                    </div>
+
+
+                    {/* Imagenes pequeñas */}
+                    <div className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-small" })}`}>
+                        <>
+
+                            {/* Imagen 1 */}
+                            {images.map((image, index) => (
+                                <button key={index} className={CustomClass({
+                                    component,
+                                    version,
+                                    customClass: `quickview-body-button-imagen-small`,
+                                })} type="button" onClick={() => (setImageSrc(image))}>
+                                    <img
+                                        className={CustomClass({
+                                            component,
+                                            version,
+                                            customClass: `quickview-body-imagen-small-${index + 1}`,
+                                        })}
+                                        src={image}
+                                        alt={nombre_prenda}
+                                    />
+                                </button>
+                            ))}
+                        </>
+
                     </div>
 
                     {/* Información de prenda */}
@@ -173,7 +224,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
 
             const result = items.find(item => item.referencia === product.referencia)
 
-            if(result && result.talla){
+            if (result && result.talla) {
                 setSelectedSize({
                     size: result.talla,
                     selectedIntoQuickView: false

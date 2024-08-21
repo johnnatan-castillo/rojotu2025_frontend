@@ -179,6 +179,10 @@
     pointer-events: none;
 }
 
+.rojo-tu-quickview-0-x-quickview-quickview-body-button-imagen-small {
+    background: none;
+    border: none;
+}
 
 
 /*--- Inicio estilos ---*/
@@ -203,7 +207,7 @@
     .rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications {
         width: 50%;
     }
-    
+
     .rojo-tu-quickview-0-x-quickview-quickview-body-product-specifications-name {
         font-size: 1.167315vw;
         max-width: 18.48249vw;
@@ -217,7 +221,7 @@
         width: 1.945525vw;
         height: 1.945525vw;
     }
-    
+
     .rojo-tu-quickview-0-x-quickview-quickview-header-botton-exit {
         margin-top: 0.486381vw;
         margin-right: 0.486381vw;
@@ -230,8 +234,21 @@
         padding: 0.972763vw;
     }
 
-    .rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-button{
+    .rojo-tu-quickview-0-x-quickview-quickview-body-product-buy-button {
         font-size: 1.13798vw;
+    }
+
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-1,
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-2,
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-3,
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-4 {
+        width: 5.049787vw;
+        cursor: pointer;
+    }
+
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small {
+        display: flex;
+        flex-direction: column;
     }
 
 }
@@ -251,7 +268,7 @@
         width: 100%;
     }
 
-    .rojo-tu-quickview-0-x-quickview-quickview-body{
+    .rojo-tu-quickview-0-x-quickview-quickview-body {
         flex-direction: column;
     }
 
@@ -268,7 +285,7 @@
         font-size: 16px;
     }
 
-    .rojo-tu-quickview-0-x-quickview-quickview-body{
+    .rojo-tu-quickview-0-x-quickview-quickview-body {
         height: 100%;
     }
 
@@ -280,7 +297,7 @@
         width: 30px;
         height: 30px;
     }
-    
+
     .rojo-tu-quickview-0-x-quickview-quickview-header-botton-exit {
         margin-top: 10px;
         margin-right: 8px;
@@ -299,6 +316,25 @@
 
     .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-container {
         border-radius: 16px 16px 0 0;
+    }
+
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-1,
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-2,
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-3,
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-4 {
+        width: 61px;
+        cursor: pointer;
+        padding-left: 10px;
+    }
+
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small {
+        display: flex;
+        padding-left: 10px;
+        padding-top: 10px;
+    }
+
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-container {
+        overflow: auto
     }
 
 }

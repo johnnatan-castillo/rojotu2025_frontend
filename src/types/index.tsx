@@ -79,7 +79,8 @@ declare global {
         id_carrito: string;
         id_order: string;
         prenda_front: boolean;
-        prenda?: any
+        prenda?: any;
+        detalles: []
     }
 
     interface ProductListProps {
