@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import CustomClass from '../../utils/CustomClass';
 import ReactDOM from 'react-dom';
 import { v4 as uuidv4 } from "uuid";
@@ -9,6 +9,12 @@ import { addClothingItemThunk, setMessage } from '../../features/cart/cartSlice'
 import { getApuUrl } from '../../utils/config';
 import { useNavigate } from 'react-router-dom';
 
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, FreeMode, Autoplay } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
 const component: string = "quickview"
 const version: string = "0"
 
@@ -16,7 +22,6 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     const { rol } = useSelector((state: RootState) => state.auth);
     const { nombre_prenda, descripcion, dias } = product;
     const imageRef: any = useRef(null);
-    const [imageSrc, setImageSrc] = useState("");
     const [images, setImages] = useState<string[]>([]);
     const [isZoomed, setIsZoomed] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -30,15 +35,12 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     };
 
     const handleMouseMove = (e: any) => {
-        if (!isZoomed) return;
-        const {
-            left,
-            top,
-            width,
-            height
-        } = imageRef.current.getBoundingClientRect();
+        if (!isZoomed || !imageRef.current) return;
+
+        const { left, top, width, height } = imageRef.current.getBoundingClientRect();
         const x = (e.clientX - left) / width;
         const y = (e.clientY - top) / height;
+
         setPosition({ x, y });
     };
 
@@ -48,40 +50,42 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
 
     useEffect(() => {
         const loadImage = async () => {
+
+            const fetchImages = async () => {
+                try {
+    
+                    const imagePromises = product.detalles.map(async (detalle) => {
+                        const nameImage = Object.values(detalle)[0];
+                        const image = await import(`../../assets/plp/${nameImage}`);
+                        return image.default;
+                    });
+    
+                    const resolvedImages = await Promise.all(imagePromises);
+                    setImages((prev) => ([...prev, ...resolvedImages]));
+    
+                } catch (error) {
+                    console.log("Error al intentar cargar la imagen");
+                }
+            };
+
             try {
                 const image = await import(`../../assets/plp/${product.ubicacion_archivo}`);
-                setImageSrc(image.default);
+                setImages([image.default]);
+                product?.detalles?.length > 0 && fetchImages()
             } catch (error) {
                 const image = await import("../../assets/plp/no-image.jpg");
-                setImageSrc(image.default);
+                setImages([image.default]);
 
             }
         };
 
         loadImage();
-    }, [product.ubicacion_archivo]);
+    }, [product]);
 
     useEffect(() => {
-        const fetchImages = async () => {
-            try {
-
-                const imagePromises = product.detalles.map(async (detalle) => {
-                    const nameImage = Object.values(detalle)[0];
-                    const image = await import(`../../assets/plp/${nameImage}`);
-                    return image.default;
-                });
-
-                const resolvedImages = await Promise.all(imagePromises);
-                setImages([imageSrc, ...resolvedImages]);
-
-            } catch (error) {
-                console.log("Error al intentar cargar la imagen");
-            }
-        };
-
-        product?.detalles?.length > 0 && fetchImages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [product]);
+        
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
 
     return ReactDOM.createPortal(
@@ -117,36 +121,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                     <div onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onMouseMove={handleMouseMove} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-container" })}`}>
-                        <img ref={imageRef} style={{
-                            transformOrigin: `${position.x * 100}% ${position.y * 100}%`
-                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={imageSrc} alt={nombre_prenda} />
-                    </div>
-
-
-                    {/* Imagenes pequeñas */}
-                    <div className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-small" })}`}>
-                        <>
-
-                            {/* Imagen 1 */}
-                            {images.map((image, index) => (
-                                <button key={index} className={CustomClass({
-                                    component,
-                                    version,
-                                    customClass: `quickview-body-button-imagen-small`,
-                                })} type="button" onClick={() => (setImageSrc(image))}>
-                                    <img
-                                        className={CustomClass({
-                                            component,
-                                            version,
-                                            customClass: `quickview-body-imagen-small-${index + 1}`,
-                                        })}
-                                        src={image}
-                                        alt={nombre_prenda}
-                                    />
-                                </button>
-                            ))}
-                        </>
-
+                        <SliderImage images={images} position={position} isZoomed={isZoomed} imageRef={imageRef} />
                     </div>
 
                     {/* Información de prenda */}
@@ -444,5 +419,70 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
         </>
     );
 };
+
+interface SliderImageI {
+    images: string[];
+    position: any;
+    isZoomed: any;
+    imageRef: any
+}
+
+const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, imageRef }) => {
+
+
+
+
+    const swiperRef = useRef<any>(null);
+
+    const swiperModules = useMemo(() => [Pagination, Navigation, FreeMode, Autoplay], []);
+
+    const onInit = useCallback((swiper: any) => {
+        swiperRef.current = swiper;
+    }, []);
+
+    const handleMouseEnter = useCallback(() => {
+        if (swiperRef.current && swiperRef.current.autoplay) {
+            swiperRef.current.autoplay.stop();
+        }
+    }, []);
+
+    const handleMouseLeave = useCallback(() => {
+        if (swiperRef.current && swiperRef.current.autoplay) {
+            swiperRef.current.autoplay.start();
+        }
+    }, []);
+
+    return <div
+        className={CustomClass({ component, version, customClass: "slider-quick" })}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+    >
+        <Swiper
+            onInit={onInit}
+            direction={'horizontal'}
+            slidesPerView={1}
+            spaceBetween={10}
+            pagination={{ clickable: false }}
+            centeredSlides={false}
+            loop={true}
+            freeMode={true}
+            navigation={true}
+            modules={swiperModules}
+            className={CustomClass({ component, version, customClass: "slider-swiper" })}
+        >
+            {images.map((image, index) => (
+                <SwiperSlide key={index}>
+                    <div className={CustomClass({ component, version, customClass: "slider-swiper-container-quick" })}>
+
+                        <img ref={imageRef} loading="eager" crossOrigin="anonymous" style={{
+                            transformOrigin: `${position.x * 100}% ${position.y * 100}%`
+                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={image} alt="Imagen de referencia" />
+
+                    </div>
+                </SwiperSlide>
+            ))}
+        </Swiper>
+    </div>
+}
 
 export default QuickView;

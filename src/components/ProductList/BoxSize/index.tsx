@@ -22,7 +22,7 @@ export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product,
 
     return <>
         {
-            rol === "FRONT" && product.prenda_front && <BoxSizePLPFront component={component} version={version} product={product} isPLP={isPLP} />
+            rol === "FRONT" && <BoxSizePLPFront component={component} version={version} product={product} isPLP={isPLP} />
 
         }
         {
@@ -108,6 +108,9 @@ const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, i
     const location = useLocation();
     const currentPath = location.pathname;
     const isCart = currentPath.includes('/my-clothes');
+
+    console.log(product);
+    
 
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
 

@@ -196,23 +196,23 @@ export const addClothingItemThunk = createAsyncThunk(
 
     if (rol === "BACK") {
       if (
-        (product.segmento_Prenda === "SUPERIOR" &&
+        (product?.segmento_Prenda === "SUPERIOR" &&
           currentCart.counters.back.upper + 1 > prendas_superiores) ||
-        (product.segmento_Prenda === "INFERIOR" &&
+        (product?.segmento_Prenda === "INFERIOR" &&
           currentCart.counters.back.lower + 1 > prendas_inferiores) ||
-        (product.segmento_Prenda === "CHAQUETA" &&
+        (product?.segmento_Prenda === "CHAQUETA" &&
           currentCart.counters.back.other + 1 > prendas_otros) ||
-        (product.segmento_Prenda === "SACO" &&
+        (product?.segmento_Prenda === "SACO" &&
           currentCart.counters.back.other + 0.5 > prendas_otros) ||
-        (product.segmento_Prenda === "SUETER" &&
+        (product?.segmento_Prenda === "SUETER" &&
           currentCart.counters.back.other + 0.5 > prendas_otros) ||
-        (product.segmento_Prenda === "VESTIDO" &&
+        (product?.segmento_Prenda === "VESTIDO" &&
           (currentCart.counters.back.upper + 1 > prendas_superiores ||
             currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-        (product.segmento_Prenda === "TRAJE" &&
+        (product?.segmento_Prenda === "TRAJE" &&
           (currentCart.counters.back.upper + 1 > prendas_superiores ||
             currentCart.counters.back.lower + 1 > prendas_inferiores)) ||
-        (product.segmento_Prenda === "ENTERIZO" &&
+        (product?.segmento_Prenda === "ENTERIZO" &&
           (currentCart.counters.back.upper + 1 > prendas_superiores ||
             currentCart.counters.back.lower + 1 > prendas_inferiores))
       ) {
@@ -320,21 +320,21 @@ const cartSlice = createSlice({
       const addCount = ({ prenda }: Product) => {
         const productP = prenda;
 
-        if (productP.segmento_Prenda === "SUPERIOR") {
+        if (productP?.segmento_Prenda === "SUPERIOR") {
           currentCart.counters.back.upper++;
-        } else if (productP.segmento_Prenda === "INFERIOR") {
+        } else if (productP?.segmento_Prenda === "INFERIOR") {
           currentCart.counters.back.lower++;
-        } else if (productP.segmento_Prenda === "CHAQUETA") {
+        } else if (productP?.segmento_Prenda === "CHAQUETA") {
           currentCart.counters.back.other++;
         } else if (
-          productP.segmento_Prenda === "SACO" ||
-          productP.segmento_Prenda === "SUETER"
+          productP?.segmento_Prenda === "SACO" ||
+          productP?.segmento_Prenda === "SUETER"
         ) {
           currentCart.counters.back.other += 0.5;
         } else if (
-          productP.segmento_Prenda === "VESTIDO" ||
-          productP.segmento_Prenda === "TRAJE" ||
-          productP.segmento_Prenda === "ENTERIZO"
+          productP?.segmento_Prenda === "VESTIDO" ||
+          productP?.segmento_Prenda === "TRAJE" ||
+          productP?.segmento_Prenda === "ENTERIZO"
         ) {
           currentCart.counters.back.upper++;
           currentCart.counters.back.lower++;
@@ -360,45 +360,45 @@ const cartSlice = createSlice({
       }
 
       if (
-        product.segmento_Prenda === "SUPERIOR" &&
+        product?.segmento_Prenda === "SUPERIOR" &&
         currentCart.counters.back.upper >= prendas_superiores
       ) {
         state.cart.message = "No se puede agregar más prendas superiores";
         return;
       } else if (
-        product.segmento_Prenda === "INFERIOR" &&
+        product?.segmento_Prenda === "INFERIOR" &&
         currentCart.counters.back.lower >= prendas_inferiores
       ) {
         state.cart.message = "No se puede agregar más prendas inferiores";
         return;
       } else if (
-        product.segmento_Prenda === "CHAQUETA" &&
+        product?.segmento_Prenda === "CHAQUETA" &&
         currentCart.counters.back.other >= prendas_otros
       ) {
         state.cart.message = "No se puede agregar más prendas de otros tipos";
         return;
       } else if (
-        (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") &&
+        (product?.segmento_Prenda === "SACO" || product?.segmento_Prenda === "SUETER") &&
         currentCart.counters.back.other >= prendas_otros
       ) {
         state.cart.message = "No se puede agregar más prendas de otros tipos";
         return;
       } else if (
-        product.segmento_Prenda === "VESTIDO" &&
+        product?.segmento_Prenda === "VESTIDO" &&
         (currentCart.counters.back.upper + 1 > prendas_superiores ||
           currentCart.counters.back.lower + 1 > prendas_inferiores)
       ) {
         state.cart.message = "No se puede agregar más prendas de tipo vestido";
         return;
       } else if (
-        product.segmento_Prenda === "TRAJE" &&
+        product?.segmento_Prenda === "TRAJE" &&
         (currentCart.counters.back.upper + 1 > prendas_superiores ||
           currentCart.counters.back.lower + 1 > prendas_inferiores)
       ) {
         state.cart.message = "No se puede agregar más prendas de tipo traje";
         return;
       } else if (
-        product.segmento_Prenda === "ENTERIZO" &&
+        product?.segmento_Prenda === "ENTERIZO" &&
         (currentCart.counters.back.upper + 1 > prendas_superiores ||
           currentCart.counters.back.lower + 1 > prendas_inferiores)
       ) {
@@ -429,18 +429,18 @@ const cartSlice = createSlice({
         const product = currentCart.items[existingItemIndex];
 
         const subtractCount = () => {
-          if (product.segmento_Prenda === "SUPERIOR") {
+          if (product?.segmento_Prenda === "SUPERIOR") {
             currentCart.counters.back.upper--;
-          } else if (product.segmento_Prenda === "INFERIOR") {
+          } else if (product?.segmento_Prenda === "INFERIOR") {
             currentCart.counters.back.lower--;
-          } else if (product.segmento_Prenda === "CHAQUETA") {
+          } else if (product?.segmento_Prenda === "CHAQUETA") {
             currentCart.counters.back.other--;
-          } else if (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") {
+          } else if (product?.segmento_Prenda === "SACO" || product?.segmento_Prenda === "SUETER") {
             currentCart.counters.back.other -= 0.5;
           } else if (
-            product.segmento_Prenda === "VESTIDO" ||
-            product.segmento_Prenda === "TRAJE" ||
-            product.segmento_Prenda === "ENTERIZO"
+            product?.segmento_Prenda === "VESTIDO" ||
+            product?.segmento_Prenda === "TRAJE" ||
+            product?.segmento_Prenda === "ENTERIZO"
           ) {
             currentCart.counters.back.upper--;
             currentCart.counters.back.lower--;
@@ -507,18 +507,18 @@ const cartSlice = createSlice({
           action.payload;
 
         const addCount = () => {
-          if (product.segmento_Prenda === "SUPERIOR") {
+          if (product?.segmento_Prenda === "SUPERIOR") {
             state.cart.counters.back.upper++;
-          } else if (product.segmento_Prenda === "INFERIOR") {
+          } else if (product?.segmento_Prenda === "INFERIOR") {
             state.cart.counters.back.lower++;
-          } else if (product.segmento_Prenda === "CHAQUETA") {
+          } else if (product?.segmento_Prenda === "CHAQUETA") {
             state.cart.counters.back.other++;
-          } else if (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") {
+          } else if (product?.segmento_Prenda === "SACO" || product?.segmento_Prenda === "SUETER") {
             state.cart.counters.back.other += 0.5;
           } else if (
-            product.segmento_Prenda === "VESTIDO" ||
-            product.segmento_Prenda === "TRAJE" ||
-            product.segmento_Prenda === "ENTERIZO"
+            product?.segmento_Prenda === "VESTIDO" ||
+            product?.segmento_Prenda === "TRAJE" ||
+            product?.segmento_Prenda === "ENTERIZO"
           ) {
             state.cart.counters.back.upper++;
             state.cart.counters.back.lower++;
@@ -570,18 +570,18 @@ const cartSlice = createSlice({
           const product = state.cart.items[productIndex];
 
           const subtractCount = () => {
-            if (product.segmento_Prenda === "SUPERIOR") {
+            if (product?.segmento_Prenda === "SUPERIOR") {
               state.cart.counters.back.upper--;
-            } else if (product.segmento_Prenda === "INFERIOR") {
+            } else if (product?.segmento_Prenda === "INFERIOR") {
               state.cart.counters.back.lower--;
-            } else if (product.segmento_Prenda === "CHAQUETA") {
+            } else if (product?.segmento_Prenda === "CHAQUETA") {
               state.cart.counters.back.other--;
-            } else if (product.segmento_Prenda === "SACO" || product.segmento_Prenda === "SUETER") {
+            } else if (product?.segmento_Prenda === "SACO" || product?.segmento_Prenda === "SUETER") {
               state.cart.counters.back.other -= 0.5;
             } else if (
-              product.segmento_Prenda === "VESTIDO" ||
-              product.segmento_Prenda === "TRAJE" ||
-              product.segmento_Prenda === "ENTERIZO"
+              product?.segmento_Prenda === "VESTIDO" ||
+              product?.segmento_Prenda === "TRAJE" ||
+              product?.segmento_Prenda === "ENTERIZO"
             ) {
               state.cart.counters.back.upper--;
               state.cart.counters.back.lower--;

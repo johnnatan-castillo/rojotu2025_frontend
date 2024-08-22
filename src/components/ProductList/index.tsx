@@ -115,7 +115,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
             if (profile.rol === "BACK") {
                 return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-                    .filter(product => filter.split('/').includes(product.segmento_Prenda));
+                    .filter(product => filter.split('/').includes(product?.segmento_Prenda));
 
             } else if (profile.rol === "FRONT") {
                 return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.dias.split("-").includes(filter));

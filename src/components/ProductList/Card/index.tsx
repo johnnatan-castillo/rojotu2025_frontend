@@ -47,7 +47,7 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
             } catch (error) {
                 const image = await import("../../../assets/plp/no-image.jpg");
                 setImageSrc(image.default);
-                
+
             }
         };
 

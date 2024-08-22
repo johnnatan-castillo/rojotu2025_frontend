@@ -32,9 +32,14 @@
     cursor: pointer;
 }
 
+.swiper-button-lock{
+    display: none !important;
+}
 
 .rojo-tu-collection-0-x-collection-collection .swiper-button-prev:after,
-.rojo-tu-collection-0-x-collection-collection .swiper-button-next:after {
+.rojo-tu-collection-0-x-collection-collection .swiper-button-next:after,
+.rojo-tu-quickview-0-x-quickview-slider-quick .swiper-button-prev:after,
+.rojo-tu-quickview-0-x-quickview-slider-quick .swiper-button-next:after{
     background: white;
     width: 40px;
     height: 40px;
@@ -47,7 +52,9 @@
 }
 
 .rojo-tu-collection-0-x-collection-collection .swiper-button-prev,
-.rojo-tu-collection-0-x-collection-collection .swiper-button-next{
+.rojo-tu-collection-0-x-collection-collection .swiper-button-next,
+.rojo-tu-quickview-0-x-quickview-slider-quick .swiper-button-prev,
+.rojo-tu-quickview-0-x-quickview-slider-quick .swiper-button-next{
     background: white;
     width: 40px;
     height: 40px;
@@ -56,6 +63,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.rojo-tu-quickview-0-x-quickview-slider-quick .swiper-pagination-bullets{
+    display: none;;
 }
 
 /* .rojo-tu-collection-0-x-collection-collection .rojo-tu-slider-0-x-slider-slider .swiper-slide{
