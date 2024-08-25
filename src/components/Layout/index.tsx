@@ -14,6 +14,13 @@ const Layout: React.FC = () => {
             <main className={`${CustomClass({ component, version, customClass: "layout" })}`}>
                 <Outlet />
                 <Alert />
+                <div className={`${CustomClass({ component, version, customClass: "link-to-gender-container" })}`}>
+                    <a className={`${CustomClass({ component, version, customClass: "link-to-gender-a" })}`} href="https://docs.google.com/forms/d/e/1FAIpQLSc1AshdH9cYDxWbeb_SBKqVIWgXSMWB7kaKDxGcXw2MranIPw/viewform">
+                        <div className={`${CustomClass({ component, version, customClass: "link-to-gender" })}`}>
+                            <span>¿Te sientes identificado con otra expresión de género</span>
+                        </div>
+                    </a>
+                </div>
             </main>
         </>
     );

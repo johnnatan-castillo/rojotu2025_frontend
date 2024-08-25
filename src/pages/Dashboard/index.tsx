@@ -146,52 +146,55 @@ const Dashboard = () => {
           <span className={`${CustomClass({ component, version, customClass: "dasboard-chart-line-span" })}`}>Metrica de inicio de sesion por día</span>
         </div>
         <div className={`${CustomClass({ component, version, customClass: "dasboard-chart-line" })}`}>
-          <ListChart data={usersPerDay?.detalle} />
+          <ListChart data={usersPerDay?.logs} />
         </div>
       </div>
       <div className={`${CustomClass({ component, version, customClass: "dasboard-box-3" })}`}>
 
         <div className={`${CustomClass({ component, version, customClass: "dasboard-filters-box" })}`}>
-          <div className={`${CustomClass({ component, version, customClass: "dasboard-filters" })} ${CustomClass({ component, version, customClass: "dasboard-filters-country" })}`}>
+          
+          <div className={`${CustomClass({ component, version, customClass: "dasboard-filters" })} ${CustomClass({ component, version, customClass: "dasboard-filters-country-container" })}`}>
+            <div className={`${CustomClass({ component, version, customClass: "dasboard-filters" })} ${CustomClass({ component, version, customClass: "dasboard-filters-country" })}`}>
 
-            {
-              reportBig?.result && <select
-                value={countrySelect}
-                className={`${CustomClass({ component, version, customClass: "dasboard-filters-select" })}`}
-                onChange={(e) => {
-                  setCountrySelect(e.target.value);
-                }}
-              >
-                <option value="" disabled>
-                  Seleccione un país
-                </option>
-                {Object.keys(reportBig?.result).map((country, index) => (
-                  <option key={index} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </select>
-            }
-
-
-
-          </div>
-
-          <div className={`${CustomClass({ component, version, customClass: "dasboard-filters" })} ${CustomClass({ component, version, customClass: "dasboard-filters-city" })}`}>
-            <select value={citySelect} className={`${CustomClass({ component, version, customClass: "dasboard-filters-select" })}`} onChange={(e) => { setCitySelect(e.target.value) }}>
-              <option selected value="" disabled >Seleccione una sucursal</option>
               {
-                countrySelect &&
-                Object.keys(reportBig.result).map((country) => {
-                  return Object.keys(reportBig.result[country]).map((city, index) => (
-                    <option key={`${country}-${index}`} value={city}>
-                      {city}
+                reportBig?.result && <select
+                  value={countrySelect}
+                  className={`${CustomClass({ component, version, customClass: "dasboard-filters-select" })}`}
+                  onChange={(e) => {
+                    setCountrySelect(e.target.value);
+                  }}
+                >
+                  <option value="" disabled>
+                    Seleccione un país
+                  </option>
+                  {Object.keys(reportBig?.result).map((country, index) => (
+                    <option key={index} value={country}>
+                      {country}
                     </option>
-                  ));
-                })
+                  ))}
+                </select>
               }
 
-            </select>
+
+
+            </div>
+
+            <div className={`${CustomClass({ component, version, customClass: "dasboard-filters" })} ${CustomClass({ component, version, customClass: "dasboard-filters-city" })}`}>
+              <select value={citySelect} className={`${CustomClass({ component, version, customClass: "dasboard-filters-select" })}`} onChange={(e) => { setCitySelect(e.target.value) }}>
+                <option selected value="" disabled >Seleccione una sucursal</option>
+                {
+                  countrySelect &&
+                  Object.keys(reportBig.result).map((country) => {
+                    return Object.keys(reportBig.result[country]).map((city, index) => (
+                      <option key={`${country}-${index}`} value={city}>
+                        {city}
+                      </option>
+                    ));
+                  })
+                }
+
+              </select>
+            </div>
           </div>
 
           <div className={`${CustomClass({ component, version, customClass: "dasboard-filters-buttons" })}`}>

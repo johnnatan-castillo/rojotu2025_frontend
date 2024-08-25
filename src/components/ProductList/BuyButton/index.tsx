@@ -12,7 +12,7 @@ const version: string = "0";
 
 const BuyButton = () => {
 
-    const { token, total, rol } = useSelector((state: RootState) => state.auth);
+    const { token, total, rol, administrador } = useSelector((state: RootState) => state.auth);
     const { status, counters } = useSelector((state: RootState) => state.carts.cart);
     const dispatch = useDispatch<AppDispatch>();
 
@@ -55,11 +55,21 @@ const BuyButton = () => {
                                 return Swal.fire({ title: 'Pedido enviado', text: "Se ha enviado tu pedido", icon: 'success', confirmButtonColor: "#E31A2A" });
                             }
 
-                            if(code !== 200 || code !== 201){
+                            if (code !== 200 || code !== 201) {
                                 return Swal.fire({ title: 'Ha ocurrido un error', text: `Ha ocurrido un error al intentar enviar tu pedido`, icon: 'error', confirmButtonColor: "#E31A2A" });
                             }
 
                         })
+                }
+
+                if (administrador) {
+                    if (rol === "BACK" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total) ) {
+                        handleFetch();
+                    } else if (rol === "FRONT" && (counters.front.LUNES + counters.front.MARTES + counters.front.MIERCOLES + counters.front.JUEVES + counters.front.VIERNES) <= parseInt(total)) {
+                        handleFetch();
+                    } else {
+                        return Swal.fire({ title: 'Completa tu pedido', text: `El pedido no esta completo, revisa que todas tus prendas esten completas `, icon: 'error', confirmButtonColor: "#E31A2A" });
+                    }
                 }
 
                 if (rol === "BACK" && parseInt(total) === (counters.back.lower + counters.back.upper + counters.back.other)) {

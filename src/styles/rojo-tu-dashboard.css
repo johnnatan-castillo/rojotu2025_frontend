@@ -1,11 +1,9 @@
-.rojo-tu-dasboard-0-x-dasboard-dasboard{
+.rojo-tu-dasboard-0-x-dasboard-dasboard {
     margin-top: 5rem;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global {
     background: #4D4D4D;
-    width: 297px;
-    height: 174px;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -17,26 +15,22 @@
 .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-container {
     background: white;
     display: flex;
-    width: 268px;
-    height: 150px;
     border-radius: 16px;
     margin-top: -20px;
-    box-shadow: -2px -6px 13px -9px rgba(227,26,42,1);
+    box-shadow: -2px -6px 13px -9px rgba(227, 26, 42, 1);
     justify-content: center;
     align-items: center;
 }
 
 
-.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-span-value{
+.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-span-value {
     color: #E31A2A;
     font-weight: 900;
-    font-size: 40px;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-title {
     color: white;
     font-weight: 900;
-    font-size: 20px;
     margin-top: 5px;
     margin-left: 10px;
 }
@@ -47,58 +41,53 @@
     justify-content: center;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global{
+.rojo-tu-dasboard-0-x-dasboard-dasboard-status-global {
     margin: 0 20px
 }
 
 
-.rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line{
+.rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line {
     width: 80%;
     margin-top: 40px;
 }
 
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-box-2,
-.rojo-tu-dasboard-0-x-dasboard-dasboard-box-3{
-    display:flex;
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-3 {
+    display: flex;
     justify-content: center;
 }
 
 
-.rojo-tu-dasboard-0-x-dasboard-table-container{
+.rojo-tu-dasboard-0-x-dasboard-table-container {
     background: #4D4D4D;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-table-card{
-    width: 16.796875vw;
-    height: 14.884569vw;
+.rojo-tu-dasboard-0-x-dasboard-table-card {
     background: white;
     padding: 12px 14px;
     border-radius: 16px;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-table-card-body{
-    display:flex;
+.rojo-tu-dasboard-0-x-dasboard-table-card-body {
+    display: flex;
     flex-direction: column;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-table-card-body-value {
-    font-size: 2.430134vw;
     color: #E31A2A;
     font-weight: 900;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-table-card-bosy-title{
-    font-size: 1.215067vw;
+.rojo-tu-dasboard-0-x-dasboard-table-card-bosy-title {
     color: #E31A2A;
-    font-weight: 900; 
+    font-weight: 900;
 }
 
 .rojo-tu-dasboard-0-x-dasboard-table-card-body-information {
     background: #4D4D4D;
     color: white;
     font-weight: 900;
-    font-size: 0.972053vw;
     padding: 5px 5px;
     padding-left: 0.72904vw;
     margin-bottom: 5px;
@@ -110,12 +99,12 @@
 
 
 .rojo-tu-dasboard-0-x-dasboard-table-box {
-    display:flex;
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-table-card{
+.rojo-tu-dasboard-0-x-dasboard-table-card {
     margin: 15px
 }
 
@@ -124,14 +113,14 @@
 }
 
 
-.rojo-tu-dasboard-0-x-dasboard-table-card-items-per-surcursal{
+.rojo-tu-dasboard-0-x-dasboard-table-card-items-per-surcursal {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
 }
 
 
-.rojo-tu-dasboard-0-x-dasboard-dasboard-box-4{
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-4 {
     display: flex;
     justify-content: center;
 }
@@ -144,13 +133,11 @@
 .rojo-tu-dasboard-0-x-dasboard-dasboard-box-2 {
     flex-direction: column;
     align-items: center;
-    margin-top: 38px;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line-span{
+.rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line-span {
     color: #4D4D4D;
     font-weight: 900;
-    font-size: 30px;
     margin-top: 5px;
     margin-left: 10px;
 }
@@ -161,69 +148,40 @@
     display: flex;
     background: #4D4D4D;
     border-radius: 16px;
-    padding-left: 1.953125vw;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-dasboard-box-3{
+.rojo-tu-dasboard-0-x-dasboard-dasboard-box-3 {
     margin: 10px 0;
-}
-
-.rojo-tu-dasboard-0-x-dasboard-dasboard-filters{
-    margin-right: 1.953125vw;
-}
-
-.rojo-tu-dasboard-0-x-dasboard-dasboard-filters{
-    padding: 1.215067vw 0;
-}
-
-.rojo-tu-dasboard-0-x-dasboard-dasboard-filters-select{
-    height: 2.430134vw;
-    border-radius: 16px;
-    width: 15.069319vw;
-    padding: 0 20px;
-    font-size: 0.972053vw;
 }
 
 
 .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons {
-    display:flex;
+    display: flex;
     align-items: center;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons-remove{
-    width: 9.113001vw;
-    height: 2.430134vw;
-    font-size: 0.972053vw;
+.rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons-remove {
     color: white;
     border-radius: 16px;
     background: #E31A2A;
     border: none;
     cursor: pointer;
     font-weight: 700;
-    
+
 }
 
-
-.rojo-tu-dasboard-0-x-dasboard-table-container-items-per-surcursal .rojo-tu-dasboard-0-x-dasboard-table-card-information-items-per-surcursal{
-    width: 32.806804vw;
-    margin-top: 40px;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-}
-
-.rojo-tu-dasboard-0-x-dasboard-table-card-body-box:first-child{
+.rojo-tu-dasboard-0-x-dasboard-table-card-body-box:first-child {
     width: 40%;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-table-card-body-box:last-child{
+.rojo-tu-dasboard-0-x-dasboard-table-card-body-box:last-child {
     width: 60%;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
 
-.rojo-tu-dasboard-0-x-dasboard-table-pagination{
+.rojo-tu-dasboard-0-x-dasboard-table-pagination {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -231,10 +189,7 @@
 }
 
 .rojo-tu-dasboard-0-x-dasboard-table-pagination-next,
-.rojo-tu-dasboard-0-x-dasboard-table-pagination-prev{
-    width: 9.113001vw;
-    height: 2.430134vw;
-    font-size: 0.972053vw;
+.rojo-tu-dasboard-0-x-dasboard-table-pagination-prev {
     color: white;
     border-radius: 16px;
     background: #E31A2A;
@@ -245,15 +200,209 @@
 }
 
 
-/*--- Inicio estilos ---*/ 
+/*--- Inicio estilos ---*/
 
 @media only screen and (min-width: 1026px) {
-    .rojo-tu-dasboard-0-x-dasboard-table-card-items-per-surcursal{
+    .rojo-tu-dasboard-0-x-dasboard-table-card-items-per-surcursal {
         height: 12.802276vw;
+    }
+
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global {
+        width: 297px;
+        height: 174px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-container {
+        width: 268px;
+        height: 150px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-title {
+        font-size: 20px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-span-value {
+        font-size: 40px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line-span {
+        font-size: 30px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-box-2 {
+        margin-top: 38px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-select {
+        height: 2.430134vw;
+        border-radius: 16px;
+        width: 15.069319vw;
+        padding: 0 20px;
+        font-size: 0.972053vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-box {
+        padding-left: 1.953125vw;
+    }
+
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters {
+        margin-right: 1.953125vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters {
+        padding: 1.215067vw 0;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons-remove {
+        width: 9.113001vw;
+        height: 2.430134vw;
+        font-size: 0.972053vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-select {
+        height: 2.430134vw;
+        border-radius: 16px;
+        width: 15.069319vw;
+        padding: 0 20px;
+        font-size: 0.972053vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-pagination-next,
+    .rojo-tu-dasboard-0-x-dasboard-table-pagination-prev {
+        width: 9.113001vw;
+        height: 2.430134vw;
+        font-size: 0.972053vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card {
+        width: 16.796875vw;
+        height: 14.884569vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card-bosy-title {
+        font-size: 1.215067vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card-body-value {
+        font-size: 2.430134vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card-body-information {
+        font-size: 0.972053vw;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-container-items-per-surcursal .rojo-tu-dasboard-0-x-dasboard-table-card-information-items-per-surcursal {
+        width: 32.806804vw;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
     }
 }
 
-@media only screen and (max-width: 1025px) {}
+@media only screen and (max-width: 1025px) {
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-box-1 {
+        flex-direction: column;
+        align-items: center;
+    }
 
- /*--- Fin estilos ---*/ 
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global {
+        width: 350px;
+        height: 90px;
+        margin-bottom: 38px;
+    }
 
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-container {
+        width: 268px;
+        height: 150px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-title {
+        font-size: 15px;
+        padding-bottom: 10px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-status-global-span-value {
+        font-size: 40px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-chart-line-span {
+        font-size: 20px;
+    }
+
+
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-box {
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters {
+        padding: 12px 0;
+        width: 100%;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons-remove {
+        width: 150px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-select {
+        height: 30px;
+        border-radius: 16px;
+        width: 100%;
+        padding: 0 20px;
+        font-size: 16px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-pagination-next,
+    .rojo-tu-dasboard-0-x-dasboard-table-pagination-prev {
+        width: 150px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card {
+        width: 120px;
+        height: 146px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card-bosy-title {
+        font-size: 14px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card-body-value {
+        font-size: 16px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-card-body-information {
+        font-size: 10px;
+        padding-left: 10px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-country-container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons {
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .rojo-tu-dasboard-0-x-dasboard-table-container-items-per-surcursal .rojo-tu-dasboard-0-x-dasboard-table-card-information-items-per-surcursal {
+        width: 100%;
+        margin-top: 40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+}
+
+/*--- Fin estilos ---*/

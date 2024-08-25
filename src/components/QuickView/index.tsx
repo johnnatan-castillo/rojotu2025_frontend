@@ -428,11 +428,8 @@ interface SliderImageI {
 }
 
 const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, imageRef }) => {
-
-
-
-
     const swiperRef = useRef<any>(null);
+    const [isMobile, setIsMobile] = useState<boolean>(false);
 
     const swiperModules = useMemo(() => [Pagination, Navigation, FreeMode, Autoplay], []);
 
@@ -450,6 +447,24 @@ const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, image
         if (swiperRef.current && swiperRef.current.autoplay) {
             swiperRef.current.autoplay.start();
         }
+    }, []);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 1025px)');
+
+        // Define la función de callback que se ejecuta cuando cambia la condición
+        const handleMediaChange = (event: MediaQueryListEvent) => {
+            setIsMobile(event.matches);
+        };
+
+        // Establece el valor inicial
+        setIsMobile(mediaQuery.matches);
+
+        // Escucha los cambios en la condición
+        mediaQuery.addEventListener('change', handleMediaChange);
+
+        // Limpia el event listener cuando el componente se desmonta
+        return () => mediaQuery.removeEventListener('change', handleMediaChange);
     }, []);
 
     return <div
@@ -476,7 +491,7 @@ const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, image
 
                         <img ref={imageRef} loading="eager" crossOrigin="anonymous" style={{
                             transformOrigin: `${position.x * 100}% ${position.y * 100}%`
-                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={image} alt="Imagen de referencia" />
+                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && !isMobile && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={image} alt="Imagen de referencia" />
 
                     </div>
                 </SwiperSlide>

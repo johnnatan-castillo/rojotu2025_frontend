@@ -130,6 +130,26 @@
 
 /*--- Inicio estilos ---*/
 
+.rojo-tu-layout-0-x-layout-link-to-gender-a {
+    text-decoration: none;
+    color: #4D4D4D;
+    font-weight: 800;
+}
+
+.rojo-tu-layout-0-x-layout-link-to-gender-container {
+    width: 300px;
+    position: sticky;
+    bottom: 10px;
+    left: 30px;
+    background: #d8d8d8;
+    padding: 15px 20px;
+    border-radius: 16px;
+}
+
+.rojo-tu-layout-0-x-layout-link-to-gender {
+    text-align: center;
+}
+
 @media only screen and (min-width: 1026px) {
 
     .rojo-tu-header-0-x-header-nav-link {
@@ -171,6 +191,7 @@
         font-size: 0.972763vw;
     }
 
+    .rojo-tu-header-0-x-header-login-form-help svg,
     .rojo-tu-header-0-x-header-nav-link-profile svg {
         width: 2.140078vw;
         height: 2.140078vw;
@@ -236,6 +257,11 @@
         font-size: 2.325581vw;
     }
 
+    .rojo-tu-header-0-x-header-login-form-help svg {
+        width: 5.651163vw;
+        height: 5.651163vw;
+    }
+
     .rojo-tu-header-0-x-header-nav-link-profile svg {
         width: 4.651163vw;
         height: 4.651163vw;
@@ -248,8 +274,8 @@
         background-size: 100%;
         background-position: center;
     }
-    
-    .rojo-tu-header-0-x-header-header{
+
+    .rojo-tu-header-0-x-header-header {
         background: white;
         height: 24.418605vw;
     }
