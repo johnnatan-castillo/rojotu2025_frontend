@@ -501,20 +501,6 @@ const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, image
                                 onClick={() => handleImageClick(index)}
                                 onMouseMove={handleMouseMove}
                             />
-                            {zoomedIndex === index && zoomPosition && (
-                                <div
-                                    className="zoom-overlay"
-                                    style={{
-                                        backgroundImage: `url(${image})`,
-                                        backgroundPosition: `${zoomPosition.left}% ${zoomPosition.top}%`,
-                                        backgroundSize: '200% 200%',
-                                        backgroundRepeat: 'no-repeat',
-                                        transform: 'translate(-50%, -50%)',
-                                        top: '50%',
-                                        left: '50%',
-                                    }}
-                                />
-                            )}
                         </div>
                     </SwiperSlide>
                 ))}
