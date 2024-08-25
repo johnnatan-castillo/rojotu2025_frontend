@@ -113,8 +113,16 @@
 
 .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-container .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-big-zoomed {
     transform: scale(2.5);
-    cursor: move;
+    cursor: zoom-out;
 }
+
+.rojo-tu-quickview-0-x-quickview-quickview-body-imagen-big{
+    cursor: zoom-in;
+}
+
+.rojo-tu-quickview-0-x-quickview-quickview-body-imagen-big  {
+    transition: transform 0.3s ease;
+ }
 
 .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-container {
     overflow: hidden;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 import CustomClass from '../../utils/CustomClass';
 import ReactDOM from 'react-dom';
 import { v4 as uuidv4 } from "uuid";
@@ -10,7 +10,7 @@ import { getApuUrl } from '../../utils/config';
 import { useNavigate } from 'react-router-dom';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, FreeMode, Autoplay } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -25,6 +25,9 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     const [images, setImages] = useState<string[]>([]);
     const [isZoomed, setIsZoomed] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
+
+
+    const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
 
     const handleMouseEnter = () => {
         setIsZoomed(true);
@@ -53,16 +56,16 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
 
             const fetchImages = async () => {
                 try {
-    
+
                     const imagePromises = product.detalles.map(async (detalle) => {
                         const nameImage = Object.values(detalle)[0];
                         const image = await import(`../../assets/plp/${nameImage}`);
                         return image.default;
                     });
-    
+
                     const resolvedImages = await Promise.all(imagePromises);
                     setImages((prev) => ([...prev, ...resolvedImages]));
-    
+
                 } catch (error) {
                     console.log("Error al intentar cargar la imagen");
                 }
@@ -83,7 +86,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     }, [product]);
 
     useEffect(() => {
-        
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -121,7 +124,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                     <div onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onMouseMove={handleMouseMove} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-container" })}`}>
-                        <SliderImage images={images} position={position} isZoomed={isZoomed} imageRef={imageRef} />
+                        <SliderImage images={images} position={position} isZoomed={isZoomed} imageRef={imageRef} activeIndex={activeImageIndex} setActiveImageIndex={setActiveImageIndex} />
                     </div>
 
                     {/* Información de prenda */}
@@ -424,30 +427,38 @@ interface SliderImageI {
     images: string[];
     position: any;
     isZoomed: any;
-    imageRef: any
+    imageRef: any;
+    activeIndex: number;
+    setActiveImageIndex: (index: number) => void;
 }
 
-const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, imageRef }) => {
+const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, imageRef, activeIndex, setActiveImageIndex }) => {
     const swiperRef = useRef<any>(null);
+    const [zoomedIndex, setZoomedIndex] = useState<number | null>(null);
+    const [zoomPosition, setZoomPosition] = useState<{ top: number; left: number } | null>(null);
     const [isMobile, setIsMobile] = useState<boolean>(false);
 
-    const swiperModules = useMemo(() => [Pagination, Navigation, FreeMode, Autoplay], []);
 
-    const onInit = useCallback((swiper: any) => {
-        swiperRef.current = swiper;
-    }, []);
-
-    const handleMouseEnter = useCallback(() => {
-        if (swiperRef.current && swiperRef.current.autoplay) {
-            swiperRef.current.autoplay.stop();
+    const handleImageClick = (index: number) => {
+        if (zoomedIndex === index) {
+            setZoomedIndex(null);
+            setZoomPosition(null);
+        } else {
+            setZoomedIndex(index);
         }
-    }, []);
+    };
 
-    const handleMouseLeave = useCallback(() => {
-        if (swiperRef.current && swiperRef.current.autoplay) {
-            swiperRef.current.autoplay.start();
+    const handleMouseMove = useCallback((event: React.MouseEvent<HTMLImageElement>) => {
+        if (zoomedIndex !== null) {
+            const { clientX, clientY, currentTarget } = event;
+            const { left, top, width, height } = currentTarget.getBoundingClientRect();
+            const x = clientX - left;
+            const y = clientY - top;
+            const zoomX = (x / width) * 100;
+            const zoomY = (y / height) * 100;
+            setZoomPosition({ top: zoomY, left: zoomX });
         }
-    }, []);
+    }, [zoomedIndex]);
 
     useEffect(() => {
         const mediaQuery = window.matchMedia('(max-width: 1025px)');
@@ -467,37 +478,49 @@ const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, image
         return () => mediaQuery.removeEventListener('change', handleMediaChange);
     }, []);
 
-    return <div
-        className={CustomClass({ component, version, customClass: "slider-quick" })}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-    >
-        <Swiper
-            onInit={onInit}
-            direction={'horizontal'}
-            slidesPerView={1}
-            spaceBetween={10}
-            pagination={{ clickable: false }}
-            centeredSlides={false}
-            loop={true}
-            freeMode={true}
-            navigation={true}
-            modules={swiperModules}
-            className={CustomClass({ component, version, customClass: "slider-swiper" })}
+    return (
+        <div
+            className={CustomClass({ component, version, customClass: "slider-quick" })}
         >
-            {images.map((image, index) => (
-                <SwiperSlide key={index}>
-                    <div className={CustomClass({ component, version, customClass: "slider-swiper-container-quick" })}>
-
-                        <img ref={imageRef} loading="eager" crossOrigin="anonymous" style={{
-                            transformOrigin: `${position.x * 100}% ${position.y * 100}%`
-                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && !isMobile && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={image} alt="Imagen de referencia" />
-
-                    </div>
-                </SwiperSlide>
-            ))}
-        </Swiper>
-    </div>
+            <Swiper
+                modules={[Navigation, Pagination]}
+                pagination={{ clickable: true }}
+                navigation
+                loop={true}
+                onSlideChange={(swiper: any) => setActiveImageIndex(swiper.activeIndex)}
+                ref={swiperRef}
+                className={CustomClass({ component, version, customClass: "slider-swiper" })}
+            >
+                {images.map((image, index) => (
+                    <SwiperSlide key={index} className={CustomClass({ component, version, customClass: "slider-swiper-container-quick" })}>
+                        <div className="image-zoom-container">
+                            <img
+                                src={image}
+                                alt={`Slide ${index}`}
+                                className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${zoomedIndex === index && !isMobile && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`}
+                                onClick={() => handleImageClick(index)}
+                                onMouseMove={handleMouseMove}
+                            />
+                            {zoomedIndex === index && zoomPosition && (
+                                <div
+                                    className="zoom-overlay"
+                                    style={{
+                                        backgroundImage: `url(${image})`,
+                                        backgroundPosition: `${zoomPosition.left}% ${zoomPosition.top}%`,
+                                        backgroundSize: '200% 200%',
+                                        backgroundRepeat: 'no-repeat',
+                                        transform: 'translate(-50%, -50%)',
+                                        top: '50%',
+                                        left: '50%',
+                                    }}
+                                />
+                            )}
+                        </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
+    );
 }
 
 export default QuickView;
