@@ -19,7 +19,7 @@ const Alert = () => {
 
     useEffect(() => {
 
-        if (message && message.length > 0 && message !== undefined && message !== null) {
+        if (message && message.length > 0 && message !== undefined && message !== null && message !== "El carrito se ha limpiado") {
 
             setShow(true);
 
