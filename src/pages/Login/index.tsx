@@ -347,7 +347,7 @@ const Login: React.FC = () => {
     }
 
     const hanldeHref = () => {
-        window.location.href = "https://rojotu.davivienda.com/preguntas-frecuentes"
+        window.open("https://rojotu.davivienda.com/preguntas-frecuentes", "_blank");
     }
 
     useEffect(() => {

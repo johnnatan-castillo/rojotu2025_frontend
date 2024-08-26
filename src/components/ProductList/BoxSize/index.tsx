@@ -109,9 +109,6 @@ const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, i
     const currentPath = location.pathname;
     const isCart = currentPath.includes('/my-clothes');
 
-    console.log(product);
-    
-
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
 
     return (
