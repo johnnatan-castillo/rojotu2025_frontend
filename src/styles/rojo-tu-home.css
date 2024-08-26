@@ -1,0 +1,65 @@
+.rojo-tu-home-0-x-home-baner-image {
+    width: 100%;
+}
+
+.rojo-tu-home-0-x-home-baner-container{
+    width: 90%;
+    margin: 40px auto;
+}
+
+.rojo-tu-home-0-x-home-home-image-navigation{
+    width: 100%;
+    border-radius: 16px;
+}
+
+.rojo-tu-home-0-x-home-home-image-title{
+    font-weight: 900;
+    font-size: 20px;
+    margin-top: 10px;
+    display: block;
+}
+
+.rojo-tu-home-0-x-home-home-image-paragraph{
+    font-weight: 400;
+    font-size: 16px;
+    
+}
+
+.rojo-tu-home-0-x-home-home-image-link{
+    font-weight: 900;
+    color: red;
+}
+
+
+/*--- Inicio estilos ---*/ 
+
+@media only screen and (min-width: 1026px) {
+
+    .rojo-tu-home-0-x-home-home-split-navigation-container{
+        display: flex;
+        width: 91.5%;
+        margin: 0 auto;
+        margin-bottom: 45px;
+    }
+
+    .rojo-tu-home-0-x-home-home-split-navigation{
+        width: 33.33%;
+        padding: 10px;
+    }
+
+}
+
+@media only screen and (max-width: 1025px) {
+    .rojo-tu-home-0-x-home-home-split-navigation-container{
+        width: 91.5%;
+        margin: 0 auto;
+        margin-bottom: 45px;
+    }
+
+    .rojo-tu-home-0-x-home-home-split-navigation{
+        margin-bottom: 60px;
+    }
+}
+
+ /*--- Fin estilos ---*/ 
+

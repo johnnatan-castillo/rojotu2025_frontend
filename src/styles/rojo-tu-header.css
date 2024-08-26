@@ -231,7 +231,7 @@
     .rojo-tu-header-0-x-header-span-icon-4,
     .rojo-tu-header-0-x-header-span-icon-5,
     .rojo-tu-header-0-x-header-span-icon-6 {
-        font-size: 10px;
+        font-size: 2.03666vw;
         bottom: -15px;
     }
 
@@ -240,7 +240,7 @@
     }
 
     .rojo-tu-header-0-x-header-span-icon-5 {
-        bottom: -24px;
+        bottom: -4.887984vw;
         text-align: center;
     }
 
@@ -280,5 +280,7 @@
         height: 24.418605vw;
     }
 }
+
+
 
 /*--- Fin estilos ---*/
