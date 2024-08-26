@@ -9,12 +9,6 @@ import { addClothingItemThunk, setMessage } from '../../features/cart/cartSlice'
 import { getApuUrl } from '../../utils/config';
 import { useNavigate } from 'react-router-dom';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-
 const component: string = "quickview"
 const version: string = "0"
 
@@ -22,12 +16,10 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     const { rol } = useSelector((state: RootState) => state.auth);
     const { nombre_prenda, descripcion, dias } = product;
     const imageRef: any = useRef(null);
+    const [imageSrc, setImageSrc] = useState("");
     const [images, setImages] = useState<string[]>([]);
     const [isZoomed, setIsZoomed] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
-
-
-    const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
 
     const handleMouseEnter = () => {
         setIsZoomed(true);
@@ -38,12 +30,15 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     };
 
     const handleMouseMove = (e: any) => {
-        if (!isZoomed || !imageRef.current) return;
-
-        const { left, top, width, height } = imageRef.current.getBoundingClientRect();
+        if (!isZoomed) return;
+        const {
+            left,
+            top,
+            width,
+            height
+        } = imageRef.current.getBoundingClientRect();
         const x = (e.clientX - left) / width;
         const y = (e.clientY - top) / height;
-
         setPosition({ x, y });
     };
 
@@ -53,42 +48,40 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
 
     useEffect(() => {
         const loadImage = async () => {
-
-            const fetchImages = async () => {
-                try {
-
-                    const imagePromises = product.detalles.map(async (detalle) => {
-                        const nameImage = Object.values(detalle)[0];
-                        const image = await import(`../../assets/plp/${nameImage}`);
-                        return image.default;
-                    });
-
-                    const resolvedImages = await Promise.all(imagePromises);
-                    setImages((prev) => ([...prev, ...resolvedImages]));
-
-                } catch (error) {
-                    console.log("Error al intentar cargar la imagen");
-                }
-            };
-
             try {
                 const image = await import(`../../assets/plp/${product.ubicacion_archivo}`);
-                setImages([image.default]);
-                product?.detalles?.length > 0 && fetchImages()
+                setImageSrc(image.default);
             } catch (error) {
                 const image = await import("../../assets/plp/no-image.jpg");
-                setImages([image.default]);
+                setImageSrc(image.default);
 
             }
         };
 
         loadImage();
-    }, [product]);
+    }, [product.ubicacion_archivo]);
 
     useEffect(() => {
+        const fetchImages = async () => {
+            try {
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+                const imagePromises = product.detalles.map(async (detalle) => {
+                    const nameImage = Object.values(detalle)[0];
+                    const image = await import(`../../assets/plp/${nameImage}`);
+                    return image.default;
+                });
+
+                const resolvedImages = await Promise.all(imagePromises);
+                setImages([imageSrc, ...resolvedImages]);
+
+            } catch (error) {
+                console.log("Error al intentar cargar la imagen");
+            }
+        };
+
+        product?.detalles?.length > 0 && fetchImages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [product]);
 
 
     return ReactDOM.createPortal(
@@ -124,7 +117,36 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                     <div onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onMouseMove={handleMouseMove} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-container" })}`}>
-                        <SliderImage images={images} position={position} isZoomed={isZoomed} imageRef={imageRef} activeIndex={activeImageIndex} setActiveImageIndex={setActiveImageIndex} />
+                        <img ref={imageRef} style={{
+                            transformOrigin: `${position.x * 100}% ${position.y * 100}%`
+                        }} className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${isZoomed && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`} src={imageSrc} alt={nombre_prenda} />
+                    </div>
+
+
+                    {/* Imagenes pequeñas */}
+                    <div className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-small" })}`}>
+                        <>
+
+                            {/* Imagen 1 */}
+                            {images.map((image, index) => (
+                                <button key={index} className={CustomClass({
+                                    component,
+                                    version,
+                                    customClass: `quickview-body-button-imagen-small`,
+                                })} type="button" onClick={() => (setImageSrc(image))}>
+                                    <img
+                                        className={CustomClass({
+                                            component,
+                                            version,
+                                            customClass: `quickview-body-imagen-small-${index + 1}`,
+                                        })}
+                                        src={image}
+                                        alt={nombre_prenda}
+                                    />
+                                </button>
+                            ))}
+                        </>
+
                     </div>
 
                     {/* Información de prenda */}
@@ -422,91 +444,5 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
         </>
     );
 };
-
-interface SliderImageI {
-    images: string[];
-    position: any;
-    isZoomed: any;
-    imageRef: any;
-    activeIndex: number;
-    setActiveImageIndex: (index: number) => void;
-}
-
-const SliderImage: React.FC<SliderImageI> = ({ images, position, isZoomed, imageRef, activeIndex, setActiveImageIndex }) => {
-    const swiperRef = useRef<any>(null);
-    const [zoomedIndex, setZoomedIndex] = useState<number | null>(null);
-    const [zoomPosition, setZoomPosition] = useState<{ top: number; left: number } | null>(null);
-    const [isMobile, setIsMobile] = useState<boolean>(false);
-
-
-    const handleImageClick = (index: number) => {
-        if (zoomedIndex === index) {
-            setZoomedIndex(null);
-            setZoomPosition(null);
-        } else {
-            setZoomedIndex(index);
-        }
-    };
-
-    const handleMouseMove = useCallback((event: React.MouseEvent<HTMLImageElement>) => {
-        if (zoomedIndex !== null) {
-            const { clientX, clientY, currentTarget } = event;
-            const { left, top, width, height } = currentTarget.getBoundingClientRect();
-            const x = clientX - left;
-            const y = clientY - top;
-            const zoomX = (x / width) * 100;
-            const zoomY = (y / height) * 100;
-            setZoomPosition({ top: zoomY, left: zoomX });
-        }
-    }, [zoomedIndex]);
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(max-width: 1025px)');
-
-        // Define la función de callback que se ejecuta cuando cambia la condición
-        const handleMediaChange = (event: MediaQueryListEvent) => {
-            setIsMobile(event.matches);
-        };
-
-        // Establece el valor inicial
-        setIsMobile(mediaQuery.matches);
-
-        // Escucha los cambios en la condición
-        mediaQuery.addEventListener('change', handleMediaChange);
-
-        // Limpia el event listener cuando el componente se desmonta
-        return () => mediaQuery.removeEventListener('change', handleMediaChange);
-    }, []);
-
-    return (
-        <div
-            className={CustomClass({ component, version, customClass: "slider-quick" })}
-        >
-            <Swiper
-                modules={[Navigation, Pagination]}
-                pagination={{ clickable: true }}
-                navigation
-                loop={true}
-                onSlideChange={(swiper: any) => setActiveImageIndex(swiper.activeIndex)}
-                ref={swiperRef}
-                className={CustomClass({ component, version, customClass: "slider-swiper" })}
-            >
-                {images.map((image, index) => (
-                    <SwiperSlide key={index} className={CustomClass({ component, version, customClass: "slider-swiper-container-quick" })}>
-                        <div className="image-zoom-container">
-                            <img
-                                src={image}
-                                alt={`Slide ${index}`}
-                                className={`${CustomClass({ component, version, customClass: "quickview-body-imagen-big" })} ${zoomedIndex === index && !isMobile && CustomClass({ component, version, customClass: "quickview-body-imagen-big-zoomed" })}`}
-                                onClick={() => handleImageClick(index)}
-                                onMouseMove={handleMouseMove}
-                            />
-                        </div>
-                    </SwiperSlide>
-                ))}
-            </Swiper>
-        </div>
-    );
-}
 
 export default QuickView;

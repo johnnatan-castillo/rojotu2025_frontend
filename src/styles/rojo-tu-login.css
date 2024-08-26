@@ -37,7 +37,6 @@
 }
 
 .rojo-tu-login-0-x-login-login-form-child-span-error {
-    font-size: 0.875486vw;
     color: #E31A2A;
     font-weight: 600;
 }
@@ -95,6 +94,10 @@
      border: none;
      margin-top: 10px;
  }
+
+ .rojo-tu-login-0-x-login-login-form-child-span-error{
+    margin-top: -20px;
+}
 
 @media only screen and (min-width: 1026px) {
     .rojo-tu-login-0-x-login-login-container-form {
@@ -164,9 +167,17 @@
     .rojo-tu-login-0-x-login-login-form-child {
         margin-bottom: 0.729572vw;
     }
+
+    .rojo-tu-login-0-x-login-login-form-child-span-error {
+        font-size: 0.875486vw;
+    }
 }
 
 @media only screen and (max-width: 1025px) {
+
+    .rojo-tu-login-0-x-login-login-form-child-span-error {
+        font-size: 14px;
+    }
 
     .rojo-tu-login-0-x-login-login,
     .rojo-tu-login-0-x-login-login-baner {
