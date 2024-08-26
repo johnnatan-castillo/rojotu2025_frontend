@@ -250,13 +250,13 @@
     .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-2,
     .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-3,
     .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small-4 {
-        width: 5.049787vw;
+        width: 3.049787vw;
         cursor: pointer;
     }
 
-    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small {
-        display: flex;
-        flex-direction: column;
+    .rojo-tu-quickview-0-x-quickview-quickview-body-imagen-small{
+        position: absolute;
+        bottom: 0;
     }
 
 }

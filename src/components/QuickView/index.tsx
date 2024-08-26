@@ -47,41 +47,40 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
     };
 
     useEffect(() => {
-        const loadImage = async () => {
+        const loadImages = async () => {
             try {
-                const image = await import(`../../assets/plp/${product.ubicacion_archivo}`);
-                setImageSrc(image.default);
-            } catch (error) {
-                const image = await import("../../assets/plp/no-image.jpg");
-                setImageSrc(image.default);
-
-            }
-        };
-
-        loadImage();
-    }, [product.ubicacion_archivo]);
-
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-
+                // Cargar la imagen principal
+                const mainImage = await import(`../../assets/plp/${product.ubicacion_archivo}`);
+                setImageSrc(mainImage.default);
+    
+                // Cargar las imágenes adicionales
                 const imagePromises = product.detalles.map(async (detalle) => {
                     const nameImage = Object.values(detalle)[0];
                     const image = await import(`../../assets/plp/${nameImage}`);
                     return image.default;
                 });
-
+    
                 const resolvedImages = await Promise.all(imagePromises);
-                setImages([imageSrc, ...resolvedImages]);
-
+                setImages([mainImage.default, ...resolvedImages]);
+    
             } catch (error) {
-                console.log("Error al intentar cargar la imagen");
+                try {
+                    // En caso de error, cargar la imagen por defecto
+                    const fallbackImage = await import("../../assets/plp/no-image.jpg");
+                    setImageSrc(fallbackImage.default);
+                    setImages([fallbackImage.default]);
+                } catch (fallbackError) {
+                    console.log("Error al intentar cargar la imagen por defecto");
+                }
             }
         };
-
-        product?.detalles?.length > 0 && fetchImages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
+        if (product) {
+            loadImages();
+        }
+    
     }, [product]);
+    
 
 
     return ReactDOM.createPortal(
