@@ -6,8 +6,9 @@ import { AppDispatch, RootState } from '../../redux/store';
 import Swal from "sweetalert2";
 import { getApuUrl } from '../../utils/config';
 import { decryptData } from '../../utils/Decrypt';
-import { login } from '../../features/auth/authSlice';
+import { login, logout } from '../../features/auth/authSlice';
 import Spinner from '../Spinner/intex';
+import { useNavigate } from 'react-router-dom';
 
 const component: string = "select-identity"
 const version: string = "0"
@@ -17,6 +18,7 @@ const SelectIdentity = () => {
 
   const profile = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -45,6 +47,11 @@ const SelectIdentity = () => {
       .then((result: ResponseAPI) => {
 
         setLoading(false)
+
+        if (result.code === 401) {
+          dispatch(logout());
+          navigate('/login');
+        }
 
         if (result.code !== 200) {
           return Swal.fire({ title: 'Error al cambiar de expresión de genero', text: `Ha ocurrido un error al intentar cambiar la expresión de genero`, icon: 'error', confirmButtonColor: "#E31A2A" });

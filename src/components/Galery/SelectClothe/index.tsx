@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import CustomClass from '../../../utils/CustomClass'
 import QuickView from '../../QuickView'
-import { RootState } from '../../../redux/store'
-import { useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../../../redux/store'
+import { useDispatch, useSelector } from 'react-redux'
 import { getApuUrl } from '../../../utils/config'
+import { logout } from '../../../features/auth/authSlice'
+import { useNavigate } from 'react-router-dom'
 
 interface BadgeI {
     component: string
@@ -17,6 +19,9 @@ const Badge: React.FC<BadgeI> = ({ component, version, numberButton, id }) => {
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
 
     const [product, setProduct] = useState<Product>();
+
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -46,6 +51,11 @@ const Badge: React.FC<BadgeI> = ({ component, version, numberButton, id }) => {
         fetch(url, requestOptions)
             .then((response) => response.json())
             .then(({ code, data }) => {
+
+                if (code === 401) {
+                    dispatch(logout());
+                    navigate('/login');
+                }
 
                 if (code !== 200) {
                     return;

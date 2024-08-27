@@ -38,7 +38,7 @@ const MyClothes = () => {
     <div className={`${CustomClass({ component, version, customClass: "my-clothes" })}`}>
       <Suspense fallback={<Spinner />}>
         <ProductList
-          itemsPerPage={16}
+          itemsPerPage={200}
           showArrows={true}
           showQuickView={true}
           showSizes={true}

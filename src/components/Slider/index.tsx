@@ -12,7 +12,7 @@ import { AppDispatch, RootState } from '../../redux/store';
 import Badge from '../Galery/SelectClothe';
 import QuickView from '../QuickView';
 import { getApuUrl } from '../../utils/config';
-import { logout } from '../../features/auth/authSlice';
+import { logout, updateTokenUser } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
 interface CarruselProps {
@@ -58,8 +58,15 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
         fetch(url, requestOptions)
             .then((response) => response.json())
             .then((result) => {
+
+                if (result.code === 401) {
+                    dispatch(logout());
+                    navigate('/login');
+                }
+
                 if (result.code === 200) {
                     setData(result.data);
+                    dispatch(updateTokenUser({ token: result.token }))
                 }
             })
             .catch((error) => {

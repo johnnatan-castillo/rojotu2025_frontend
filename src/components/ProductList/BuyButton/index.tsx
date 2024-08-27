@@ -5,6 +5,8 @@ import { AppDispatch, RootState } from '../../../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { setStatus } from '../../../features/cart/cartSlice';
 import Swal from "sweetalert2";
+import { logout } from '../../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const component: string = "buy-button";
 const version: string = "0";
@@ -15,6 +17,7 @@ const BuyButton = () => {
     const { token, total, rol, administrador } = useSelector((state: RootState) => state.auth);
     const { status, counters } = useSelector((state: RootState) => state.carts.cart);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
 
     const handleSendOrder = async () => {
@@ -55,6 +58,11 @@ const BuyButton = () => {
                                 return Swal.fire({ title: 'Pedido enviado', text: "Se ha enviado tu pedido", icon: 'success', confirmButtonColor: "#E31A2A" });
                             }
 
+                            if (code === 401) {
+                                dispatch(logout());
+                                navigate('/login');
+                            }
+
                             if (code !== 200 || code !== 201) {
                                 return Swal.fire({ title: 'Ha ocurrido un error', text: `Ha ocurrido un error al intentar enviar tu pedido`, icon: 'error', confirmButtonColor: "#E31A2A" });
                             }
@@ -65,8 +73,10 @@ const BuyButton = () => {
                 if (administrador) {
                     if (rol === "BACK" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total) ) {
                         handleFetch();
+                        return;
                     } else if (rol === "FRONT" && (counters.front.LUNES + counters.front.MARTES + counters.front.MIERCOLES + counters.front.JUEVES + counters.front.VIERNES) <= parseInt(total)) {
                         handleFetch();
+                        return;
                     } else {
                         return Swal.fire({ title: 'Completa tu pedido', text: `El pedido no esta completo, revisa que todas tus prendas esten completas `, icon: 'error', confirmButtonColor: "#E31A2A" });
                     }

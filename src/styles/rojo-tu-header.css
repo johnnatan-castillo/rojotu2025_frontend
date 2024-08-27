@@ -115,7 +115,7 @@
 }
 
 .rojo-tu-header-0-x-header-span-name {
-    color: #4D4D4D;
+    color: white;
     text-transform: capitalize;
     text-decoration: none;
     font-weight: 700;
@@ -198,8 +198,7 @@
     }
 
     .rojo-tu-header-0-x-header-header {
-        background: url("data:image/svg+xml,%3Csvg width='300' height='134' viewBox='90 25 1250 174' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1366' height='200' transform='translate(37)' fill='%23F0EFEC'/%3E%3Cpath d='M37 173.5V200L1403 199.5V174C1403 174 989.072 120.748 722.5 120.5C453.997 120.251 37 173.5 37 173.5Z' fill='white'/%3E%3C/svg%3E%0A");
-        background-repeat: no-repeat;
+        background: url('data:image/svg+xml,<svg width="1682" height="195" viewBox="0 0 1682 195" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="1678.76" height="191.491" fill="%23EB1C23"/><path d="M0 169.667V195L1682 194.522V170.145C1682 170.145 1172.32 119.238 844.078 119.001C513.462 118.762 0 169.667 0 169.667Z" fill="white"/></svg>');
         background-repeat: no-repeat;
         background-size: 100%;
         background-position: center;
@@ -221,8 +220,8 @@
     .rojo-tu-header-0-x-header-nav-link-4 svg,
     .rojo-tu-header-0-x-header-nav-link-5 svg,
     .rojo-tu-header-0-x-header-nav-link-6 svg {
-        width: 8.11284vw;
-        height: 8.11284vw;
+        width: 7.11284vw;
+        height: 7.11284vw;
     }
 
     .rojo-tu-header-0-x-header-span-icon-1,
@@ -236,7 +235,7 @@
     }
 
     .rojo-tu-header-0-x-header-box-1 {
-        height: 17.311284vw;
+        height: 19.311284vw;
     }
 
     .rojo-tu-header-0-x-header-span-icon-5 {
@@ -268,8 +267,7 @@
     }
 
     .rojo-tu-header-0-x-header-container {
-        background: url("data:image/svg+xml,%3Csvg width='300' height='134' viewBox='90 25 1250 174' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='1366' height='200' transform='translate(37)' fill='%23F0EFEC'/%3E%3Cpath d='M37 173.5V200L1403 199.5V174C1403 174 989.072 120.748 722.5 120.5C453.997 120.251 37 173.5 37 173.5Z' fill='white'/%3E%3C/svg%3E%0A");
-        background-repeat: no-repeat;
+        background: url('data:image/svg+xml,<svg width="1682" height="373" viewBox="0 0 1682 373" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="1678.76" height="366.288" fill="%23EB1C23"/><path d="M0 337.667V373L1682 372.333V338.334C1682 338.334 1172.32 267.331 844.078 267.001C513.462 266.669 0 337.667 0 337.667Z" fill="white"/></svg>');
         background-repeat: no-repeat;
         background-size: 100%;
         background-position: center;

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import CustomClass from '../../../utils/CustomClass'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../redux/store'
-import { filter } from '../../../features/filter/filterSlice'
+import { filter, resetFilter } from '../../../features/filter/filterSlice'
 
 const component: string = "counter"
 const version: string = "0"
@@ -23,11 +23,17 @@ const CounterBack = () => {
     const profile = useSelector((state: RootState) => state.auth);
     const dispatch = useDispatch<AppDispatch>();
 
-
     const handleSwitchFilter = (isFilteredBy: string) => {
         dispatch(filter({ isFilteredBy }))
 
     }
+
+    useEffect(() => {
+
+        dispatch(resetFilter());
+
+    }, [dispatch])
+
 
     return (
         <div className={`${CustomClass({ component, version, customClass: "counter" })}`}>
@@ -117,8 +123,13 @@ const CounterFront = () => {
 
     const handleSwitchFilter = (isFilteredBy: string) => {
         dispatch(filter({ isFilteredBy }))
-
     }
+
+    useEffect(() => {
+
+        dispatch(resetFilter());
+
+    }, [dispatch])
 
     return (
         <div className={`${CustomClass({ component, version, customClass: "counter" })}`}>

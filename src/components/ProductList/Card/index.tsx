@@ -5,6 +5,8 @@ import { BoxSizePLP } from '../BoxSize';
 import { removeClothingItemThunk } from '../../../features/cart/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/store';
+import { logout } from '../../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 const component: string = "card"
 const version: string = "0"
@@ -15,26 +17,35 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
     const [imageSrc, setImageSrc] = useState("");
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
     const handleRemoveClotheTOCart = async (reference: string) => {
-        for (const item of items) {
-            if (rol === "BACK") {
-                if (item.referencia === reference) {
-                    await dispatch(removeClothingItemThunk({ productId: item.id, talla: item.talla, token, rol })).unwrap();
-                }
-            } else {
-                if (item.referencia === reference) {
-
-                    if (rol) {
-                        const filterTODelete = items.filter((product) => product.id_order === item.id_order);
-
-                        for (const filter of filterTODelete) {
-                            await dispatch(removeClothingItemThunk({ productId: filter.id, talla: filter.talla, token, rol })).unwrap();
-                        }
+        try {
+            
+            for (const item of items) {
+                if (rol === "BACK") {
+                    if (item.referencia === reference) {
+                        await dispatch(removeClothingItemThunk({ productId: item.id, talla: item.talla, token, rol })).unwrap();
                     }
-
+                } else {
+                    if (item.referencia === reference) {
+    
+                        if (rol) {
+                            const filterTODelete = items.filter((product) => product.id_order === item.id_order);
+    
+                            for (const filter of filterTODelete) {
+                                await dispatch(removeClothingItemThunk({ productId: filter.id, talla: filter.talla, token, rol })).unwrap();
+                            }
+                        }
+    
+                    }
                 }
             }
+
+
+        } catch (error) {
+            dispatch(logout());
+            navigate('/login');
         }
     };
     // product.ubicacion_archivo && product.ubicacion_archivo.endsWith('.jpg') ? product.ubicacion_archivo : NOFOUNDIMAGE

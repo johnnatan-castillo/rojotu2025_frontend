@@ -253,6 +253,8 @@
 
     .rojo-tu-dasboard-0-x-dasboard-dasboard-filters {
         padding: 1.215067vw 0;
+        display: flex;
+        flex-direction: row;
     }
 
     .rojo-tu-dasboard-0-x-dasboard-dasboard-filters-buttons-remove {

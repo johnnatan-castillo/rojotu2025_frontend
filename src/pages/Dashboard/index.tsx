@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { RootState } from '../../redux/store';
-import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
 import { getApuUrl } from '../../utils/config';
 import CustomClass from '../../utils/CustomClass';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../features/auth/authSlice';
 
 
 const component: string = "dasboard"
@@ -11,6 +13,9 @@ const version: string = "0"
 
 
 const Dashboard = () => {
+
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const userRole = useSelector((state: RootState) => state.auth);
   const [usersPerDay, setUsersPerDay] = useState<any>([]);
@@ -21,6 +26,8 @@ const Dashboard = () => {
 
   const [countrySelect, setCountrySelect] = useState("");
   const [citySelect, setCitySelect] = useState("");
+
+  const [firstCountry, setFirstCountry] = useState("")
 
 
   const handleRemove = () => {
@@ -45,6 +52,11 @@ const Dashboard = () => {
     fetch(url, requestOptions)
       .then((response) => response.json())
       .then((result) => {
+
+        if (result.code === 401) {
+          dispatch(logout());
+          navigate('/login');
+        }
 
         if (result.code === 200) {
           setUsersPerDay(result.data)
@@ -76,7 +88,9 @@ const Dashboard = () => {
       .then((result) => {
 
         if (result.code === 200) {
-          setReportBig(result.data)
+          setReportBig(result.data);
+          const firstCountry = Object.keys(result.data.result)[0];
+          setFirstCountry(firstCountry);
         }
 
       })
@@ -94,6 +108,8 @@ const Dashboard = () => {
       const filteredData = Object.keys(reportBig.result).find((item: any) => item === countrySelect && item);
       if (filteredData) {
         setDataFilterByCountry(reportBig.result[filteredData]);
+        setFirstCountry(countrySelect);
+        setCitySelect("");
       }
     }
 
@@ -152,7 +168,7 @@ const Dashboard = () => {
       <div className={`${CustomClass({ component, version, customClass: "dasboard-box-3" })}`}>
 
         <div className={`${CustomClass({ component, version, customClass: "dasboard-filters-box" })}`}>
-          
+
           <div className={`${CustomClass({ component, version, customClass: "dasboard-filters" })} ${CustomClass({ component, version, customClass: "dasboard-filters-country-container" })}`}>
             <div className={`${CustomClass({ component, version, customClass: "dasboard-filters" })} ${CustomClass({ component, version, customClass: "dasboard-filters-country" })}`}>
 
@@ -184,13 +200,11 @@ const Dashboard = () => {
                 <option selected value="" disabled >Seleccione una sucursal</option>
                 {
                   countrySelect &&
-                  Object.keys(reportBig.result).map((country) => {
-                    return Object.keys(reportBig.result[country]).map((city, index) => (
-                      <option key={`${country}-${index}`} value={city}>
-                        {city}
-                      </option>
-                    ));
-                  })
+                  Object.keys(reportBig.result[countrySelect]).map((city, index) => (
+                    <option key={`${countrySelect}-${index}`} value={city}>
+                      {city}
+                    </option>
+                  ))
                 }
 
               </select>
@@ -208,7 +222,7 @@ const Dashboard = () => {
 
         {reportBig.result && citySelect && <ItemsPerSurcursal sucursal={dataFilterByCity} />}
 
-        {reportBig.result && !citySelect && <Table itemsPerPage={16} products={reportBig.result} />}
+        {reportBig.result && !citySelect && <Table itemsPerPage={16} products={reportBig.result} firstCountry={firstCountry} />}
 
       </div>
     </div>
@@ -219,9 +233,10 @@ const Dashboard = () => {
 interface TableI {
   products: any,
   itemsPerPage: number;
+  firstCountry: string;
 }
 
-const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
+const Table: React.FC<TableI> = ({ products, itemsPerPage, firstCountry }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [sucursales, setSucursales] = useState<{ country: string, city: string, data: any }[]>([])
@@ -251,23 +266,26 @@ const Table: React.FC<TableI> = ({ products, itemsPerPage }) => {
 
     // eslint-disable-next-line array-callback-return
     Object.keys(products).map((country: any) => {
-      // eslint-disable-next-line array-callback-return
-      Object.keys(products[country]).map((city: any) => {
 
-        sucursalesFormat.push({
-          country,
-          city,
-          data: products[country][city]
-        });
+      if (firstCountry === country) {
+        // eslint-disable-next-line array-callback-return
+        Object.keys(products[country]).map((city: any) => {
 
-      })
+          sucursalesFormat.push({
+            country,
+            city,
+            data: products[country][city]
+          });
+
+        })
+      }
 
     });
 
 
     setSucursales(sucursalesFormat)
 
-  }, [products]);
+  }, [firstCountry, products]);
 
 
   return <div className={`${CustomClass({ component, version, customClass: "table-container" })}`}>

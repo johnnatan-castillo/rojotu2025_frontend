@@ -1,5 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getApuUrl } from '../utils/config';
+import { updateTokenUser } from '../features/auth/authSlice';
+import { AppDispatch } from '../redux/store';
+import { useDispatch } from 'react-redux';
 
 interface DataState {
     loading: boolean;
@@ -10,6 +13,8 @@ interface DataState {
 
 export const useFetch = (endpoint: string, options: any) => {
     const url = getApuUrl(endpoint);
+
+    const dispatch = useDispatch<AppDispatch>();
 
     const [isFetched, setIsFetched] = useState(false);
 
@@ -39,6 +44,8 @@ export const useFetch = (endpoint: string, options: any) => {
                     data
                 }));
 
+                dispatch(updateTokenUser({ token: data.token }))
+
             } catch (error) {
 
                 setDataState((prev: any) => ({
@@ -51,7 +58,7 @@ export const useFetch = (endpoint: string, options: any) => {
                 setIsFetched(true);
             }
         },
-        [options, url],
+        [dispatch, options, url],
     );
 
     useEffect(() => {
