@@ -8,6 +8,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BuyButton from './BuyButton';
 import { resetFilter } from '../../features/filter/filterSlice';
 import { getApuUrl } from '../../utils/config';
+import { logout } from '../../features/auth/authSlice';
 
 const component: string = "product-list";
 const version: string = "0";
@@ -67,6 +68,8 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
             .catch((error) => {
                 console.error(error);
                 setError(true);
+                dispatch(logout());
+                navigate('/login');
             })
             .finally(() => {
                 setLoading(false);

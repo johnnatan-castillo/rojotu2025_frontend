@@ -3,10 +3,12 @@ import React, { useEffect, useState } from 'react';
 import CustomClass from '../../utils/CustomClass';
 import Badge from './SelectClothe';
 import { useFetch } from '../../hooks/useFetch';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
 
 import NOFOUNDIMAGE from "../../assets/plp/no-image.jpg"
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../features/auth/authSlice';
 
 const component: string = "galery"
 const version: string = "0"
@@ -14,6 +16,8 @@ const version: string = "0"
 
 const Galery: React.FC = () => {
   const profile = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   let currentIndex = 0;
 
@@ -32,6 +36,9 @@ const Galery: React.FC = () => {
   useEffect(() => {
     if (!loading && !error && data) {
       setProducts(() => (data));
+    } else if (error) {
+      dispatch(logout());
+      navigate('/login');
     }
   }, [data, error, loading]);
 

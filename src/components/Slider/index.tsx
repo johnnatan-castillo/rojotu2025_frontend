@@ -6,12 +6,14 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import CustomClass from '../../utils/CustomClass';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
 
 import Badge from '../Galery/SelectClothe';
 import QuickView from '../QuickView';
 import { getApuUrl } from '../../utils/config';
+import { logout } from '../../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 interface CarruselProps {
     direction: "horizontal" | "vertical";
@@ -32,6 +34,8 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
     const [data, setData] = useState([]);
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
 
 
     const fetchClothes = () => {
@@ -61,6 +65,8 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
             .catch((error) => {
                 console.error(error);
                 setError(true);
+                dispatch(logout());
+                navigate('/login');
             })
             .finally(() => {
                 setLoading(false);

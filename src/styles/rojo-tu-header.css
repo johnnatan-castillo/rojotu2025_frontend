@@ -138,9 +138,9 @@
 
 .rojo-tu-layout-0-x-layout-link-to-gender-container {
     width: 300px;
-    position: sticky;
+    position: fixed;
     bottom: 10px;
-    left: 30px;
+    right: 30px;
     background: #d8d8d8;
     padding: 15px 20px;
     border-radius: 16px;

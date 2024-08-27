@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom';
 import CustomClass from '../../utils/CustomClass';
-import { RootState } from '../../redux/store';
-import { useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearMessage } from '../../features/cart/cartSlice';
 
 const component: string = "alert"
 const version: string = "0"
@@ -10,16 +11,18 @@ const version: string = "0"
 const Alert = () => {
 
     const { messageId, message } = useSelector((state: RootState) => state.carts.cart);
-    const [show, setShow] = useState(false)
+    const [show, setShow] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
 
     const handleClose = () => {
-        setShow(false)
+        setShow(false);
+        dispatch(clearMessage())
     }
 
 
     useEffect(() => {
 
-        if (message && message.length > 0 && message !== undefined && message !== null && message !== "El carrito se ha limpiado") {
+        if (message && message.length > 0 && message !== undefined && message !== null && message !== "El carrito se ha limpiado" && message !== "Se ha limpiado el mensaje") {
 
             setShow(true);
 
@@ -29,7 +32,7 @@ const Alert = () => {
 
             return () => clearTimeout(timer);
         }
-    }, [message, messageId])
+    }, [dispatch, message, messageId])
 
     return <>
         {
