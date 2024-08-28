@@ -9,7 +9,7 @@ import { getApuUrl } from '../../utils/config';
 
 import CustomClass from '../../utils/CustomClass';
 import { encryptData } from '../../utils/Decrypt';
-import { addClothingItem, setStatus } from '../../features/cart/cartSlice';
+import { addClothingItem, resetcart, setStatus } from '../../features/cart/cartSlice';
 
 const component: string = "login"
 const version: string = "0"
@@ -71,6 +71,8 @@ const Login: React.FC = () => {
         fetch(url, requestOptions)
             .then((response) => response.json())
             .then(({ code, data }) => {
+
+                dispatch(resetcart())
 
                 if (code !== 200) {
                     setLoginForm((prev) => ({
