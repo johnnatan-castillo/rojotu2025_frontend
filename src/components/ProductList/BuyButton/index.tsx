@@ -55,7 +55,7 @@ const BuyButton = () => {
 
                             if (code === 200) {
                                 dispatch(setStatus({ status: "enviado" }));
-                                return Swal.fire({ title: 'Pedido enviado', text: "Se ha enviado tu pedido", icon: 'success', confirmButtonColor: "#E31A2A" });
+                                return Swal.fire({ title: 'Pedido enviado', text: "Tu pedido ha sido enviado exitosamente", icon: 'success', confirmButtonColor: "#E31A2A" });
                             }
 
                             if (code === 401) {
