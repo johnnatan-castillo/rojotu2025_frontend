@@ -4,7 +4,7 @@ import QuickView from '../../QuickView'
 import { AppDispatch, RootState } from '../../../redux/store'
 import { useDispatch, useSelector } from 'react-redux'
 import { getApuUrl } from '../../../utils/config'
-import { logout } from '../../../features/auth/authSlice'
+import { logout, updateTokenUser } from '../../../features/auth/authSlice'
 import { useNavigate } from 'react-router-dom'
 
 interface BadgeI {
@@ -50,7 +50,7 @@ const Badge: React.FC<BadgeI> = ({ component, version, numberButton, id }) => {
 
         fetch(url, requestOptions)
             .then((response) => response.json())
-            .then(({ code, data }) => {
+            .then(({ code, data, token }) => {
 
                 if (code === 401) {
                     dispatch(logout());
@@ -62,6 +62,7 @@ const Badge: React.FC<BadgeI> = ({ component, version, numberButton, id }) => {
                 }
 
                 setProduct(data);
+                dispatch(updateTokenUser({ token: token }))
                 return;
             })
     }

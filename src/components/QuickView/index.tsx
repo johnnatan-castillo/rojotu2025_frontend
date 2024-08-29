@@ -8,6 +8,7 @@ import { addClothingItemThunk, setMessage } from '../../features/cart/cartSlice'
 
 import { getApuUrl } from '../../utils/config';
 import { useNavigate } from 'react-router-dom';
+import { logout, updateTokenUser } from '../../features/auth/authSlice';
 
 const component: string = "quickview"
 const version: string = "0"
@@ -374,13 +375,21 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
         fetch(url, requestOptions)
             .then(response => response.json())
-            .then(({ code, data }) => {
+            .then(({ code, data, token }) => {
+
+                if (code === 401) {
+                    dispatch(logout());
+                    navigate('/login');
+                }
+
                 if (code === 200) {
                     setProducts((prevProducts) => {
                         const newProducts = [...prevProducts, { ...data, id_order, dias }];
                         return Array.from(new Set(newProducts.map(product => product.id)))
                             .map(id => newProducts.find(product => product.id === id) as Product);
                     });
+
+                    dispatch(updateTokenUser({ token: token }))
                 }
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
