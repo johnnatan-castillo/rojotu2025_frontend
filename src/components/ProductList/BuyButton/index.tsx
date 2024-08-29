@@ -78,7 +78,7 @@ const BuyButton = () => {
                         handleFetch();
                         return;
                     } else {
-                        return Swal.fire({ title: 'Completa tu pedido', text: `El pedido no esta completo, revisa que todas tus prendas esten completas `, icon: 'error', confirmButtonColor: "#E31A2A" });
+                        return Swal.fire({ title: 'Completa tu pedido', text: `Tu pedido aun se encuentra imcompleto, te invitamos a revisar tu carrito de prendas`, icon: 'error', confirmButtonColor: "#E31A2A" });
                     }
                 }
 
@@ -87,7 +87,7 @@ const BuyButton = () => {
                 } else if (rol === "FRONT" && parseInt(total) === (counters.front.LUNES + counters.front.MARTES + counters.front.MIERCOLES + counters.front.JUEVES + counters.front.VIERNES)) {
                     handleFetch();
                 } else {
-                    return Swal.fire({ title: 'Completa tu pedido', text: `El pedido no esta completo, revisa que todas tus prendas esten completas `, icon: 'error', confirmButtonColor: "#E31A2A" });
+                    return Swal.fire({ title: 'Completa tu pedido', text: `Tu pedido aun se encuentra imcompleto, te invitamos a revisar tu carrito de prendas`, icon: 'error', confirmButtonColor: "#E31A2A" });
                 }
 
             } else if (result.isDenied) {
