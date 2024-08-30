@@ -174,9 +174,9 @@ const SliderSwiperBack = ({ product }: { product: LookBook }) => {
 
     return <>
         <a href="#" className={`${CustomClass({ component, version, customClass: "slider-swiper-link" })} ${CustomClass({ component, version, customClass: "slider-swiper-link-back" })}`}>
-            {product.referencia_prenda_superior && <Badge component={component} version={version} numberButton={1} id={product.referencia_prenda_superior} />}
-            {product.referencia_prenda_inferior && <Badge component={component} version={version} numberButton={2} id={product.referencia_prenda_inferior} />}
-            {product.referencia_otro && <Badge component={component} version={version} numberButton={3} id={product.referencia_otro} />}
+            {product.referencia_otro && <Badge component={component} version={version} numberButton={1} id={product.referencia_otro} />}
+            {product.referencia_prenda_superior && <Badge component={component} version={version} numberButton={2} id={product.referencia_prenda_superior} />}
+            {product.referencia_prenda_inferior && <Badge component={component} version={version} numberButton={3} id={product.referencia_prenda_inferior} />}
             <img
                 src={imageSrc}
                 loading="eager"

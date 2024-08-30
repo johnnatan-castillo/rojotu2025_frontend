@@ -167,7 +167,7 @@
 .rojo-tu-counter-0-x-counter-counter-cart-bottom-count,
 .rojo-tu-counter-0-x-counter-counter-cart-others-count {
     display: flex;
-    background: #E31A2A;
+    background: #989898;
     color: white;
     justify-content: center;
     align-items: center;
@@ -467,8 +467,8 @@
     }
 
     .rojo-tu-counter-0-x-counter-counter-cart-number svg {
-        width: 3.11284vw;
-        height: 3.11284vw;
+        width: 3.51284vw;
+        height: 3.51284vw;
     }
 
 
@@ -484,9 +484,10 @@
     .rojo-tu-counter-0-x-counter-counter-cart-others-count {
         width: 1.070039vw;
         height: 1.070039vw;
-        top: 40%;
-        left: 50%;
+        top: 36%;
+        left: 57%;
         font-size: 0.575486vw;
+        z-index: 999;
     }
 
 

@@ -145,6 +145,7 @@
     padding: 15px 20px;
     border-radius: 16px;
     z-index: 900;
+    box-shadow: -2px -6px 13px -9px rgba(227, 26, 42, 1);
 }
 
 .rojo-tu-layout-0-x-layout-link-to-gender {

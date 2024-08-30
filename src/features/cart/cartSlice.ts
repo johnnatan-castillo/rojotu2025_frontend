@@ -343,12 +343,40 @@ const cartSlice = createSlice({
 
         if (rol === "FRONT") {
           const day = product.dia;
+          const segmento_Prenda = product.segmento_Prenda
 
-          if (day === "LUNES") state.cart.counters.front.LUNES++;
-          if (day === "MARTES") state.cart.counters.front.MARTES++;
-          if (day === "MIERCOLES") state.cart.counters.front.MIERCOLES++;
-          if (day === "JUEVES") state.cart.counters.front.JUEVES++;
-          if (day === "VIERNES") state.cart.counters.front.VIERNES++;
+          if (day === "LUNES"){
+            state.cart.counters.front.LUNES++
+
+            if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+              state.cart.counters.front.LUNES++
+            }
+
+          }
+          if (day === "MARTES"){
+            state.cart.counters.front.MARTES++;
+            if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+              state.cart.counters.front.MARTES++;
+            }
+          } 
+          if (day === "MIERCOLES"){
+            state.cart.counters.front.MIERCOLES++;
+            if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+              state.cart.counters.front.MIERCOLES++;
+            }
+          } 
+          if (day === "JUEVES"){
+            state.cart.counters.front.JUEVES++;
+            if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+              state.cart.counters.front.JUEVES++;
+            }
+          } 
+          if (day === "VIERNES") {
+            state.cart.counters.front.VIERNES++;
+            if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+              state.cart.counters.front.VIERNES++;
+            }
+          }
         }
       };
 
@@ -527,13 +555,41 @@ const cartSlice = createSlice({
 
           if (rol === "FRONT") {
             const days = product.dias.split("-");
+            const segmento_Prenda = product.segmento_Prenda
 
             for (const day of days) {
-              if (day === "LUNES") state.cart.counters.front.LUNES++;
-              if (day === "MARTES") state.cart.counters.front.MARTES++;
-              if (day === "MIERCOLES") state.cart.counters.front.MIERCOLES++;
-              if (day === "JUEVES") state.cart.counters.front.JUEVES++;
-              if (day === "VIERNES") state.cart.counters.front.VIERNES++;
+              if (day === "LUNES"){
+                state.cart.counters.front.LUNES++
+
+                if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                  state.cart.counters.front.LUNES++
+                }
+
+              }
+              if (day === "MARTES"){
+                state.cart.counters.front.MARTES++;
+                if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                  state.cart.counters.front.MARTES++;
+                }
+              } 
+              if (day === "MIERCOLES"){
+                state.cart.counters.front.MIERCOLES++;
+                if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                  state.cart.counters.front.MIERCOLES++;
+                }
+              } 
+              if (day === "JUEVES"){
+                state.cart.counters.front.JUEVES++;
+                if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                  state.cart.counters.front.JUEVES++;
+                }
+              } 
+              if (day === "VIERNES") {
+                state.cart.counters.front.VIERNES++;
+                if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                  state.cart.counters.front.VIERNES++;
+                }
+              }
             }
           }
         };
@@ -590,13 +646,41 @@ const cartSlice = createSlice({
 
             if (rol === "FRONT") {
               const days = product.dias.split("-");
+              const segmento_Prenda = product.segmento_Prenda
 
               for (const day of days) {
-                if (day === "LUNES") state.cart.counters.front.LUNES--;
-                if (day === "MARTES") state.cart.counters.front.MARTES--;
-                if (day === "MIERCOLES") state.cart.counters.front.MIERCOLES--;
-                if (day === "JUEVES") state.cart.counters.front.JUEVES--;
-                if (day === "VIERNES") state.cart.counters.front.VIERNES--;
+                if (day === "LUNES"){
+                  state.cart.counters.front.LUNES--
+  
+                  if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                    state.cart.counters.front.LUNES--
+                  }
+  
+                }
+                if (day === "MARTES"){
+                  state.cart.counters.front.MARTES--;
+                  if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                    state.cart.counters.front.MARTES--;
+                  }
+                } 
+                if (day === "MIERCOLES"){
+                  state.cart.counters.front.MIERCOLES--;
+                  if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                    state.cart.counters.front.MIERCOLES--;
+                  }
+                } 
+                if (day === "JUEVES"){
+                  state.cart.counters.front.JUEVES--;
+                  if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                    state.cart.counters.front.JUEVES--;
+                  }
+                } 
+                if (day === "VIERNES") {
+                  state.cart.counters.front.VIERNES--;
+                  if(segmento_Prenda === "VESTIDO" || segmento_Prenda === "TRAJE" || segmento_Prenda === "ENTERIZO"){
+                    state.cart.counters.front.VIERNES--;
+                  }
+                }
               }
             }
           };
