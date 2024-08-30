@@ -23,6 +23,7 @@ const initialState: AuthState = {
   url_3d: "",
   primer_ingreso: false,
   administrador: false,
+  dashboard: false,
 };
 
 const authSlice = createSlice({
@@ -53,6 +54,7 @@ const authSlice = createSlice({
       state.url_3d = action.payload.url_3d;
       state.primer_ingreso = action.payload.primer_ingreso;
       state.administrador = action.payload.administrador;
+      state.dashboard = action.payload.dashboard;
     },
     logout: (state) => {
       state.user = "";
@@ -78,6 +80,7 @@ const authSlice = createSlice({
       state.url_3d = "";
       state.primer_ingreso = false;
       state.administrador = false;
+      state.dashboard = false;
     },
     updateUserInfo: (
       state,

@@ -121,7 +121,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
     const displayedProducts = useMemo(() => {
 
-        if (filter !== undefined && filter !== "" && !isCart) {
+        if (filter !== undefined && filter !== "") {
 
             if (profile.rol === "BACK") {
                 return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)

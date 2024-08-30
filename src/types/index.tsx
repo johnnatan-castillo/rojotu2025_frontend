@@ -31,6 +31,7 @@ declare global {
         url_3d: string,
         primer_ingreso: boolean,
         administrador: boolean,
+        dashboard: boolean,
     }
 
     interface Filters{

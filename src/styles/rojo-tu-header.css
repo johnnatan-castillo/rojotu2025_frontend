@@ -96,7 +96,6 @@
 }
 
 .rojo-tu-header-0-x-header-left-navigation-container {
-    margin-top: 0.972763vw;
     margin-left: 1.945525vw;
 }
 
@@ -150,6 +149,12 @@
 
 .rojo-tu-layout-0-x-layout-link-to-gender {
     text-align: center;
+}
+
+.rojo-tu-header-0-x-header-nav-link-active svg,
+.rojo-tu-header-0-x-header-nav-link-active span{
+    fill: #E31A2A;
+    color: #E31A2A;;
 }
 
 @media only screen and (min-width: 1026px) {
@@ -206,9 +211,23 @@
         background-position: center;
     }
 
+    .rojo-tu-header-0-x-header-box-logo svg{
+        width: 22vw;
+        height: 9vw;
+    }
+
 }
 
 @media only screen and (max-width: 1025px) {
+
+    .rojo-tu-header-0-x-header-box-logo svg {
+        width: 40vw;
+        height: 12vw;
+    }
+
+    .rojo-tu-header-0-x-header-left-navigation-container {
+        margin-top: 0.972763vw;
+    }
 
     .rojo-tu-header-0-x-header-nav-link {
         width: 8.11284vw;

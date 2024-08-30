@@ -104,6 +104,7 @@ const Login: React.FC = () => {
                 const url_3d = data?.url_3d
                 const primer_ingreso = data?.primer_ingreso
                 const administrador = data?.administrador;
+                const dashboard = data?.dashboard;
 
                 const combineReducers: any = {
                     user,
@@ -124,6 +125,7 @@ const Login: React.FC = () => {
                     url_3d,
                     primer_ingreso,
                     administrador,
+                    dashboard
                 }
 
 
