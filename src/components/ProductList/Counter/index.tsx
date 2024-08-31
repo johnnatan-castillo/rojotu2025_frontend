@@ -1,32 +1,13 @@
-import React, { useEffect } from 'react'
 import CustomClass from '../../../utils/CustomClass'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../redux/store'
-import { filter, resetFilter } from '../../../features/filter/filterSlice'
-import { useLocation } from 'react-router-dom'
+import { filter } from '../../../features/filter/filterSlice'
 
 const component: string = "counter"
 const version: string = "0"
 
 const Counter = () => {
     const rol = useSelector((state: RootState) => state.auth.rol);
-
-    const dispatch = useDispatch<AppDispatch>();
-
-    const location = useLocation();
-    const currentPath = location.pathname;
-    const isCart = currentPath.includes('/my-clothes');
-
-    useEffect(() => {
-
-        if (isCart) {
-            dispatch(resetFilter());
-        }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [location])
-
-
     return (
         <>
             {rol === "BACK" && <CounterBack />}
@@ -45,12 +26,6 @@ const CounterBack = () => {
         dispatch(filter({ isFilteredBy }))
 
     }
-
-    useEffect(() => {
-
-        dispatch(resetFilter());
-
-    }, [dispatch]);
 
     return (
         <div className={`${CustomClass({ component, version, customClass: "counter" })}`}>
