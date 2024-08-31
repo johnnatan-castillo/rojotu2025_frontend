@@ -79,10 +79,14 @@
 }
 
 .rojo-tu-header-0-x-header-login-form-help{
-    background: none;
+    background: white;
      border: none;
      margin-bottom: 15px;
      cursor: pointer;
+     border-radius: 16px;
+     margin-top: 10px;
+     color: #E31A2A;
+     font-weight: 600;
 }
 
 .rojo-tu-header-0-x-header-profile-link-box{
@@ -90,8 +94,14 @@
 }
 
 .rojo-tu-login-0-x-login-login-form-help{
-    background: none;
+    background: white;
      border: none;
+     margin-bottom: 15px;
+     cursor: pointer;
+     border-radius: 16px;
+     margin-top: 10px;
+     color: #E31A2A;
+     font-weight: 600;
      margin-top: 10px;
  }
 
@@ -100,10 +110,29 @@
 }
 
 @media only screen and (min-width: 1026px) {
+
+
+.rojo-tu-header-0-x-header-login-form-help{
+     width: 7.29572vw;
+     height: 1.945525vw;
+     font-size: 0.972763vw;
+}
+
+    .rojo-tu-header-0-x-header-profile-link-box{
+        flex-direction: column;
+        align-items: center;
+    }
+
+.rojo-tu-login-0-x-login-login-form-help{ 
+     width: 11.29572vw;
+     height: 1.945525vw;
+     font-size: 0.972763vw;
+ }
+
     .rojo-tu-login-0-x-login-login-container-form {
         position: absolute;
         width: 24.319066vw;
-        height: 19.455253vw;
+        height: 21.455253vw;
         background: rgb(239, 209, 209);
         border-radius: 25px;
         display: flex;
@@ -153,9 +182,9 @@
     }
 
     .rojo-tu-login-0-x-login-login-form-submit {
-        width: 8.754864vw;
+        width: 11.29572vw;
         height: 2.188716vw;
-        font-size: 0.875486vw;
+        font-size: 0.972763vw;
     }
 
     .rojo-tu-login-0-x-login-login-form-child svg {
@@ -174,6 +203,29 @@
 }
 
 @media only screen and (max-width: 1025px) {
+
+    /* .rojo-tu-header-0-x-header-profile-link-box{
+        flex-direction: column;
+    } */
+
+    .rojo-tu-header-0-x-header-login-form-help{
+        width: 16.29572vw;
+        height: 4.576744vw;
+        font-size: 2.325581vw;
+   }
+
+    .rojo-tu-login-0-x-login-box-logo{
+        position: absolute;
+        top: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    .rojo-tu-login-0-x-login-box-logo svg {
+        width: 90vw;
+        height: 90vw;
+        fill: red;
+    }    
 
     .rojo-tu-login-0-x-login-login-form-child-span-error {
         font-size: 14px;
@@ -205,16 +257,16 @@
     .rojo-tu-login-0-x-login-login-container-form {
         position: absolute;
         width: 93.023256vw;
-        height: 73.023256vw;
+        height: 81.023256vw;
         background: rgb(239, 209, 209);
         border-radius: 25px;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        top: 50%;
+        top: 34%;
         left: 50%;
-        transform: translate(-50%, -98%);
+        transform: translate(-50%, -50%);
     }
 
     .rojo-tu-login-0-x-login-login-title-span {
@@ -246,16 +298,18 @@
 
 
     .rojo-tu-login-0-x-login-login-form-submit {
-        width: 32.55814vw;
-        height: 6.976744vw;
+        width: 45.55814vw;
+        height: 7.976744vw;
         font-size: 3.72093vw;
         margin-top: 1.488372vw;
     }
 
-    .rojo-tu-login-0-x-login-login-form-help{
-         margin-top: 10px;
-         width:100px;
-     }
+    .rojo-tu-login-0-x-login-login-form-help{ 
+        width: 45.55814vw;
+        height: 7.976744vw;
+        font-size: 3.72093vw;
+        margin-top: 10px;
+    }
 
     .rojo-tu-login-0-x-login-login-form-child svg {
         width: 5.813953vw;
@@ -273,12 +327,25 @@
         top: 7%;
         width: 81.697674vw;
     }
+
+    .rojo-tu-login-0-x-login-login-container-form{
+        top: 50%;
+    }
+
+    .rojo-tu-login-0-x-login-box-logo{
+        top: 14%;
+    }
+
   }
   
   @media only screen and (min-width: 540px) and (max-width: 720px) and (orientation: portrait), only screen and (min-width: 1180px) and (max-width: 820px) and (orientation: landscape) {
     .rojo-tu-login-0-x-login-login-logo{
         top: 7%;
         width: 81.697674vw;
+    }
+
+    .rojo-tu-login-0-x-login-login-container-form{
+        top: 45%;
     }
   }
 

@@ -222,7 +222,7 @@ const SliderSwiperFront = ({ product }: { product: any }) => {
             />
         </button>
         {showQuickView && Object.keys(productQuickView).length > 0 && (
-            <QuickView product={productQuickView} setproductQuickView={setproductQuickView} />
+            <QuickView products={productQuickView} setproductQuickView={setproductQuickView} />
         )}
     </>
 }

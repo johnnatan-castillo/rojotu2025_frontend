@@ -116,7 +116,7 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
 
             {/* Componente de QuickView */}
             {showQuickView && Object.keys(productQuickView).length > 0 && (
-                <QuickView product={productQuickView} setproductQuickView={setproductQuickView} />
+                <QuickView products={productQuickView} setproductQuickView={setproductQuickView} />
             )}
         </div>
     )

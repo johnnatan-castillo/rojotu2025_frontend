@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import BuyButton from './BuyButton';
-import { resetFilter } from '../../features/filter/filterSlice';
+import { filter as filters, resetFilter } from '../../features/filter/filterSlice';
 import { getApuUrl } from '../../utils/config';
 import { logout, updateTokenUser } from '../../features/auth/authSlice';
 
@@ -106,6 +106,27 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
             setProducts(productsList);
         }
     }, [productsList]);
+
+    useEffect(() => {
+    
+        if(profile.rol === "BACK"){
+            if(!isCart){
+                dispatch(filters({ isFilteredBy: "SUPERIOR" }))
+            }else{
+                dispatch(resetFilter())
+            }
+        }
+
+        if(profile.rol === "FRONT"){
+            if(!isCart){
+                dispatch(filters({ isFilteredBy: "LUNES" }))
+            }else{
+                dispatch(resetFilter())
+            }
+        }
+    
+    }, [dispatch, isCart, location, profile.rol])
+    
 
     const totalPages = useMemo(() => {
         return Math.ceil(products.length / itemsPerPage);

@@ -18,7 +18,7 @@ const Collection = () => {
 
   useEffect(() => {
     
-    setSlidesPerView(window.innerWidth <= 600? 2 : 5);
+    setSlidesPerView(window.innerWidth <= 600? 1 : 5);
   
   }, [])
 

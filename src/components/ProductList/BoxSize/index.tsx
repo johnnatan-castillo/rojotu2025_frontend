@@ -162,7 +162,7 @@ const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, i
                 </div>
             </div>
             {showQuickView && Object.keys(productQuickView).length > 0 && (
-                <QuickView product={productQuickView} setproductQuickView={setproductQuickView} />
+                <QuickView products={productQuickView} setproductQuickView={setproductQuickView} />
             )}
         </>
     )

@@ -101,7 +101,7 @@ declare global {
     }
 
     interface QuickViewProps {
-        product: Product;
+        products: Product;
         setproductQuickView: (product: Product) => void;
     }
 

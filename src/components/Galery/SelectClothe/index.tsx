@@ -76,7 +76,7 @@ const Badge: React.FC<BadgeI> = ({ component, version, numberButton, id }) => {
 
             {/* Componente de QuickView */}
             {Object.keys(productQuickView).length > 0 && (
-                <QuickView product={productQuickView} setproductQuickView={setproductQuickView} />
+                <QuickView products={productQuickView} setproductQuickView={setproductQuickView} />
             )}
 
         </>

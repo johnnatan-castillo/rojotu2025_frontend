@@ -255,7 +255,7 @@ const MyProfile = ({ setShowProfile }: any) => {
               </div>
 
 
-              {administrador &&
+              {administrador ?
                 <div className={`${CustomClass({ component, version, customClass: "my-profile-2-child" })}`}>
                   <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-1" })}`}>
                     <span className={`${CustomClass({ component, version, customClass: "my-profile-admin" })}`}>Es administrador:</span>
@@ -263,7 +263,10 @@ const MyProfile = ({ setShowProfile }: any) => {
                   <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
                     <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{administrador ? "Sí" : "No"}</span>
                   </div>
-                </div>}
+                </div>
+                :
+                <></>
+                }
 
             </div>
 

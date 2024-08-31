@@ -13,14 +13,18 @@ import { logout, updateTokenUser } from '../../features/auth/authSlice';
 const component: string = "quickview"
 const version: string = "0"
 
-const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) => {
-    const { rol } = useSelector((state: RootState) => state.auth);
+const QuickView: React.FC<QuickViewProps> = ({ products, setproductQuickView }) => {
+    const { rol, token } = useSelector((state: RootState) => state.auth);
+    const [product, setProduct] = useState(products)
     const { nombre_prenda, descripcion, dias } = product;
     const imageRef: any = useRef(null);
     const [imageSrc, setImageSrc] = useState("");
     const [images, setImages] = useState<string[]>([]);
     const [isZoomed, setIsZoomed] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
+    const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+    const [refetch, setRefetch] = useState(false);
 
     const handleMouseEnter = () => {
         setIsZoomed(true);
@@ -47,6 +51,46 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
         setproductQuickView({} as Product); // Limpia el producto cuando se cierra
     };
 
+    const fetchClothesFront = () => {
+        const url = getApuUrl("/buscarprenda");
+        const raw = JSON.stringify({ id_prenda: product.id });
+
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                token: token
+            },
+            body: raw
+        };
+
+        fetch(url, requestOptions)
+            .then(response => response.json())
+            .then(({ code, data, token }) => {
+
+                if (code === 401) {
+                    dispatch(logout());
+                    navigate('/login');
+                }
+
+                if (code === 200) {
+                    
+                    setProduct(data);
+
+                    setRefetch(true);
+                    dispatch(updateTokenUser({ token: token }))
+                }
+            });
+    }
+
+    useEffect(() => {
+
+        fetchClothesFront();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+
     useEffect(() => {
         const loadImages = async () => {
             try {
@@ -55,13 +99,18 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
                 setImageSrc(mainImage.default);
     
                 // Cargar las imágenes adicionales
-                const imagePromises = product.detalles.map(async (detalle) => {
+                const imagePromises = product.detalles?.map(async (detalle) => {
                     const nameImage = Object.values(detalle)[0];
                     const image = await import(`../../assets/plp/${nameImage}`);
                     return image.default;
                 });
     
-                const resolvedImages = await Promise.all(imagePromises);
+                let resolvedImages:any = [];
+
+                if(product.detalles){
+                    resolvedImages = await Promise.all(imagePromises)
+                }
+
                 setImages([mainImage.default, ...resolvedImages]);
     
             } catch (error) {
@@ -80,7 +129,7 @@ const QuickView: React.FC<QuickViewProps> = ({ product, setproductQuickView }) =
             loadImages();
         }
     
-    }, [product]);
+    }, [refetch, product]);
     
 
 

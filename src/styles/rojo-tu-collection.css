@@ -9,8 +9,6 @@
 }
 
 .rojo-tu-collection-0-x-collection-collection .rojo-tu-slider-0-x-slider-slider-swiper .swiper-pagination-bullet {
-    width: 1.459144vw;
-    height: 0.389105vw;
     border-radius: 5px;
     background: #E31A2A;
 }
@@ -79,3 +77,22 @@
     transition: all 0.3s ease-out;
     transition: all 0.3s ease-in;
 }
+
+/*--- Inicio estilos Paginacion Slider ---*/ 
+
+@media only screen and (min-width: 1026px) {
+    .rojo-tu-collection-0-x-collection-collection .rojo-tu-slider-0-x-slider-slider-swiper .swiper-pagination-bullet {
+        width: 1.459144vw;
+        height: 0.389105vw;
+    }
+}
+
+@media only screen and (max-width: 1025px) {
+    .rojo-tu-collection-0-x-collection-collection .rojo-tu-slider-0-x-slider-slider-swiper .swiper-pagination-bullet {
+        width: 25px;
+        height: 5px;
+    }
+}
+
+ /*--- Fin estilos Paginacion Slider ---*/ 
+

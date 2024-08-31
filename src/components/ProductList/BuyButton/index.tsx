@@ -24,10 +24,10 @@ const BuyButton = () => {
 
         Swal.fire({
             title: "¡Importante!",
-            text: `Una vez enviado el pedido, no podra modificarse, ¿Esta de acuerdo?`,
+            html: `Te informamos que una vez realizado el pedido, este no podrá ser modificado. <br> <br> Tienes hasta el 19 de septiembre para enviar tu pedido final.`,
             showDenyButton: true,
             showCancelButton: false,
-            confirmButtonText: "Continuar",
+            confirmButtonText: "Confirmar pedido",
             confirmButtonColor: "#4D4D4D",
             denyButtonText: `Cancelar`
         }).then((result) => {
