@@ -399,6 +399,11 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                 dispatch(addClothingItemThunk({ product: products[2], limits, talla: selectedSize.sizes.otro, token, dia: product.dias, rol }));
             }
 
+            if (countClothes === 1 && countProducts === 1) {
+                canIPass = true;
+                dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
+            }
+
             if (!canIPass) {
                 dispatch(setMessage({ message: "Debes de seleccionar todas las tallas" }));
             }
