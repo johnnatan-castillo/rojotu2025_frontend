@@ -74,7 +74,7 @@ const BuyButton = () => {
                     if (rol === "BACK" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total) ) {
                         handleFetch();
                         return;
-                    } else if (rol === "FRONT" && (counters.front.LUNES + counters.front.MARTES + counters.front.MIERCOLES + counters.front.JUEVES + counters.front.VIERNES) <= parseInt(total)) {
+                    } else if (rol === "FRONT" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total)) {
                         handleFetch();
                         return;
                     } else {
@@ -84,7 +84,7 @@ const BuyButton = () => {
 
                 if (rol === "BACK" && parseInt(total) === (counters.back.lower + counters.back.upper + counters.back.other)) {
                     handleFetch();
-                } else if (rol === "FRONT" && parseInt(total) === (counters.front.LUNES + counters.front.MARTES + counters.front.MIERCOLES + counters.front.JUEVES + counters.front.VIERNES)) {
+                } else if (rol === "FRONT" && parseInt(total) === (counters.back.lower + counters.back.upper + counters.back.other)) {
                     handleFetch();
                 } else {
                     return Swal.fire({ title: 'Completa tu pedido', text: `Tu pedido aun se encuentra imcompleto, te invitamos a revisar tu carrito de prendas`, icon: 'error', confirmButtonColor: "#E31A2A" });
