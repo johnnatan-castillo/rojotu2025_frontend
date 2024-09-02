@@ -402,7 +402,10 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
             if (countClothes === 1 && countProducts === 1) {
                 canIPass = true;
-                dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: product.dias, rol }));
+
+                const isFound = items.find((item) => item.id === products[0].id);
+
+                dispatch(addClothingItemThunk({ product: products[0], limits, talla: selectedSize.sizes.superior, token, dia: isFound ? isFound.dias : product.dias, rol }));
             }
 
             if (!canIPass) {
