@@ -54,6 +54,7 @@ declare global {
     }
 
     interface Product {
+        talla_inferior: string
         id: number;
         referencia: string;
         nombre_prenda: string;

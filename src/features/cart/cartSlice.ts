@@ -226,7 +226,7 @@ export const addClothingItemThunk = createAsyncThunk(
       const days = product.dias.split("-");
 
       for (const day of days) {
-        if (currentCart.counters.front[day] >= 1) {
+        if (currentCart.counters.front[day] >= 1 && existingItemIndex === -1) {
           return rejectWithValue(
             `No se puede agregar más prendas del dia ${day.toLocaleLowerCase()}`
           );

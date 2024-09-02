@@ -310,7 +310,8 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
     const id_order = uuidv4();
     const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
-    const { status } = useSelector((state: RootState) => state.carts.cart);
+    const { status, items } = useSelector((state: RootState) => state.carts.cart);
+    const [sizeS, setSize]:any = useState(null)
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -469,6 +470,17 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [handleFetchSearchClothes, referencia_prenda_superior, referencia_prenda_inferior, referencia_otro,]);
 
+    useEffect(() => {
+      
+        // eslint-disable-next-line array-callback-return
+        items.map((item) => {
+            if(item.id === product.id){
+                setSize(item.talla)
+            }            
+        });
+
+    }, [items, product.id, product.talla])
+    
 
     return (
         <>
@@ -484,7 +496,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                                 <button
                                     key={product.id + index + product.referencia}
                                     onClick={() => handleSizeClick(indexP === 0 ? "superior" : indexP === 1 ? "inferior" : indexP === 2 ? "otro" : "", size, product.id)}
-                                    className={`${CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size" })} ${indexP === 0 &&
+                                    className={`${sizeS === size && CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" })} ${CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size" })} ${indexP === 0 &&
                                         selectedSize.sizes.superior === size ?
                                         CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 1 &&
                                             selectedSize.sizes.inferior === size ? CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 2 &&
