@@ -74,7 +74,7 @@ const QuickView: React.FC<QuickViewProps> = ({ products, setproductQuickView }) 
                 }
 
                 if (code === 200) {
-                    
+
                     setProduct(data);
 
                     setRefetch(true);
@@ -87,7 +87,7 @@ const QuickView: React.FC<QuickViewProps> = ({ products, setproductQuickView }) 
 
         fetchClothesFront();
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
 
@@ -97,22 +97,22 @@ const QuickView: React.FC<QuickViewProps> = ({ products, setproductQuickView }) 
                 // Cargar la imagen principal
                 const mainImage = await import(`../../assets/plp/${product.ubicacion_archivo}`);
                 setImageSrc(mainImage.default);
-    
+
                 // Cargar las imágenes adicionales
                 const imagePromises = product.detalles?.map(async (detalle) => {
                     const nameImage = Object.values(detalle)[0];
                     const image = await import(`../../assets/plp/${nameImage}`);
                     return image.default;
                 });
-    
-                let resolvedImages:any = [];
 
-                if(product.detalles){
+                let resolvedImages: any = [];
+
+                if (product.detalles) {
                     resolvedImages = await Promise.all(imagePromises)
                 }
 
                 setImages([mainImage.default, ...resolvedImages]);
-    
+
             } catch (error) {
                 try {
                     // En caso de error, cargar la imagen por defecto
@@ -124,13 +124,13 @@ const QuickView: React.FC<QuickViewProps> = ({ products, setproductQuickView }) 
                 }
             }
         };
-    
+
         if (product) {
             loadImages();
         }
-    
+
     }, [refetch, product]);
-    
+
 
 
     return ReactDOM.createPortal(
@@ -311,7 +311,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
     const id_order = uuidv4();
     const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
     const { status, items } = useSelector((state: RootState) => state.carts.cart);
-    const [sizeS, setSize]:any = useState(null)
+    const [sizeS, setSize]: any = useState(null)
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
 
@@ -450,6 +450,17 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [token]);
 
+    const putClass = (product: Product, size: string): string => {
+
+        const isFound = items.find((item) => item.id === product.id);
+
+        if (isFound) {
+            return "card-footer-product-sku-size" + isFound.talla
+        }
+
+        return "card-footer-product-sku-size"
+    }
+
     useEffect(() => {
         const references = [
             referencia_prenda_superior,
@@ -471,16 +482,15 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
     }, [handleFetchSearchClothes, referencia_prenda_superior, referencia_prenda_inferior, referencia_otro,]);
 
     useEffect(() => {
-      
+
         // eslint-disable-next-line array-callback-return
         items.map((item) => {
-            if(item.id === product.id){
+            if (item.id === product.id) {
                 setSize(item.talla)
-            }            
+            }
         });
 
     }, [items, product.id, product.talla])
-    
 
     return (
         <>
@@ -496,11 +506,21 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                                 <button
                                     key={product.id + index + product.referencia}
                                     onClick={() => handleSizeClick(indexP === 0 ? "superior" : indexP === 1 ? "inferior" : indexP === 2 ? "otro" : "", size, product.id)}
-                                    className={`${sizeS === size && CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" })} ${CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size" })} ${indexP === 0 &&
-                                        selectedSize.sizes.superior === size ?
-                                        CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 1 &&
-                                            selectedSize.sizes.inferior === size ? CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 2 &&
-                                                selectedSize.sizes.otro === size ? CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : ""}`}
+                                    className={`
+                                        ${sizeS === size &&
+                                        CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" })}
+                                            ${CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size" })}
+                                            ${indexP === 0 && selectedSize.sizes.superior === size ?
+                                            CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 1 &&
+                                                selectedSize.sizes.inferior === size ?
+                                                CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : indexP === 2 &&
+                                                    selectedSize.sizes.otro === size ?
+                                                    CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" }) : ""}
+                                                
+                                                ${putClass(product, size) === ("card-footer-product-sku-size" + size) && CustomClass({ component: "card", version, customClass: "card-footer-product-sku-size-selected" })}
+
+
+                                                `}
                                     type="button"
                                 >
                                     {size}
