@@ -133,7 +133,7 @@ const CounterFront = () => {
                                     </svg>
                                 </button>
                             </span>
-                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-top-count" })}`}>{counters.front.LUNES}</span>
+                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-top-count" })}`}>{counters.front.LUNES <= 0 ? 0 : 1}/1</span>
                         </div>
                         {/* Icono Martes */}
                         <div className={`${CustomClass({ component, version, customClass: "counter-cart-bottom" })}`}>
@@ -148,7 +148,7 @@ const CounterFront = () => {
 
 
                             </span>
-                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-bottom-count" })}`}>{counters.front.MARTES}</span>
+                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-bottom-count" })}`}>{counters.front.MARTES <= 0 ? 0 : 1}/1</span>
                         </div>
                         {/* Icono de Miercoles */}
                         <div className={`${CustomClass({ component, version, customClass: "counter-cart-others" })}`}>
@@ -162,7 +162,7 @@ const CounterFront = () => {
                                 </button>
 
                             </span>
-                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-others-count" })}`}>{counters.front.MIERCOLES}</span>
+                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-others-count" })}`}>{counters.front.MIERCOLES <= 0 ? 0 : 1}/1</span>
                         </div>
                         {/* Icono de Jueves */}
                         <div className={`${CustomClass({ component, version, customClass: "counter-cart-others" })}`}>
@@ -176,7 +176,7 @@ const CounterFront = () => {
                                 </button>
 
                             </span>
-                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-others-count" })}`}>{counters.front.JUEVES}</span>
+                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-others-count" })}`}>{counters.front.JUEVES <= 0 ? 0 : 1}/1</span>
                         </div>
                         {/* Icono de Viernes */}
                         <div className={`${CustomClass({ component, version, customClass: "counter-cart-others" })}`}>
@@ -190,7 +190,7 @@ const CounterFront = () => {
                                 </button>
 
                             </span>
-                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-others-count" })}`}>{counters.front.VIERNES}</span>
+                            <span className={`${CustomClass({ component, version, customClass: "counter-cart-others-count" })}`}>{counters.front.VIERNES <= 0 ? 0 : 1}/1</span>
                         </div>
                     </div>
                 </div>
