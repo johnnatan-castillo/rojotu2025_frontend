@@ -24,7 +24,7 @@ const BuyButton = () => {
 
         Swal.fire({
             title: "¡Importante!",
-            html: `Te informamos que una vez realizado el pedido, este no podrá ser modificado. <br> <br> Tienes hasta el 19 de septiembre para enviar tu pedido final.`,
+            html: `Te informamos que una vez realizado el pedido, este no podrá ser modificado. <br> <br> Tienes hasta el 22 de septiembre para enviar tu pedido final.`,
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: "Confirmar pedido",

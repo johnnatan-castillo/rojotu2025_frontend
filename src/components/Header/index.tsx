@@ -17,7 +17,7 @@ const version: string = "0"
 
 const Header: React.FC = () => {
 
-    const { nombre, administrador, primer_ingreso, user, dashboard } = useSelector((state: RootState) => state.auth);
+    const { nombre, primer_ingreso, user, dashboard } = useSelector((state: RootState) => state.auth);
     const [showProfile, setShowProfile] = useState(false);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -214,7 +214,7 @@ const Header: React.FC = () => {
                                     </svg>
                                     <span className={`${CustomClass({ component, version, customClass: "span-icon" })} ${CustomClass({ component, version, customClass: "span-icon-5" })}`}>Mis prendas</span>
                                 </Link>
-                                {administrador && dashboard ? <Link onClick={() => setnavActive("DASH")} className={`${navActive === "DASH" && CustomClass({ component, version, customClass: "nav-link-active" })} ${CustomClass({ component, version, customClass: "nav-link" })} ${CustomClass({ component, version, customClass: "nav-link-6" })}`} to="/dashboard">
+                                { dashboard ? <Link onClick={() => setnavActive("DASH")} className={`${navActive === "DASH" && CustomClass({ component, version, customClass: "nav-link-active" })} ${CustomClass({ component, version, customClass: "nav-link" })} ${CustomClass({ component, version, customClass: "nav-link-6" })}`} to="/dashboard">
                                     <svg width="58" height="64" viewBox="0 0 58 64" xmlns="http://www.w3.org/2000/svg">
                                         <path fillRule="evenodd" clipRule="evenodd" d="M0.876526 7.0135V48.958C0.876526 52.2895 3.95803 55.176 8.05703 55.176H23.852C24.879 55.176 25.7585 54.584 25.7585 53.585C25.7585 51.5395 22.8805 51.993 20.8175 51.993H7.57553C5.65103 51.9835 4.06953 50.6605 4.06953 48.8005V7.3285C4.06953 5.376 5.95653 4.136 7.89953 4.136H39.795C42.257 4.136 43.645 5.5425 43.6265 8.1235V27.75C43.6075 30.1835 44.1815 30.2945 45.699 30.2945C46.2075 30.2945 46.818 29.4895 46.818 28.86V7.1705C46.818 5.1445 45.7175 3.664 44.385 2.4245C43.1175 1.2305 41.2485 0.786499 38.842 0.786499H8.85253C6.09553 0.786499 4.24503 1.3415 2.73703 2.9605C2.61603 3.0905 2.62553 3.0905 2.50603 3.2105C2.20003 3.5525 1.99603 3.775 1.73703 4.2005C1.33903 4.867 0.876526 6.0235 0.876526 7.0135Z" />
                                         <path fillRule="evenodd" clipRule="evenodd" d="M38.685 58.053H45.384C45.3095 61.043 40.665 62.1065 39.1015 59.2285C38.833 58.729 38.8885 58.4885 38.685 58.053ZM53.36 54.7035H30.709C30.949 51.7895 31.3465 51.512 31.3465 47.524C31.3465 42.8415 32.5595 39.316 36.224 36.772C41.0445 33.4225 46.06 34.4395 49.8075 38.474C51.1115 39.871 52.0005 41.703 52.4905 43.6095C52.8145 44.8775 52.694 45.895 52.7125 47.3665L52.9435 51.123C53.0275 51.678 53.0455 52.2985 53.129 52.8535C53.212 53.4455 53.3415 54.214 53.36 54.7035ZM27.1925 56.2955V57.5725H35.1685C35.1685 59.5255 36.1865 60.746 37.204 61.764C37.778 62.338 38.2965 62.699 39.1105 63.041C43.598 64.9475 47.919 61.6065 48.253 57.5725L55.4325 57.582C56.5065 57.4425 55.544 57.119 57.0245 56.777C57.0245 55.861 56.5525 53.825 56.3585 52.4925C56.1545 51.096 56.1455 49.1985 55.951 47.802C55.6185 45.34 56.2385 42.777 54.249 39.455C52.935 37.2525 51.574 35.5685 49.5015 34.153C44.5235 30.757 39.564 30.84 34.6595 34.097C34.0855 34.477 33.7905 34.6345 33.2995 35.1245C29.8115 38.595 28.1555 41.361 28.1555 47.3665C28.1555 49.0875 28.1365 50.5125 27.9045 52.058L27.1925 56.2955Z" />

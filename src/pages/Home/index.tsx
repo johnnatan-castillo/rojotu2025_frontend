@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div className={`${CustomClass({ component, version, customClass: "home" })}`}>
-      <Countdown targetDate="2024-09-19T00:00:00" />
+      <Countdown targetDate="2024-09-22T00:00:00" />
       <div className={`${CustomClass({ component, version, customClass: "baner-container" })}`}>
         <img className={`${CustomClass({ component, version, customClass: "baner-image" })}`} src={BANERHOME} alt="image con tres personas" />
       </div>
