@@ -50,12 +50,12 @@ const BuyButton = () => {
                         .then(({ code }) => {
 
                             if (code === 201) {
-                                return Swal.fire({ title: 'Pedido enviado', text: "Ya se ha enviado tu pedido", icon: 'success', confirmButtonColor: "#E31A2A" });
+                                return Swal.fire({ title: '¡Tu pedido ha sido enviado exitosamente!', html: "Si la medida de tu manga es Long, no olvides especificarlo enviando un correo a <strong>jcardenas@arturocalle.com</strong>.", icon: 'success', confirmButtonColor: "#E31A2A" });
                             }
 
                             if (code === 200) {
                                 dispatch(setStatus({ status: "enviado" }));
-                                return Swal.fire({ title: 'Pedido enviado', text: "Tu pedido ha sido enviado exitosamente", icon: 'success', confirmButtonColor: "#E31A2A" });
+                                return Swal.fire({ title: '¡Tu pedido ha sido enviado exitosamente!', html: "Si la medida de tu manga es Long, no olvides especificarlo enviando un correo a <strong>jcardenas@arturocalle.com</strong>.", icon: 'success', confirmButtonColor: "#E31A2A" });
                             }
 
                             if (code === 401) {
