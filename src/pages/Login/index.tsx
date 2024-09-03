@@ -351,7 +351,7 @@ const Login: React.FC = () => {
     }
 
     const hanldeHref = () => {
-        window.open("https://rojotu.davivienda.com/preguntas-frecuentes", "_blank");
+        window.open("https://sites.google.com/davivienda.com/rojotu/preguntas-frecuentes-rojot%C3%BA/selecci%C3%B3n-de-prendas ", "_blank");
     }
 
     useEffect(() => {
