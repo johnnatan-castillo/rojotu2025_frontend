@@ -85,7 +85,7 @@ const BuyButton = () => {
                         }
 
                     } else {
-                        return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
+                        return Swal.fire({ title: '¡Por favor, revisa tu pedido!', text: `No cumple con los límites permitidos. Asegúrate que el número de prendas sea el adecuado para tu género y clima.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
                     }
                 }
 
@@ -94,17 +94,17 @@ const BuyButton = () => {
                     if ((parseInt(prendas_superiores) === counters.back.upper) && (parseInt(prendas_inferiores) === counters.back.lower) && parseInt(prendas_otros) === counters.back.other) {
                         handleFetch();
                     } else {
-                        return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
+                        return Swal.fire({ title: '¡Por favor, revisa tu pedido!', text: `No cumple con los límites permitidos. Asegúrate que el número de prendas sea el adecuado para tu género y clima.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
                     }
 
                 } else if (rol === "FRONT" && parseInt(total) === (counters.back.lower + counters.back.upper + counters.back.other)) {
                     if ((parseInt(prendas_superiores) === counters.back.upper) && (parseInt(prendas_inferiores) === counters.back.lower) && parseInt(prendas_otros) === counters.back.other) {
                         handleFetch();
                     } else {
-                        return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
+                        return Swal.fire({ title: '¡Por favor, revisa tu pedido!', text: `No cumple con los límites permitidos. Asegúrate que el número de prendas sea el adecuado para tu género y clima.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
                     }
                 } else if ((counters.back.lower + counters.back.upper + counters.back.other) > parseInt(total) && rol === "BACK") {
-                    return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
+                    return Swal.fire({ title: '¡Por favor, revisa tu pedido!', text: `No cumple con los límites permitidos. Asegúrate que el número de prendas sea el adecuado para tu género y clima.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
                 } else {
                     return Swal.fire({ title: 'Completa tu pedido', text: `Tu pedido aun se encuentra imcompleto, te invitamos a revisar tu carrito de prendas`, icon: 'error', confirmButtonColor: "#E31A2A" });
                 }
