@@ -14,7 +14,7 @@ const version: string = "0";
 
 const BuyButton = () => {
 
-    const { token, total, rol, administrador } = useSelector((state: RootState) => state.auth);
+    const { token, total, rol, administrador, prendas_superiores, prendas_inferiores, prendas_otros } = useSelector((state: RootState) => state.auth);
     const { status, counters } = useSelector((state: RootState) => state.carts.cart);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
@@ -71,24 +71,45 @@ const BuyButton = () => {
                 }
 
                 if (administrador) {
-                    if (rol === "BACK" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total) ) {
-                        handleFetch();
-                        return;
-                    } else if (rol === "FRONT" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total)) {
-                        handleFetch();
-                        return;
+
+                    if ((counters.back.upper <= parseInt(prendas_superiores)) && (counters.back.lower <= parseInt(prendas_inferiores)) && (counters.back.other <= parseInt(prendas_otros))) {
+
+                        if (rol === "BACK" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total)) {
+                            handleFetch();
+                            return;
+                        } else if (rol === "FRONT" && (counters.back.lower + counters.back.upper + counters.back.other) <= parseInt(total)) {
+                            handleFetch();
+                            return;
+                        } else {
+                            return Swal.fire({ title: 'Completa tu pedido', text: `Tu pedido aun se encuentra imcompleto, te invitamos a revisar tu carrito de prendas`, icon: 'error', confirmButtonColor: "#E31A2A" });
+                        }
+
                     } else {
-                        return Swal.fire({ title: 'Completa tu pedido', text: `Tu pedido aun se encuentra imcompleto, te invitamos a revisar tu carrito de prendas`, icon: 'error', confirmButtonColor: "#E31A2A" });
+                        return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
                     }
                 }
 
                 if (rol === "BACK" && parseInt(total) === (counters.back.lower + counters.back.upper + counters.back.other)) {
-                    handleFetch();
+
+                    if ((parseInt(prendas_superiores) === counters.back.upper) && (parseInt(prendas_inferiores) === counters.back.lower) && parseInt(prendas_otros) === counters.back.other) {
+                        handleFetch();
+                    } else {
+                        return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
+                    }
+
                 } else if (rol === "FRONT" && parseInt(total) === (counters.back.lower + counters.back.upper + counters.back.other)) {
-                    handleFetch();
+                    if ((parseInt(prendas_superiores) === counters.back.upper) && (parseInt(prendas_inferiores) === counters.back.lower) && parseInt(prendas_otros) === counters.back.other) {
+                        handleFetch();
+                    } else {
+                        return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
+                    }
+                } else if ((counters.back.lower + counters.back.upper + counters.back.other) > parseInt(total) && rol === "BACK") {
+                    return Swal.fire({ title: 'Tu pedido es inconsistente', text: `Debes de respetar los limites de pedido, por favor, asegurate que tengas las prendas que indica el contador de prendas.`, icon: 'warning', confirmButtonColor: "#E31A2A" });
                 } else {
                     return Swal.fire({ title: 'Completa tu pedido', text: `Tu pedido aun se encuentra imcompleto, te invitamos a revisar tu carrito de prendas`, icon: 'error', confirmButtonColor: "#E31A2A" });
                 }
+
+
 
             } else if (result.isDenied) {
                 Swal.fire({
