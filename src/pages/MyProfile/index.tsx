@@ -27,7 +27,12 @@ const version: string = "0"
 const MyProfile = ({ setShowProfile }: any) => {
 
   const profile = useSelector((state: RootState) => state.auth);
-  const { user, nombre, correo, gender, rol, cargo, pais, administrador, token } = useSelector((state: RootState) => state.auth);
+  let { user, nombre, correo, gender, rol, cargo, pais, administrador, token }:any = useSelector((state: RootState) => state.auth);
+
+  rol = decryptData(rol).data
+  cargo = decryptData(cargo).data
+  pais = decryptData(pais).data
+  administrador = decryptData(administrador).data
 
   const [userFull, setUserFull] = useState<Profile>();
   const dispatch = useDispatch<AppDispatch>();
@@ -91,7 +96,11 @@ const MyProfile = ({ setShowProfile }: any) => {
                 return Swal.fire({ title: 'Error al cambiar de expresión de genero', text: `Ha ocurrido un error al intentar cambiar la expresión de genero`, icon: 'error', confirmButtonColor: "#E31A2A" });
               }
 
-              const copyProfile = { ...profile };
+              const copyProfile: any = { ...profile };
+
+              if(!copyProfile.identidad){
+                return null;
+              }
 
               copyProfile.identidad = myProfileData.identidad
               copyProfile.token = result.token
@@ -202,7 +211,7 @@ const MyProfile = ({ setShowProfile }: any) => {
                   <span className={`${CustomClass({ component, version, customClass: "my-profile-gender" })}`}>Genero:</span>
                 </div>
                 <div className={`${CustomClass({ component, version, customClass: "my-profile-container-child" })} ${CustomClass({ component, version, customClass: "my-profile-container-child-2" })}`}>
-                  <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{gender}</span>
+                  <span className={`${CustomClass({ component, version, customClass: "my-profile-value-span" })}`}>{decryptData(gender).data}</span>
                 </div>
               </div>
 

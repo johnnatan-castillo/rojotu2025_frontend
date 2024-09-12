@@ -12,8 +12,12 @@ const version: string = "0"
 const ThreeD = () => {
 
 
-    const userRole = useSelector((state: RootState) => state.auth.rol);
-    const { gender, climate, url_3d } = useSelector((state: RootState) => state.auth);
+    let userRole: any = useSelector((state: RootState) => state.auth.rol);
+    let { gender, climate, url_3d }:any = useSelector((state: RootState) => state.auth);
+
+    userRole = decryptData(userRole).data;
+    gender = decryptData(gender).data;
+    climate = decryptData(climate).data;
 
     if (!userRole) {
         return <div>

@@ -17,8 +17,9 @@ const Dashboard = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
-  const userRole = useSelector((state: RootState) => state.auth);
+  const userRole: any = useSelector((state: RootState) => state.auth);
   const [usersPerDay, setUsersPerDay] = useState<any>([]);
+  const [cartsPerDay, setCartsPerDay] = useState<any>([]);
   const [reportBig, setReportBig] = useState<any>({});
 
   const [dataFilterByCountry, setDataFilterByCountry] = useState<any>({})
@@ -99,8 +100,42 @@ const Dashboard = () => {
       });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
+  //Reporte cantidad carritos enviados por día
+  useEffect(() => {
+
+    const url = getApuUrl("/reports/carritos/day");
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'token': userRole.token
+      }
+    };
+
+    fetch(url, requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+
+        if (result.code === 401) {
+          dispatch(logout());
+          navigate('/login');
+        }
+
+        if (result.code === 200) {
+          setCartsPerDay(result.data);
+        }
+
+      })
+      .catch((error) => {
+        console.error(error)
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+  
   // Filtrar reporte por país
   useEffect(() => {
 
@@ -162,7 +197,7 @@ const Dashboard = () => {
           <span className={`${CustomClass({ component, version, customClass: "dasboard-chart-line-span" })}`}>Metrica de inicio de sesion por día</span>
         </div>
         <div className={`${CustomClass({ component, version, customClass: "dasboard-chart-line" })}`}>
-          <ListChart data={usersPerDay?.logs} />
+          <ListChart data={usersPerDay?.logs} data1={cartsPerDay?.logs} />
         </div>
       </div>
       <div className={`${CustomClass({ component, version, customClass: "dasboard-box-3" })}`}>
@@ -435,31 +470,63 @@ interface DataPoint {
 }
 interface LineChartComponentProps {
   data: DataPoint[];
+  data1: any[];
 }
 
-const ListChart: React.FC<LineChartComponentProps> = ({ data }) => {
 
-  if (!data) {
-    return <></>
+const ListChart: React.FC<LineChartComponentProps> = ({ data, data1 }) => {
+  if (!data || !data1) {
+    return <></>;
   }
 
-  // Formatear la fecha a "MMM DD"
-  const formattedData = data.map(item => ({
-    ...item,
-    fecha: new Date(item.fecha).toLocaleDateString('es-ES', { month: 'short', day: '2-digit' })
-  }));
+  // Convertir la fecha a un objeto Date
+  const parseDate = (dateString: string) => new Date(dateString);
+
+  // Formatear los datos manteniendo las fechas como objetos Date
+  const formatData = (dataset: { fecha: string; count: number }[]) =>
+    dataset.map(item => ({
+      ...item,
+      fecha: parseDate(item.fecha)
+    }));
+
+  const formattedData = formatData(data);
+  const formattedData1 = formatData(data1);
+
+  // Obtener todas las fechas únicas y ordenarlas
+  const allDates = Array.from(
+    new Set([
+      ...formattedData.map(item => item.fecha.toISOString()),
+      ...formattedData1.map(item => item.fecha.toISOString())
+    ])
+  ).map(dateStr => new Date(dateStr))
+    .sort((a, b) => a.getTime() - b.getTime());
+
+  // Unir los datos por fecha
+  const combinedData = allDates.map(date => {
+    const dateStr = date.toISOString(); // Convertir a string ISO para comparación
+    const itemData = formattedData.find(d => d.fecha.toISOString() === dateStr);
+    const itemData1 = formattedData1.find(d => d.fecha.toISOString() === dateStr);
+
+    return {
+      fecha: date.toLocaleDateString('es-ES', { month: 'short', day: '2-digit' }),
+      usuarios: itemData ? itemData.count : null,
+      carritos: itemData1 ? itemData1.count : null,
+    };
+  });
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={formattedData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+      <LineChart data={combinedData} margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="fecha" />
         <YAxis />
         <Tooltip />
-        <Line type="monotone" dataKey="count" stroke="#E31A2A" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="usuarios" stroke="#E31A2A" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="carritos" stroke="#82ca9d" activeDot={{ r: 8 }} />
       </LineChart>
     </ResponsiveContainer>
   );
 };
+
 
 export default Dashboard;

@@ -3,6 +3,7 @@ import Spinner from '../../components/Spinner/intex'
 import CustomClass from '../../utils/CustomClass'
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { decryptData } from '../../utils/Decrypt';
 
 const ProductList = lazy(() => import('../../components/ProductList'));
 
@@ -13,7 +14,8 @@ const version: string = "0"
 const MyClothes = () => {
 
 
-  const userRole = useSelector((state: RootState) => state.auth.rol);
+  let userRole: any = useSelector((state: RootState) => state.auth.rol);
+  userRole = decryptData(userRole).data;
   const { items } = useSelector((state: RootState) => state.carts.cart);
   const [productsList, setProductsList] = useState<Product[]>([]);
 

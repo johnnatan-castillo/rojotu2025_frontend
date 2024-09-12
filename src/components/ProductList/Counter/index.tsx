@@ -2,12 +2,14 @@ import CustomClass from '../../../utils/CustomClass'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../../../redux/store'
 import { filter } from '../../../features/filter/filterSlice'
+import { decryptData } from '../../../utils/Decrypt'
 
 const component: string = "counter"
 const version: string = "0"
 
 const Counter = () => {
-    const rol = useSelector((state: RootState) => state.auth.rol);
+    let rol: any = useSelector((state: RootState) => state.auth.rol);
+    rol = decryptData(rol).data
     return (
         <>
             {rol === "BACK" && <CounterBack />}
@@ -48,7 +50,7 @@ const CounterBack = () => {
                         </div>
                         {/* Icono vestido */}
                         {
-                            (profile.gender !== "MASCULINO" || profile.identidad !== "MASCULINO") &&
+                            (decryptData(profile.gender).data !== "MASCULINO" || decryptData(profile.identidad).data !== "MASCULINO") &&
                             <div className={`${CustomClass({ component, version, customClass: "counter-cart-top" })}`}>
                                 <span className={`${CustomClass({ component, version, customClass: "counter-cart-top-icon" })}`}>
 

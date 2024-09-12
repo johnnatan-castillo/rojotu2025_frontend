@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { getApuUrl } from '../../utils/config';
 
 import CustomClass from '../../utils/CustomClass';
-import { encryptData } from '../../utils/Decrypt';
+import { decryptData, encryptData } from '../../utils/Decrypt';
 import { addClothingItem, resetcart, setStatus } from '../../features/cart/cartSlice';
 
 const component: string = "login"
@@ -106,6 +106,8 @@ const Login: React.FC = () => {
                 const administrador = data?.administrador;
                 const dashboard = data?.dashboard;
 
+                const rolDecrypted = decryptData(rol).data
+
                 const combineReducers: any = {
                     user,
                     nombre,
@@ -129,7 +131,7 @@ const Login: React.FC = () => {
                 }
 
 
-                handleRecoverCart({ prendas_superiores, prendas_inferiores, prendas_otros }, token, rol).then(() => {
+                handleRecoverCart({ prendas_superiores, prendas_inferiores, prendas_otros }, token, rolDecrypted).then(() => {
                     dispatch(login(combineReducers));
                     navigate('/');
                 })

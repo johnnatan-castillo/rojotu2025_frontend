@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../redux/store';
 import { logout } from '../../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { decryptData } from '../../../utils/Decrypt';
 
 const component: string = "card"
 const version: string = "0"
 
 const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, isPLP }) => {
-    const { token, rol } = useSelector((state: RootState) => state.auth);
+    let { token, rol }: any = useSelector((state: RootState) => state.auth);
+    rol = decryptData(rol).data;
     const { items, status } = useSelector((state: RootState) => state.carts.cart);
     const [imageSrc, setImageSrc] = useState("");
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
@@ -21,7 +23,7 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
 
     const handleRemoveClotheTOCart = async (reference: string) => {
         try {
-            
+
             for (const item of items) {
                 if (rol === "BACK") {
                     if (item.referencia === reference) {
@@ -29,15 +31,15 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
                     }
                 } else {
                     if (item.referencia === reference) {
-    
+
                         if (rol) {
                             const filterTODelete = items.filter((product) => product.id_order === item.id_order);
-    
+
                             for (const filter of filterTODelete) {
                                 await dispatch(removeClothingItemThunk({ productId: filter.id, talla: filter.talla, token, rol })).unwrap();
                             }
                         }
-    
+
                     }
                 }
             }
@@ -108,7 +110,7 @@ const Card: React.FC<CardProps> = ({ product, showSizes, showQuickView, index, i
                     <span className={`${CustomClass({ component, version, customClass: "card-footer-product-name" })}`}>{product.nombre_prenda}</span>
                 </div>
                 {showSizes && product.tallas && (
-                    <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${status ==="enviado" && CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
+                    <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sizes" })} ${status === "enviado" && CustomClass({ component, version, customClass: "card-footer-product-sizes-block" })}`}>
                         <BoxSizePLP component={component} version={version} product={product} isPLP={isPLP} />
                     </div>
                 )}

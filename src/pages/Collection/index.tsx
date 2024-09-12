@@ -3,6 +3,7 @@ import CustomClass from '../../utils/CustomClass';
 import Spinner from '../../components/Spinner/intex';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { decryptData } from '../../utils/Decrypt';
 
 const Slider = lazy(() => import('../../components/Slider'));
 // const Galery = lazy(() => import('../../components/Galery'));
@@ -12,14 +13,16 @@ const version: string = "0";
 
 const Collection = () => {
 
-  const userRole = useSelector((state: RootState) => state.auth.rol);
+  let userRole: any = useSelector((state: RootState) => state.auth.rol);
+
+  userRole = decryptData(userRole).data;
 
   const [slidesPerView, setSlidesPerView] = useState(0);
 
   useEffect(() => {
-    
-    setSlidesPerView(window.innerWidth <= 600? 1 : 5);
-  
+
+    setSlidesPerView(window.innerWidth <= 600 ? 1 : 5);
+
   }, [])
 
 
@@ -28,10 +31,6 @@ const Collection = () => {
       <span>Inicia sesión para ver los productos</span>
     </div>
   }
-
-
- 
-  
 
   return (
     <div className={`${CustomClass({ component, version, customClass: "collection" })}`}>

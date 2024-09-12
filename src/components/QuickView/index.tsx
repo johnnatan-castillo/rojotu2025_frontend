@@ -9,12 +9,14 @@ import { addClothingItemThunk, setMessage } from '../../features/cart/cartSlice'
 import { getApuUrl } from '../../utils/config';
 import { useNavigate } from 'react-router-dom';
 import { logout, updateTokenUser } from '../../features/auth/authSlice';
+import { decryptData } from '../../utils/Decrypt';
 
 const component: string = "quickview"
 const version: string = "0"
 
 const QuickView: React.FC<QuickViewProps> = ({ products, setproductQuickView }) => {
-    const { rol, token } = useSelector((state: RootState) => state.auth);
+    let { rol, token }: any = useSelector((state: RootState) => state.auth);
+    rol = decryptData(rol).data;
     const [product, setProduct] = useState(products)
     const { nombre_prenda, descripcion, dias } = product;
     const imageRef: any = useRef(null);
@@ -237,7 +239,8 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
         size: '',
         selectedIntoQuickView: false
     });
-    const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
+    let { prendas_superiores, prendas_inferiores, prendas_otros, token, rol }: any = useSelector((state: RootState) => state.auth);
+    rol = decryptData(rol).data
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { items, status } = useSelector((state: RootState) => state.carts.cart);
@@ -309,7 +312,8 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
 const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
 
     const id_order = uuidv4();
-    const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
+    let { prendas_superiores, prendas_inferiores, prendas_otros, token, rol }: any = useSelector((state: RootState) => state.auth);
+    rol = decryptData(rol).data
     const { status, items } = useSelector((state: RootState) => state.carts.cart);
     const [sizeS, setSize]: any = useState(null)
     const navigate = useNavigate();

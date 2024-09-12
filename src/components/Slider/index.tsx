@@ -14,6 +14,7 @@ import QuickView from '../QuickView';
 import { getApuUrl } from '../../utils/config';
 import { logout, updateTokenUser } from '../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { decryptData } from '../../utils/Decrypt';
 
 interface CarruselProps {
     direction: "horizontal" | "vertical";
@@ -27,6 +28,7 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
     const swiperRef = useRef<any>(null);
 
     const profile = useSelector((state: RootState) => state.auth);
+    const rol = decryptData(profile.rol).data
 
     const [products, setProducts] = useState<LookBook[]>([]);
 
@@ -139,10 +141,10 @@ const Slider: React.FC<CarruselProps> = ({ direction, slidesPerView }) => {
                     <SwiperSlide key={index}>
                         <div className={CustomClass({ component, version, customClass: "slider-swiper-container" })}>
                             {
-                                profile.rol === "BACK" && <SliderSwiperBack product={product} />
+                                rol === "BACK" && <SliderSwiperBack product={product} />
                             }
                             {
-                                profile.rol === "FRONT" && <SliderSwiperFront product={product} />
+                                rol === "FRONT" && <SliderSwiperFront product={product} />
                             }
                         </div>
                     </SwiperSlide>

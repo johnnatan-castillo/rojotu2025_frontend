@@ -3,13 +3,13 @@ const initialState: AuthState = {
   user: "",
   nombre: "",
   token: "",
-  rol: null,
-  gender: null,
+  rol: "",
+  gender: "",
   climate: "",
   grupo: "",
   cargo: "",
   pais: "",
-  identidad: null,
+  identidad: "",
   prendas_superiores: "",
   prendas_inferiores: "",
   prendas_otros: "",
@@ -21,9 +21,9 @@ const initialState: AuthState = {
   total: "",
   correo: "",
   url_3d: "",
-  primer_ingreso: false,
-  administrador: false,
-  dashboard: false,
+  primer_ingreso: "",
+  administrador: "",
+  dashboard: "",
 };
 
 const authSlice = createSlice({
@@ -60,13 +60,13 @@ const authSlice = createSlice({
       state.user = "";
       state.nombre = "";
       state.token = "";
-      state.rol = null;
-      state.gender = null;
+      state.rol = "";
+      state.gender = "";
       state.climate = "";
       state.grupo = "";
       state.cargo = "";
       state.pais = "";
-      state.identidad = null;
+      state.identidad = "";
       state.prendas_superiores = "";
       state.prendas_inferiores = "";
       state.prendas_otros = "";
@@ -78,13 +78,13 @@ const authSlice = createSlice({
       state.total = "";
       state.correo = "";
       state.url_3d = "";
-      state.primer_ingreso = false;
-      state.administrador = false;
-      state.dashboard = false;
+      state.primer_ingreso = "";
+      state.administrador = "";
+      state.dashboard = "";
     },
     updateUserInfo: (
       state,
-      action: PayloadAction<{ primer_ingreso: boolean }>
+      action: PayloadAction<{ primer_ingreso: string }>
     ) => {
       state.primer_ingreso = action.payload.primer_ingreso;
     },

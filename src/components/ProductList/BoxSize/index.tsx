@@ -5,6 +5,7 @@ import { AppDispatch, RootState } from '../../../redux/store';
 import { addClothingItemThunk, removeClothingItemThunk } from '../../../features/cart/cartSlice';
 import QuickView from '../../QuickView';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { decryptData } from '../../../utils/Decrypt';
 
 interface BoxSizePLPI {
     component: string,
@@ -14,7 +15,8 @@ interface BoxSizePLPI {
 }
 
 export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
-    const { rol } = useSelector((state: RootState) => state.auth);
+    let { rol }: any = useSelector((state: RootState) => state.auth);
+    rol = decryptData(rol).data
 
     if (!product.tallas) {
         return <></>;
@@ -35,7 +37,8 @@ export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product,
 
 const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
 
-    const { prendas_superiores, prendas_inferiores, prendas_otros, token, rol } = useSelector((state: RootState) => state.auth);
+    let { prendas_superiores, prendas_inferiores, prendas_otros, token, rol }: any = useSelector((state: RootState) => state.auth);
+    rol = decryptData(rol).data
     const { items } = useSelector((state: RootState) => state.carts.cart);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();

@@ -14,6 +14,7 @@ import MENGUIDE_2 from "../../assets/side-guide/HOMBRE-2.png"
 import 'plyr/dist/plyr.css'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/store'
+import { decryptData } from '../../utils/Decrypt'
 
 const component: string = "size-guide"
 const version: string = "0"
@@ -21,7 +22,9 @@ const version: string = "0"
 
 const SizeGuide = () => {
 
-  const { gender } = useSelector((state: RootState) => state.auth);
+  let { gender }: any = useSelector((state: RootState) => state.auth);
+
+  gender = decryptData(gender).data
 
   return (
     <div className={`${CustomClass({ component, version, customClass: "size-guide" })}`}>

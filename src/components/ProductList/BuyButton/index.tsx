@@ -7,6 +7,7 @@ import { setStatus } from '../../../features/cart/cartSlice';
 import Swal from "sweetalert2";
 import { logout } from '../../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { decryptData } from '../../../utils/Decrypt';
 
 const component: string = "buy-button";
 const version: string = "0";
@@ -14,10 +15,13 @@ const version: string = "0";
 
 const BuyButton = () => {
 
-    const { token, total, rol, administrador, prendas_superiores, prendas_inferiores, prendas_otros } = useSelector((state: RootState) => state.auth);
+    let { token, total, rol, administrador, prendas_superiores, prendas_inferiores, prendas_otros }: any = useSelector((state: RootState) => state.auth);
     const { status, counters } = useSelector((state: RootState) => state.carts.cart);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
+
+    rol = decryptData(rol).data;
+    administrador = decryptData(administrador).data;
 
 
     const handleSendOrder = async () => {
@@ -70,7 +74,7 @@ const BuyButton = () => {
                         })
                 }
 
-                if (administrador) {
+                if (administrador === "true") {
 
                     if ((counters.back.upper <= parseInt(prendas_superiores)) && (counters.back.lower <= parseInt(prendas_inferiores)) && (counters.back.other <= parseInt(prendas_otros))) {
 

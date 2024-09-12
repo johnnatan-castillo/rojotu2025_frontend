@@ -9,6 +9,7 @@ import BuyButton from './BuyButton';
 import { filter as filters, resetFilter } from '../../features/filter/filterSlice';
 import { getApuUrl } from '../../utils/config';
 import { logout, updateTokenUser } from '../../features/auth/authSlice';
+import { decryptData } from '../../utils/Decrypt';
 
 const component: string = "product-list";
 const version: string = "0";
@@ -40,13 +41,15 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
     const [error, setError] = useState(false);
     const [data, setData] = useState([]);
 
+    const rol = decryptData(profile.rol).data
+
 
     const fetchClothes = () => {
 
         const url = getApuUrl("/listarPrendas");
 
         const raw = JSON.stringify({
-            "tipo": profile.rol === "BACK" ? "PRENDA" : 'OUTFIT'
+            "tipo": rol === "BACK" ? "PRENDA" : 'OUTFIT'
         });
 
         const requestOptions = {
@@ -109,7 +112,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
     useEffect(() => {
     
-        if(profile.rol === "BACK"){
+        if(rol === "BACK"){
             if(!isCart){
                 dispatch(filters({ isFilteredBy: "SUPERIOR" }))
             }else{
@@ -117,7 +120,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
             }
         }
 
-        if(profile.rol === "FRONT"){
+        if(rol === "FRONT"){
             if(!isCart){
                 dispatch(filters({ isFilteredBy: "LUNES" }))
             }else{
@@ -125,7 +128,7 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
             }
         }
     
-    }, [dispatch, isCart, location, profile.rol])
+    }, [dispatch, isCart, location, rol])
     
 
     const totalPages = useMemo(() => {
@@ -144,11 +147,11 @@ const ProductList: React.FC<ProductListProps> = ({ itemsPerPage, showArrows, sho
 
         if (filter !== undefined && filter !== "") {
 
-            if (profile.rol === "BACK") {
+            if (rol === "BACK") {
                 return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                     .filter(product => filter.split('/').includes(product?.segmento_Prenda));
 
-            } else if (profile.rol === "FRONT") {
+            } else if (rol === "FRONT") {
                 return products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).filter(product => product.dias.split("-").includes(filter));
             } else {
                 navigate("/login")
