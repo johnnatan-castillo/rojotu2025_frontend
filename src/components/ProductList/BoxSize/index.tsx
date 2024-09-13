@@ -16,6 +16,7 @@ interface BoxSizePLPI {
 
 export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product, isPLP }) => {
     let { rol }: any = useSelector((state: RootState) => state.auth);
+    const { isLoading } = useSelector((state: RootState) => state.carts.cart);
     rol = decryptData(rol).data
 
     if (!product.tallas) {
@@ -23,14 +24,15 @@ export const BoxSizePLP: React.FC<BoxSizePLPI> = ({ component, version, product,
     }
 
     return <>
-        {
-            rol === "FRONT" && <BoxSizePLPFront component={component} version={version} product={product} isPLP={isPLP} />
+        <div style={{pointerEvents: `${!isLoading ? "auto": "none"}`}}>
+            {
+                rol === "FRONT" && <BoxSizePLPFront component={component} version={version} product={product} isPLP={isPLP} />
 
-        }
-        {
-            rol === "BACK" && <BoxSizePLPBack component={component} version={version} product={product} isPLP={isPLP} />
-
-        }
+            }
+            {
+                rol === "BACK" && <BoxSizePLPBack component={component} version={version} product={product} isPLP={isPLP} />
+            }
+        </div>
 
     </>
 }

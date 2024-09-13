@@ -6,6 +6,7 @@ interface Cart {
   id: string;
   name: string;
   items: Product[];
+  isLoading: boolean;
   counters: {
     back: {
       upper: number;
@@ -63,6 +64,7 @@ const initialState: cartState = {
     id: uuidv4(),
     name: "Carrito",
     items: [],
+    isLoading: false,
     counters: {
       back: {
         upper: 0,
@@ -504,6 +506,7 @@ const cartSlice = createSlice({
         id: uuidv4(),
         name: "Carrito",
         items: [],
+        isLoading: false,
         counters: {
           back: {
             upper: 0,
@@ -528,6 +531,7 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(addClothingItemThunk.pending, (state) => {
+        state.cart.isLoading = true;
         state.cart.message = "Agregando prenda...";
       })
       .addCase(addClothingItemThunk.fulfilled, (state, action) => {
@@ -611,10 +615,12 @@ const cartSlice = createSlice({
           state.cart.message = "Talla actualizada exitosamente";
         }
 
+        state.cart.isLoading = false;
         state.cart.messageId = uuidv4();
       })
       .addCase(addClothingItemThunk.rejected, (state, action) => {
         state.cart.message = action.payload as string;
+        state.cart.isLoading = false;
       })
       .addCase(removeClothingItemThunk.pending, (state) => {
         state.cart.message = "Removiendo prenda...";
