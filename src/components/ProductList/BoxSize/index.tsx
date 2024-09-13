@@ -44,7 +44,7 @@ const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, is
     const { items } = useSelector((state: RootState) => state.carts.cart);
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-
+    const { isLoading } = useSelector((state: RootState) => state.carts.cart);
 
     const handleAddCart = (size: string) => {
 
@@ -75,7 +75,7 @@ const BoxSizePLPBack: React.FC<BoxSizePLPI> = ({ component, version, product, is
 
     return (
         <>
-            <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size-box" })}`}>
+            <div style={{pointerEvents: `${!isLoading ? "auto": "none"}`}} className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-size-box" })}`}>
                 {
                     product.tallas.split("-").map((size: string) => {
                         const itemInCart = items.find(item => item.referencia === product.referencia && item.talla === size);
@@ -116,6 +116,8 @@ const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, i
 
     const [productQuickView, setproductQuickView] = useState<Product>({} as Product);
 
+    const { isLoading } = useSelector((state: RootState) => state.carts.cart);
+
     return (
         <>
             <div className={`${CustomClass({ component, version, customClass: "card-footer-product-sku-days-box" })}`}>
@@ -142,7 +144,7 @@ const BoxSizePLPFront: React.FC<BoxSizePLPI> = ({ component, version, product, i
                             <span className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-size-text" })}`}>Talla seleccionada</span>
                         </div>
                     }
-                    <div className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-size-2" })}`}>
+                    <div style={{pointerEvents: `${!isLoading ? "auto": "none"}`}} className={`${CustomClass({ component, version, customClass: "card-footer-body-product-buy-size-2" })}`}>
                         {
                             !isCart &&
 

@@ -244,6 +244,8 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const { items, status } = useSelector((state: RootState) => state.carts.cart);
+    const { isLoading } = useSelector((state: RootState) => state.carts.cart);
+
 
     const limits = {
         prendas_superiores: parseInt(prendas_superiores),
@@ -302,7 +304,7 @@ const QuickViewBackInformation = (productSelect: QuickViewInformationI) => {
                 }
             </div>}
 
-            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
+            <div style={{pointerEvents: `${!isLoading ? "auto": "none"}`}} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
                 <button onClick={() => handleAddCart()} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })}`}>{selectedSize.size ? selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla" : "Agregar al carrito"}</button>
             </div>
         </>
@@ -318,6 +320,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
     const [sizeS, setSize]: any = useState(null)
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
+    const { isLoading } = useSelector((state: RootState) => state.carts.cart);
 
     const product: any = productSelect.product;
     const { referencia_prenda_superior, referencia_prenda_inferior, referencia_otro, dias } = product;
@@ -537,7 +540,7 @@ const QuickViewFrontInformation = (productSelect: QuickViewInformationI) => {
                     </div>
                 ))
             }
-            <div className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
+            <div style={{pointerEvents: `${!isLoading ? "auto": "none"}`}} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-container" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-container-block" })}`}>
                 <button onClick={handleAddCart} className={`${CustomClass({ component, version, customClass: "quickview-body-product-buy-button" })} ${status === "enviado" && CustomClass({ component, version, customClass: "quickview-body-product-buy-button-block" })}`}>
                     {selectedSize.sizes ? (selectedSize.selectedIntoQuickView ? "Agregar al carrito" : "Actualizar talla") : "Agregar al carrito"}
                 </button>
