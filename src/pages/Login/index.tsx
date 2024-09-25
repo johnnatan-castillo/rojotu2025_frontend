@@ -86,6 +86,11 @@ const Login: React.FC = () => {
                     return;
                 }
 
+                if(!data?.is_editable || data?.is_editable === 0){
+                    navigate('/login');
+                    return Swal.fire({ html: '<p>Nuestra campaña de selecion de prendas de la colección 2025 ha finalizado, te invitamos a estar atentos a las comunicaciones para su entrega el proximo año.</p> <br> <strong>#RojotúViveTuEscencia</strong>', icon: 'info', confirmButtonColor: "#E31A2A" });
+                }
+
                 const user = data?.user
                 const nombre = data?.nombre
                 const token = data?.token;
