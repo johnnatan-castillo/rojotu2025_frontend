@@ -66,6 +66,8 @@
   "engines": {
   "react": "16.14.0",
   "react-dom": "16.14.0",
-  "react-plyr": "2.2.0"
+  "react-plyr": "2.2.0",
+  "node": "20.x",
+  "npm": "10.x"
 }
 }
