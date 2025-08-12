@@ -64,7 +64,8 @@
     "@types/uuid": "^10.0.0"
   },
   "engines": {
-  "node": "16.x",
-  "npm": "8.x"
+  "react": "16.14.0",
+  "react-dom": "16.14.0",
+  "react-plyr": "2.2.0"
 }
 }
