@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div className={`${CustomClass({ component, version, customClass: "home" })}`}>
-      <Countdown targetDate="2024-09-22T00:00:00" />
+      <Countdown targetDate="2025-09-17T00:00:00" />
       <div className={`${CustomClass({ component, version, customClass: "baner-container" })}`}>
         <img className={`${CustomClass({ component, version, customClass: "baner-image" })}`} src={BANERHOME} alt="image con tres personas" />
       </div>
@@ -39,7 +39,7 @@ const Home = () => {
 
           <span className={`${CustomClass({ component, version, customClass: "home-image-title" })}`}>Lookbook</span>
 
-          <p className={`${CustomClass({ component, version, customClass: "home-image-paragraph" })}`}>Conoce la <strong>programación de nuestra Colección RojoTú 2025 para el Front</strong> así como los <strong>outfits destacados para el Back</strong> haciendo <a className={`${CustomClass({ component, version, customClass: "home-image-link" })}`} onClick={() => { navigate("/collection") }} href="#" target='_self' rel='noreferrer'>click aquí.</a></p>
+          <p className={`${CustomClass({ component, version, customClass: "home-image-paragraph" })}`}>Conoce la <strong>programación de nuestra Colección RojoTú 2026 para el Front</strong> así como los <strong>outfits destacados para el Back</strong> haciendo <a className={`${CustomClass({ component, version, customClass: "home-image-link" })}`} onClick={() => { navigate("/collection") }} href="#" target='_self' rel='noreferrer'>click aquí.</a></p>
 
         </div>
 
@@ -63,7 +63,7 @@ const Home = () => {
 
           <span className={`${CustomClass({ component, version, customClass: "home-image-title" })}`}>Selección de prenda</span>
 
-          <p className={`${CustomClass({ component, version, customClass: "home-image-paragraph" })}`}>Conoce <a className={`${CustomClass({ component, version, customClass: "home-image-link" })}`} onClick={() => { navigate("/clothes") }} href="#" target='_self' rel='noreferrer'>aquí </a> las <strong>prendas de la colección 2025</strong> y selecciona tus outfits.</p>
+          <p className={`${CustomClass({ component, version, customClass: "home-image-paragraph" })}`}>Conoce <a className={`${CustomClass({ component, version, customClass: "home-image-link" })}`} onClick={() => { navigate("/clothes") }} href="#" target='_self' rel='noreferrer'>aquí </a> las <strong>prendas de la colección 2026</strong> y selecciona tus outfits.</p>
 
         </div>
 
